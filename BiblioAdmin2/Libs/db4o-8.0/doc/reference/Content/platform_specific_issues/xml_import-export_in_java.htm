@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:lastBlockDepth="2" MadCap:lastHeight="120" MadCap:lastWidth="624" MadCap:disableMasterStylesheet="true" MadCap:tocPath="Platform Specific Issues" MadCap:InPreviewMode="false" MadCap:RuntimeFileType="Topic" MadCap:TargetType="WebHelp" MadCap:PathToHelpSystem="../../" MadCap:HelpSystemFileName="index.xml" MadCap:SearchType="Stem">
+    <head><title>Xml Import-Export In Java	</title>
+        <script type="text/javascript">/* <![CDATA[ */
+window.onload = function(){
+	var pathToFlash = $('html').attr('MadCap:PathToHelpSystem') + 'Content/Resources/Code/ZeroClipboard.swf';
+	ZeroClipboard.setMoviePath(pathToFlash);
+			
+	function bindToClipBord(element,content){
+		var clip = new ZeroClipboard.Client();
+		clip.setText(content);
+		clip.glue(element);
+	};
+		
+	if(location.protocol==='file:'){
+		$('.copylink-marker').remove();
+	} else{
+			$('.copylink-marker').each(function(){
+				var text = $(this).parent().parent().children('.prettyprint').html();
+				$(this).hover(function(){
+					bindToClipBord(this,text);
+				},
+				function(){});
+			});	
+	}		
+	prettyPrint();	
+};
+                /* ]]> */</script>
+        <link href="../SkinSupport/MadCap.css" rel="stylesheet" />
+        <link href="../Resources/Stylesheets/OnlineStyle.css" rel="stylesheet" />
+        <script src="../Resources/Code/prettify.js">
+        </script>
+        <script src="../Resources/Code/lang-vb.js">
+        </script>
+        <script src="../Resources/Code/jquery.min.js">
+        </script>
+        <script src="../Resources/Code/ZeroClipboard.js">
+        </script>
+        <script src="../SkinSupport/MadCapAll.js" type="text/javascript">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink" style="display: none;"><a href="../../index_CSH.html#platform_specific_issues/xml_import-export_in_java.htm" style="">Open topic with navigation</a>
+        </p>
+        <div class="MCBreadcrumbsBox"><span class="MCBreadcrumbsPrefix">You are here: </span><a class="MCBreadcrumbsLink" href="../platform_specific_issues.htm">Platform Specific Issues</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">XML Import-Export In Java</span>
+        </div>
+        <p>
+            <script type="text/javascript">/*<![CDATA[*/document.write('<a href="' + location.href +'">');
+				document.write("Direct Link");
+			document.write('</a>');/*]]>*/</script>
+        </p>
+        <p>
+        </p>
+        <h1>Xml Import-Export In Java</h1>
+        <p MadCap:conditions="Primary.Java,Primary.All languages">
+            <p>One of the most widely used platform independent formats of data exchange today is xml. Db4o does not provide any specific API to be used for XML import/export, but with the variety of XML serialization tools available for Java and .NET (freeware and licensed) this is not really necessary.  All that you need to export your database/query results is: </p>
+            <ol>
+                <li value="1">Retrieve objects from the database.</li>
+                <li value="2">Serialize them in XML format (using language, or external tools, or your own serializing software).</li>
+                <li value="3">Save XML stream (to a disc location, into memory, into another database).</li>
+            </ol>
+            <p>Import process is just the reverse:</p>
+            <ol>
+                <li value="1">Read XML stream</li>
+                <li value="2">Create an objects from XML</li>
+                <li value="3">Save objects to db4o</li>
+            </ol>
+            <p>Let's go through a simple example. We will use xstream library (<a href="http://xstream.codehaus.org/" class="">http://xstream.codehaus.org/</a>) for object serialization, but any other tool capable of serializing objects into XML will do as well.</p>
+            <p>First, let's prepare a database:</p>
+            <pre class="prettyprint" xml:space="preserve">SerializeExample.java: setObjects
+private static void setObjects()  {
+    new File(DB4O_FILE_NAME).delete();
+    ObjectContainer container = Db4o.openFile(DB4O_FILE_NAME);
+    try  {
+      Car car = new Car("BMW", new Pilot("Rubens Barrichello"));
+      container.store(car);
+      car = new Car("Ferrari", new Pilot("Michael Schumacher"));
+      container.store(car);
+    } finally  {
+      container.close();
+    }
+  }</pre>
+            <p>We will save the database to XML file "formula1.xml":</p>
+            <pre class="prettyprint" xml:space="preserve">SerializeExample.java: exportToXml
+private static void exportToXml()  {
+    XStream xstream = new XStream(new DomDriver());
+    try  {
+      FileWriter xmlFile = new FileWriter(XMLXML_FILE_NAME);
+      ObjectContainer container = Db4o.openFile(DB4O_FILE_NAME);
+      try  {
+        ObjectSet result = container.query(Car.class);
+        Car[] cars = new Car[result.size()];
+        for (int i = 0; i &lt; result.size(); i++)  {
+          Car car = (Car) result.next();
+          cars[i] = car;
+        }
+        String xml = xstream.toXML(cars);
+        xmlFile.write("&lt;?xml version=\"1.0\"?&gt;\n" + xml);
+        xmlFile.close();
+      } finally  {
+        container.close();
+      }
+    } catch (Exception ex)  {
+      System.out.println(ex.getMessage());
+    }
+  }</pre>
+            <p>After the method executes all car objects from the database will be stored in the export file as an array. Note that child objects (Pilot) are stored as well without any additional settings. You can check the created XML file to see how it looks like.</p>
+            <p>Now we can clean the database and try to recreate it from the XML file:</p>
+            <pre class="prettyprint" xml:space="preserve">SerializeExample.java: importFromXml
+private static void importFromXml()  {
+    new File(DB4O_FILE_NAME).delete();
+    XStream xstream = new XStream(new DomDriver());
+    try  {
+      FileReader xmlReader = new FileReader(XMLXML_FILE_NAME);
+      Car[] cars = (Car[]) xstream.fromXML(xmlReader);
+      ObjectContainer container;
+      for (int i = 0; i &lt; cars.length; i++)  {
+        container = Db4o.openFile(DB4O_FILE_NAME);
+        try  {
+          Car car = (Car) cars[i];
+          container.store(car);
+        } finally  {
+          container.close();
+        }
+      }
+      container = Db4o.openFile(DB4O_FILE_NAME);
+      try  {
+        ObjectSet result = container.query(Pilot.class);
+        listResult(result);
+        result = container.query(Car.class);
+        listResult(result);
+      } finally  {
+        container.close();
+      }
+      xmlReader.close();
+    } catch (Exception ex)  {
+      System.out.println(ex.getMessage());
+    }
+  }</pre>
+            <p>Easy, isn't it? Obviously there is much more about XML serialization: renaming fields, storing collections, selective persistence etc. You should be able to find detailed description together with the serialization library, which you will use.</p>
+        </p>
+        <p MadCap:conditions="Global.Primary:java" />
+        <p MadCap:conditions="Primary.Online">Download example code:</p>
+        <p MadCap:conditions="Primary.Online">
+            <MadCap:conditionalText MadCap:conditions="Primary.Java"><a href="serializingjava.zip">Java </a>
+            </MadCap:conditionalText>
+        </p>
+        <script type="text/javascript" src="../SkinSupport/MadCapBodyEnd.js">
+        </script>
+    </body>
+</html>

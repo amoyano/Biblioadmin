@@ -1,0 +1,345 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:lastBlockDepth="2" MadCap:lastHeight="120" MadCap:lastWidth="624" MadCap:disableMasterStylesheet="true" MadCap:tocPath="Platform Specific Issues|Database For OSGI|Eclipse Plug-In With db4o Service" MadCap:InPreviewMode="false" MadCap:RuntimeFileType="Topic" MadCap:TargetType="WebHelp" MadCap:PathToHelpSystem="../../../../" MadCap:HelpSystemFileName="index.xml" MadCap:SearchType="Stem">
+    <head><title>Code Overview	</title>
+        <script type="text/javascript">/* <![CDATA[ */
+window.onload = function(){
+	var pathToFlash = $('html').attr('MadCap:PathToHelpSystem') + 'Content/Resources/Code/ZeroClipboard.swf';
+	ZeroClipboard.setMoviePath(pathToFlash);
+			
+	function bindToClipBord(element,content){
+		var clip = new ZeroClipboard.Client();
+		clip.setText(content);
+		clip.glue(element);
+	};
+		
+	if(location.protocol==='file:'){
+		$('.copylink-marker').remove();
+	} else{
+			$('.copylink-marker').each(function(){
+				var text = $(this).parent().parent().children('.prettyprint').html();
+				$(this).hover(function(){
+					bindToClipBord(this,text);
+				},
+				function(){});
+			});	
+	}		
+	prettyPrint();	
+};
+                /* ]]> */</script>
+        <link href="../../../SkinSupport/MadCap.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/OnlineStyle.css" rel="stylesheet" />
+        <script src="../../../SkinSupport/MadCapAll.js">
+        </script>
+        <script src="../../../Resources/Code/prettify.js">
+        </script>
+        <script src="../../../Resources/Code/lang-vb.js">
+        </script>
+        <script src="../../../Resources/Code/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Code/ZeroClipboard.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink" style="display: none;"><a href="../../../../index_CSH.html#platform_specific_issues/database_for_osgi/eclipse_plug-in_with_db4o_service/code_overview.htm" style="">Open topic with navigation</a>
+        </p>
+        <div class="MCBreadcrumbsBox"><span class="MCBreadcrumbsPrefix">You are here: </span><a class="MCBreadcrumbsLink" href="../../../platform_specific_issues.htm">Platform Specific Issues</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../../database_for_osgi.htm">Database For OSGI</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../eclipse_plug-in_with_db4o_service.htm">Eclipse Plug-In With db4o Service</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Code Overview</span>
+        </div>
+        <p>
+            <script type="text/javascript">/*<![CDATA[*/document.write('<a href="' + location.href +'">');
+				document.write("Direct Link");
+			document.write('</a>');/*]]>*/</script>
+        </p>
+        <p>
+        </p>
+        <h1>Code Overview</h1>
+        <p>Now the plug-in environment is
+configured and we can look at the code itself.</p>
+        <p>At this point in time the project
+contains the following classes:</p>
+        <ul>
+            <li value="1">memoplugin.Activator</li>
+            <li value="2">memoplugin.actions.SampleAction</li>
+        </ul>
+        <p>Activator class is called to start
+and stop the plug-in. It is responsible for managing its lifecycle. We will use
+it to initialize and clean up db4o resources.</p>
+        <p>SampleAction is a class that performs the action
+specified in the action set in the manifest file. It can be used to specify the
+behavior on the action. We will use it to call a custom dialog for memo viewing
+and editing.</p>
+        <p>From the said above we can see
+that we will need 2 more classes:</p>
+        <ul>
+            <li value="1">Db4oProvider:
+     will be used to keep db4o connection, provide it to the users on request,
+     and close it on dispose.</li>
+            <li value="2">DataDialog:
+     will provide a simple UI for viewing and editing the data, it will use
+     Db4oProvider to access and store the data.</li>
+        </ul>
+        <p>These 2 classes are very basic and
+are not specific to <span class="MCPopup"><a href="javascript:void(0);" class="MCPopupSpot" onclick="FMCPopup( event, this ); return false;" MadCap:src="../../database_for_osgi.htm">OSGI<img style="border: none;margin-left: 5px;" src="../../../SkinSupport/ExpandingClosed.gif" MadCap:altsrc="../../../SkinSupport/ExpandingOpen.gif" class="MCExpandingIcon" onload="if ( typeof( FMCPreloadImage ) == 'function' ) { FMCPreloadImage( '../../../SkinSupport/ExpandingOpen.gif' ); }" /></a></span> environment. Please, review their code below:</p>
+        <pre class="prettyprint" xml:space="preserve">Db4oProvider.java
+package memoplugin;
+
+import com.db4o.ObjectContainer;
+import com.db4o.osgi.Db4oService;
+/**//*
+ * This class is used to store db4o_osgi service instance and 
+ * provide db4o services on request.
+ */
+public class Db4oProvider  {
+
+  private static ObjectContainer _db;
+  private static String FILENAME = "sample.db4o";
+  
+  public static void Initialize(Db4oService db4oService) {
+    _db = db4oService.openFile(FILENAME);
+  }
+  
+  public static ObjectContainer database() {
+    return _db;
+  }
+  
+  public static void UnInitialize() {
+    _db.close();
+  }
+  
+}</pre>
+        <pre class="prettyprint" xml:space="preserve">DataDialog.java
+package memoplugin.ui;
+
+import java.util.ArrayList;
+
+import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
+
+import memoplugin.Db4oProvider;
+
+import com.db4o.ObjectSet;
+
+public class DataDialog extends Dialog  {
+  private static int ID_ADD = 100;
+  private static int ID_DELETE = 101;
+  private Shell _shell;
+    /** 
+     * The title of the dialog.
+     */
+    private String title;
+
+    /** 
+     * The message to display, or &lt;code&gt;null&lt;/code&gt; if none.
+     */
+    private String message;
+
+    /** 
+     * The input value; the empty string by default.
+     */
+    private String value = "";//$NON-NLS-1$
+
+    
+    /** 
+     * Add button widget.
+     */
+    private Button addButton;
+
+    /** 
+     * Delete button widget.
+     */
+    private Button deleteButton;
+
+    /**
+     * Input text widget.
+     */
+    private Text text;
+
+    /** 
+     * List widget.
+     */
+    private List list;
+    
+
+    public DataDialog(Shell parentShell, String dialogTitle,
+            String dialogMessage, String initialValue)  {
+        super(parentShell);
+        this.title = dialogTitle;
+        message = dialogMessage;
+        if (initialValue == null)  {
+      value = "";//$NON-NLS-1$
+    } else  {
+      value = initialValue;
+    }
+    }
+    
+    /**
+     * 
+     * 
+     * @see org.eclipse.jface.window.
+     * Window#configureShell(org.eclipse.swt.widgets.Shell)
+     */
+    protected void configureShell(Shell shell)  {
+        super.configureShell(shell);
+        _shell = shell;
+        if (title != null)  {
+      shell.setText(title);
+    }
+    }
+
+    /**
+     * Clears the database before adding new data
+     */
+    private void clearDb() {
+      ObjectSet result = Db4oProvider.database().queryByExample(ArrayList.class);
+    while (result.hasNext()) {
+      Db4oProvider.database().delete(result.next());
+    }
+    }
+    
+    /**
+     * 
+     * Makes sure that all the data is saved to the 
+     * database before closing the dialog
+     */
+    protected void handleShellCloseEvent()  {
+      clearDb();
+      ArrayList data = new ArrayList();
+      for (int i=0; i &lt; list.getItemCount(); i++) {
+        data.add(list.getItem(i));
+      }
+      Db4oProvider.database().store(data);
+      Db4oProvider.database().commit();
+      Db4oProvider.database().ext().purge(ArrayList.class);
+      super.handleShellCloseEvent();
+    }
+    
+    /**
+     * Button events handler
+     */
+    protected void buttonPressed(int buttonId)  {
+        if (buttonId == ID_ADD)  {
+            value = text.getText();
+            list.add(value);
+        } else if (buttonId == ID_DELETE) {
+          int selectedId = list.getSelectionIndex();
+          if (selectedId == -1) {
+            new MessageDialog(_shell, "Error",
+                      null, "No item selected", MessageDialog.ERROR,
+                      new String[] {"Ok"}, 0).open(); 
+          } else  {
+            list.remove(selectedId);
+          }
+            value = null;
+        } else  {
+          super.buttonPressed(buttonId);
+        }
+    }
+
+    /**
+     * 
+     * 
+     * @see org.eclipse.jface.dialogs.Dialog#createButtonsForButtonBar(org.eclipse.swt.widgets.Composite)
+     */
+    protected void createButtonsForButtonBar(Composite parent)  {
+        // create Add and Delete buttons by default
+        addButton = createButton(parent, ID_ADD,
+                "Add", true);
+        createButton(parent, ID_DELETE,
+                "Delete", false);
+        //do this here because setting the text will set enablement on the ok
+        // button
+        text.setFocus();
+        if (value != null)  {
+            text.setText(value);
+            text.selectAll();
+        }
+    }
+
+    /**
+     * Creates the visual dialog representation
+     */
+    protected Control createDialogArea(Composite parent)  {
+        // create composite
+        Composite composite = (Composite) super.createDialogArea(parent);
+        // create message
+        if (message != null)  {
+            Label label = new Label(composite, SWT.WRAP);
+            label.setText(message);
+            GridData gridData = new GridData(GridData.GRAB_HORIZONTAL
+                    | GridData.GRAB_VERTICAL | GridData.HORIZONTAL_ALIGN_FILL
+                    | GridData.VERTICAL_ALIGN_CENTER);
+            gridData.widthHint = convertHorizontalDLUsToPixels(IDialogConstants.MINIMUM_MESSAGE_AREA_WIDTH);
+            label.setLayoutData(gridData);
+            label.setFont(parent.getFont());
+        }
+        text = new Text(composite, SWT.SINGLE | SWT.BORDER);
+        text.setLayoutData(new GridData(GridData.GRAB_HORIZONTAL
+                | GridData.HORIZONTAL_ALIGN_FILL));
+        
+        list = new List(composite, SWT.SINGLE|SWT.H_SCROLL|SWT.V_SCROLL);
+        GridData gridData = new GridData(SWT.FILL,SWT.FILL, true, true);
+        gridData.heightHint = 50;
+        list.setLayoutData(gridData);
+        ObjectSet result = Db4oProvider.database().query(ArrayList.class);
+        if (result.size() != 0) {
+          ArrayList data = (ArrayList)result.next();
+          String[] items = new String[data.size()];
+          for (int i=0; i &lt; data.size(); i++) {
+            items[i] = (String)data.queryByExample(i);
+          }
+          list.setItems(items);
+        }
+
+      
+        applyDialogFont(composite);
+        return composite;
+    }
+
+
+    /** 
+     * Returns the string typed into this input dialog.
+     * 
+     * @return the input string
+     */
+    public String getValue()  {
+        return value;
+    }
+
+}</pre>
+        <p>In order to call the
+above-mentioned DataDialog we will need to modify the generated
+<code>run</code> method in SampleAction class:</p>
+        <pre class="prettyprint" xml:space="preserve">SampleAction.java: run
+/** 
+   * The action has been activated. The argument of the
+   * method represents the 'real' action sitting
+   * in the workbench UI.
+   * @see IWorkbenchWindowActionDelegate#run
+   */
+  public void run(IAction action)  {
+    /**
+     * Call DataDialog to view and edit memo notes 
+     */
+    DataDialog d = new DataDialog(window.getShell(), "db4o-osgi", 
+"Enter an item to add to the list:",null);
+    d.open();
+  }</pre>
+        <p MadCap:conditions="Primary.Online">Download example code:</p>
+        <p MadCap:conditions="Primary.Online">
+            <MadCap:conditionalText MadCap:conditions="Primary.Java"><a href="../osgijava.zip">Java </a>
+            </MadCap:conditionalText>
+        </p>
+        <script type="text/javascript" src="../../../SkinSupport/MadCapBodyEnd.js">
+        </script>
+    </body>
+</html>

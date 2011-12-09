@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:lastBlockDepth="2" MadCap:lastHeight="120" MadCap:lastWidth="624" MadCap:disableMasterStylesheet="true" MadCap:tocPath="Basics Operations &amp; Concepts|Activation|Transparent Activation" MadCap:InPreviewMode="false" MadCap:RuntimeFileType="Topic" MadCap:TargetType="WebHelp" MadCap:PathToHelpSystem="../../../../" MadCap:HelpSystemFileName="index.xml" MadCap:SearchType="Stem">
+    <head><title>TA Implementation	</title>
+        <script type="text/javascript">/* <![CDATA[ */
+window.onload = function(){
+	var pathToFlash = $('html').attr('MadCap:PathToHelpSystem') + 'Content/Resources/Code/ZeroClipboard.swf';
+	ZeroClipboard.setMoviePath(pathToFlash);
+			
+	function bindToClipBord(element,content){
+		var clip = new ZeroClipboard.Client();
+		clip.setText(content);
+		clip.glue(element);
+	};
+		
+	if(location.protocol==='file:'){
+		$('.copylink-marker').remove();
+	} else{
+			$('.copylink-marker').each(function(){
+				var text = $(this).parent().parent().children('.prettyprint').html();
+				$(this).hover(function(){
+					bindToClipBord(this,text);
+				},
+				function(){});
+			});	
+	}		
+	prettyPrint();	
+};
+                /* ]]> */</script>
+        <link href="../../../SkinSupport/MadCap.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/OnlineStyle.css" rel="stylesheet" />
+        <script src="../../../SkinSupport/MadCapAll.js">
+        </script>
+        <script src="../../../Resources/Code/prettify.js">
+        </script>
+        <script src="../../../Resources/Code/lang-vb.js">
+        </script>
+        <script src="../../../Resources/Code/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Code/ZeroClipboard.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink" style="display: none;"><a href="../../../../index_CSH.html#basics/activation_concept/transparent_activation_framework/ta_implementation.htm" style="">Open topic with navigation</a>
+        </p>
+        <div class="MCBreadcrumbsBox"><span class="MCBreadcrumbsPrefix">You are here: </span><a class="MCBreadcrumbsLink" href="../../../basics.htm">Basics Operations &amp; Concepts</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../../activation.htm">Activation</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../transparent_activation_framework.htm">Transparent Activation</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">TA Implementation</span>
+        </div>
+        <p>
+            <script type="text/javascript">/*<![CDATA[*/document.write('<a href="' + location.href +'">');
+				document.write("Direct Link");
+			document.write('</a>');/*]]>*/</script>
+        </p>
+        <p>
+        </p>
+        <h1>TA Implementation</h1>
+        <p>The basic idea for Transparent <span class="MCPopup"><a href="javascript:void(0);" class="MCPopupSpot" onclick="FMCPopup( event, this ); return false;" MadCap:src="../../activation.htm">Activation<img style="border: none;margin-left: 5px;" src="../../../SkinSupport/ExpandingClosed.gif" MadCap:altsrc="../../../SkinSupport/ExpandingOpen.gif" class="MCExpandingIcon" onload="if ( typeof( FMCPreloadImage ) == 'function' ) { FMCPreloadImage( '../../../SkinSupport/ExpandingOpen.gif' ); }" /></a></span>: </p>
+        <ul>
+            <li value="1">Classes can be modified to activate objects on demand by implementing the Activatable interface. 
+</li>
+            <li value="2">To add the Activatable code to classes you can choose from one of the following three options: 
+<ul><li value="1">Let db4o tools add the code to your persistent classes at compile time. 
+</li><li value="2">Use a special ClassLoader to add the code to persistent classes at load time. 
+</li><li value="3">Write the Activatable code by hand. <a href="detailed_example.htm" target="" title="" alt="" class="MCXref" xrefformat="See &quot;{paratext}&quot;">See "Transparent Activation Example"</a></li></ul></li>
+            <li value="3">To instruct db4o to operate in Transparent Activation mode, call: configuration.common().add(new TransparentActivationSupport()); 
+</li>
+            <li value="4">In Transparent Activation mode when objects are returned from a query: 
+<ul><li value="1">objects that implement the Activatable interface will not be activated immediately 
+</li><li value="2">objects that do not implement the Activatable interface will be fully activated. Activatable objects along the graph of members break activation.</li></ul></li>
+            <li value="5">Whenever a field is accessed on an Activatable object, the first thing that is done before returning the field value is checking it's activation state and activating the parent object if it is not activated. Similar as in querying, members that implement Activatable will not be activated themselves. Members that do not implement Activatable will be fully activated until Activatable objects are found.</li>
+        </ul>
+        <p>With Transparent Activation the user does not have to worry about manual activation at all. Activatable objects will be activated on demand. Objects that do not implement Activatable will always be fully activated.</p>
+        <p>The basic sequence of actions to get this scheme to work is the following:</p>
+        <ol>
+            <li value="1">Whenever an object is instantiated from db4o, the database registers itself with this object. To enable this on the database level <code>TransparentActivationSupport</code> has to be registered with the db4o configuration. On the object level an object is made available for <span class="MCTextPopup"><a href="javascript:void(0);" class="MCTextPopupSpot" onclick="FMCTextPopup( event, this ); return false;">TA<img style="border: none;margin-left: 5px;" src="../../../SkinSupport/ExpandingClosed.gif" MadCap:altsrc="../../../SkinSupport/ExpandingOpen.gif" class="MCExpandingIcon" onload="if ( typeof( FMCPreloadImage ) == 'function' ) { FMCPreloadImage( '../../../SkinSupport/ExpandingOpen.gif' ); }" /></a><span class="MCTextPopupBody" style="display: none; ">Transparent Activation</span></span> by implementing the <code>Activatable/IActivatable</code> interface and providing the according <code>bind(activator)</code> method. The default implementation of the bind method stores the given <code>activator</code> reference for later use. Note, that only one activator can be associated with an object: trying to bind a different activator (from another object container) will result in an exception. More on this in <a href="transparent_activation/migrating_between_databases.htm">Migrating Between Databases</a>. 
+</li>
+            <li value="2">All methods that are supposed to require activated object fields should call <code>activate(ActivationPurpose)/Activate(ActivationPurpose)</code> at the beginning of the message body. This method will check whether the object is already activated and if this is not the case, it will act depending on which activation reason was supplied.</li>
+            <li value="3">The ActivationPurpose can be READ or WRITE. READ is used when an object field is requested for viewing by an application. In this case Activate method will request the container to activate the object to level 1 and set the activated flag accordingly (more on this case in the following chapters). WRITE activation purpose is used when an object is about to be changed; a simple example is setter methods. In this case the object is activated to depth 1 and registered for update. More on ActivationPurpose.Write in <a href="../../update_concept/transparent_persistence.htm">Transparent Persistence</a>.  </li>
+        </ol>
+        <p>This implementation requires quite many modifications to the objects. That is why db4o provides an automated TA implementation through bytecode instrumentation. With this approach all the work for TA is done behind the scenes. </p>
+        <p>Automatic and manual TA approaches are discussed in detail in the following examples.</p>
+        <ul>
+            <li value="1"><a href="ta_enhanced_example.htm">TA Enhanced Example</a>
+            </li>
+            <li value="2"><a href="detailed_example.htm">Detailed Example</a>
+            </li>
+        </ul>
+        <script type="text/javascript" src="../../../SkinSupport/MadCapBodyEnd.js">
+        </script>
+    </body>
+</html>

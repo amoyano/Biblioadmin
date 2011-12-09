@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:lastBlockDepth="2" MadCap:lastHeight="120" MadCap:lastWidth="624" MadCap:disableMasterStylesheet="true" MadCap:tocPath="Tuning|Main Operations Performance|Update Performance" MadCap:InPreviewMode="false" MadCap:RuntimeFileType="Topic" MadCap:TargetType="WebHelp" MadCap:PathToHelpSystem="../../../../" MadCap:HelpSystemFileName="index.xml" MadCap:SearchType="Stem">
+    <head><title>Hard Drive Speed	</title>
+        <script type="text/javascript">/* <![CDATA[ */
+window.onload = function(){
+	var pathToFlash = $('html').attr('MadCap:PathToHelpSystem') + 'Content/Resources/Code/ZeroClipboard.swf';
+	ZeroClipboard.setMoviePath(pathToFlash);
+			
+	function bindToClipBord(element,content){
+		var clip = new ZeroClipboard.Client();
+		clip.setText(content);
+		clip.glue(element);
+	};
+		
+	if(location.protocol==='file:'){
+		$('.copylink-marker').remove();
+	} else{
+			$('.copylink-marker').each(function(){
+				var text = $(this).parent().parent().children('.prettyprint').html();
+				$(this).hover(function(){
+					bindToClipBord(this,text);
+				},
+				function(){});
+			});	
+	}		
+	prettyPrint();	
+};
+                /* ]]> */</script>
+        <link href="../../../SkinSupport/MadCap.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/OnlineStyle.css" rel="stylesheet" />
+        <script src="../../../Resources/Code/prettify.js">
+        </script>
+        <script src="../../../Resources/Code/lang-vb.js">
+        </script>
+        <script src="../../../Resources/Code/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Code/ZeroClipboard.js">
+        </script>
+        <script src="../../../SkinSupport/MadCapAll.js" type="text/javascript">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink" style="display: none;"><a href="../../../../index_CSH.html#tuning/main_operations_performance/update_performance/hard_drive_speed.htm" style="">Open topic with navigation</a>
+        </p>
+        <div class="MCBreadcrumbsBox"><span class="MCBreadcrumbsPrefix">You are here: </span><a class="MCBreadcrumbsLink" href="../../../tuning.htm">Tuning</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../../main_operations_performance.htm">Main Operations Performance</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../update_performance.htm">Update Performance</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Hard Drive Speed</span>
+        </div>
+        <p>
+            <script type="text/javascript">/*<![CDATA[*/document.write('<a href="' + location.href +'">');
+				document.write("Direct Link");
+			document.write('</a>');/*]]>*/</script>
+        </p>
+        <p>
+        </p>
+        <h1>Hard Drive Speed</h1>
+        <p>Update db4o operation requires disk access and therefore is
+very dependent on the disk speed. To emulate a different drive speed we will
+use a RAMDISK utility, which creates an alternative storage media in the
+memory.</p>
+        <p MadCap:conditions="Primary.Java,Primary.All languages">
+            <pre class="prettyprint" xml:space="preserve">UpdatePerformanceBenchmark.java: runHardDriveTest
+private void runHardDriveTest() {
+    System.out.println("Update test: hard drive");
+    int objectsToUpdate = 90;
+    
+      initForHardDriveTest();
+      clean();
+      open(configureDriveTest());
+      store();
+      System.out.println("Updating  " + objectsToUpdate + " 
+objects on a hard drive:");
+      updateItems(objectsToUpdate);
+      close();
+    }</pre>
+            <pre class="prettyprint" xml:space="preserve">UpdatePerformanceBenchmark.java: initForHardDriveTest
+private void initForHardDriveTest() {
+      _count = 10000;
+        _depth = 3;
+        _filePath = "performance.db4o";
+        _isClientServer = false;
+    }</pre>
+            <pre class="prettyprint" xml:space="preserve">UpdatePerformanceBenchmark.java: runRamDiskTest
+private void runRamDiskTest() {
+    System.out.println("Update test: RAM disk");
+    int objectsToUpdate = 90;
+      initForRamDriveTest();
+      clean();
+      open(configureDriveTest());
+      store();
+      System.out.println("Updating  " + objectsToUpdate + 
+" objects on a RAM drive:");
+      updateItems(objectsToUpdate);
+      close();
+  }</pre>
+            <pre class="prettyprint" xml:space="preserve">UpdatePerformanceBenchmark.java: initForRamDriveTest
+private void initForRamDriveTest() {
+      _count = 30000;
+        _depth = 1;
+        _filePath = "r:\\performance.db4o";
+        _isClientServer = false;
+          
+    }</pre>
+            <pre class="prettyprint" xml:space="preserve">UpdatePerformanceBenchmark.java: configureDriveTest
+private Configuration configureDriveTest() {
+      Configuration config = Db4o.newConfiguration(); 
+        config.flushFileBuffers(true);
+        return config;
+    }</pre>
+        </p>
+        <p MadCap:conditions="Global.Primary:java" />
+        <p MadCap:conditions="Global.Primary:net" />
+        <p>The results:</p>
+        <p><i>Update test: hard drive</i>
+        </p>
+        <p><i>Store 30000 objects: 2884ms</i>
+        </p>
+        <p><i>Updating  90
+objects on a hard drive:</i>
+        </p>
+        <p><i>Updated 90 items: 250ms</i>
+        </p>
+        <p><i>Update test: RAM disk</i>
+        </p>
+        <p><i>Store 30000 objects: 1910ms</i>
+        </p>
+        <p><i>Updating  90
+objects on a RAM drive:</i>
+        </p>
+        <p><i>Updated 90
+items: 105ms</i>
+        </p>
+        <p><i>The test shows
+that the faster media (RAMDISK) shows better performance on update.</i>
+        </p>
+        <p MadCap:conditions="Primary.Online">Download example code:</p>
+        <p MadCap:conditions="Primary.Online">
+            <MadCap:conditionalText MadCap:conditions="Primary.Java"><a href="updateperformancejava.zip">Java </a>
+            </MadCap:conditionalText>
+        </p>
+        <script type="text/javascript" src="../../../SkinSupport/MadCapBodyEnd.js">
+        </script>
+    </body>
+</html>

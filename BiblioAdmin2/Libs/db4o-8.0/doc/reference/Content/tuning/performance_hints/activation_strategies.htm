@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:lastBlockDepth="2" MadCap:lastHeight="120" MadCap:lastWidth="624" MadCap:disableMasterStylesheet="true" MadCap:tocPath="Tuning|Performance Hints" MadCap:InPreviewMode="false" MadCap:RuntimeFileType="Topic" MadCap:TargetType="WebHelp" MadCap:PathToHelpSystem="../../../" MadCap:HelpSystemFileName="index.xml" MadCap:SearchType="Stem">
+    <head><title>Activation strategies	</title>
+        <script type="text/javascript">/* <![CDATA[ */
+window.onload = function(){
+	var pathToFlash = $('html').attr('MadCap:PathToHelpSystem') + 'Content/Resources/Code/ZeroClipboard.swf';
+	ZeroClipboard.setMoviePath(pathToFlash);
+			
+	function bindToClipBord(element,content){
+		var clip = new ZeroClipboard.Client();
+		clip.setText(content);
+		clip.glue(element);
+	};
+		
+	if(location.protocol==='file:'){
+		$('.copylink-marker').remove();
+	} else{
+			$('.copylink-marker').each(function(){
+				var text = $(this).parent().parent().children('.prettyprint').html();
+				$(this).hover(function(){
+					bindToClipBord(this,text);
+				},
+				function(){});
+			});	
+	}		
+	prettyPrint();	
+};
+                /* ]]> */</script>
+        <link href="../../SkinSupport/MadCap.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/OnlineStyle.css" rel="stylesheet" />
+        <script src="../../Resources/Code/prettify.js">
+        </script>
+        <script src="../../Resources/Code/lang-vb.js">
+        </script>
+        <script src="../../Resources/Code/jquery.min.js">
+        </script>
+        <script src="../../Resources/Code/ZeroClipboard.js">
+        </script>
+        <script src="../../SkinSupport/MadCapAll.js" type="text/javascript">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink" style="display: none;"><a href="../../../index_CSH.html#tuning/performance_hints/activation_strategies.htm" style="">Open topic with navigation</a>
+        </p>
+        <div class="MCBreadcrumbsBox"><span class="MCBreadcrumbsPrefix">You are here: </span><a class="MCBreadcrumbsLink" href="../../tuning.htm">Tuning</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../performance_hints.htm">Performance Hints</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Activation Strategies</span>
+        </div>
+        <p>
+            <script type="text/javascript">/*<![CDATA[*/document.write('<a href="' + location.href +'">');
+				document.write("Direct Link");
+			document.write('</a>');/*]]>*/</script>
+        </p>
+        <p>
+        </p>
+        <h1>Activation strategies</h1>
+        <p MadCap:conditions="Primary.Java,Primary.All languages">
+            <p>Java: <br /></p>
+            <p><code>configuration,common().activationDepth(activationDepth);<br /></code>
+            </p>
+        </p>
+        <p MadCap:conditions="Global.Primary:java" />
+        <p MadCap:conditions="Global.Primary:net" /><a name="Advantage"></a>
+        <h2>Advantage</h2>
+        <p>Db4o default activation depth is 5. This setting gives you control over activation depth level depending on your application requirements.</p><a name="Effect"></a>
+        <h2>Effect</h2>
+        <p>The two extremes:</p>
+        <ul>
+            <li value="1">activationDepth = maximum integer value - will pop the whole object graph into the memory on every retrieved object. Can be a reasonable solution for shallow objects' design. No need to bother about manual activation;</li>
+            <li value="2">activationDepth = 0 - will reduce memory consumption to the lowest level though leaving all the activation logic for your code.</li>
+        </ul><a name="Alternate strategies"></a>
+        <h2>Alternate strategies</h2>
+        <p>If your object is not fully activated due to the default configuration settings you can activate it manually:</p>
+        <p MadCap:conditions="Primary.Java,Primary.All languages">
+            <p>Java: <code>ObjectContainer#activate(object,depth)</code></p>
+        </p>
+        <p MadCap:conditions="Global.Primary:java" />
+        <p MadCap:conditions="Global.Primary:net" />
+        <p>or use specific object settings:</p>
+        <p MadCap:conditions="Primary.Java,Primary.All languages">
+            <p>Java:<br /></p>
+            <p><code>configuration.<br />objectClass("yourClass").minimumActivationDepth(minimumDepth);</code>
+            </p>
+            <p><code>configuration.common().objectClass("yourClass").<br />maximumActivationDepth(maximumDepth);</code>
+            </p>
+            <p><code>configuration.common().objectClass("yourClass").<br />cascadeOnActivate(bool);</code>
+            </p>
+            <p><code>configuration.common().objectClass("yourClass").<br />objectField("field").cascadeOnActivate(bool);</code>
+            </p>
+        </p>
+        <p MadCap:conditions="Global.Primary:java" />
+        <p MadCap:conditions="Global.Primary:net" />
+        <p>For more information on activation strategies see <a href="../../basics/activation.htm">Activation chapter</a>.</p>
+        <script type="text/javascript" src="../../SkinSupport/MadCapBodyEnd.js">
+        </script>
+    </body>
+</html>

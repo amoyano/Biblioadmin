@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:lastBlockDepth="2" MadCap:lastHeight="120" MadCap:lastWidth="624" MadCap:disableMasterStylesheet="true" MadCap:tocPath="Tuning|Main Operations Performance|Query Performance" MadCap:InPreviewMode="false" MadCap:RuntimeFileType="Topic" MadCap:TargetType="WebHelp" MadCap:PathToHelpSystem="../../../../" MadCap:HelpSystemFileName="index.xml" MadCap:SearchType="Stem">
+    <head><title>Different Query Types	</title>
+        <script type="text/javascript">/* <![CDATA[ */
+window.onload = function(){
+	var pathToFlash = $('html').attr('MadCap:PathToHelpSystem') + 'Content/Resources/Code/ZeroClipboard.swf';
+	ZeroClipboard.setMoviePath(pathToFlash);
+			
+	function bindToClipBord(element,content){
+		var clip = new ZeroClipboard.Client();
+		clip.setText(content);
+		clip.glue(element);
+	};
+		
+	if(location.protocol==='file:'){
+		$('.copylink-marker').remove();
+	} else{
+			$('.copylink-marker').each(function(){
+				var text = $(this).parent().parent().children('.prettyprint').html();
+				$(this).hover(function(){
+					bindToClipBord(this,text);
+				},
+				function(){});
+			});	
+	}		
+	prettyPrint();	
+};
+                /* ]]> */</script>
+        <link href="../../../SkinSupport/MadCap.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/OnlineStyle.css" rel="stylesheet" />
+        <script src="../../../SkinSupport/MadCapAll.js">
+        </script>
+        <script src="../../../Resources/Code/prettify.js">
+        </script>
+        <script src="../../../Resources/Code/lang-vb.js">
+        </script>
+        <script src="../../../Resources/Code/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Code/ZeroClipboard.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink" style="display: none;"><a href="../../../../index_CSH.html#tuning/main_operations_performance/query_performance/different_query_types.htm" style="">Open topic with navigation</a>
+        </p>
+        <div class="MCBreadcrumbsBox"><span class="MCBreadcrumbsPrefix">You are here: </span><a class="MCBreadcrumbsLink" href="../../../tuning.htm">Tuning</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../../main_operations_performance.htm">Main Operations Performance</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../query_performance.htm">Query Performance</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Different Query Types</span>
+        </div>
+        <p>
+            <script type="text/javascript">/*<![CDATA[*/document.write('<a href="' + location.href +'">');
+				document.write("Direct Link");
+			document.write('</a>');/*]]>*/</script>
+        </p>
+        <p>
+        </p>
+        <h1>Different Query Types</h1>
+        <p>db4o provides different query syntaxes: Query By Example,
+SODA, Native Queries and LINQ (for .NET 3.5 and higher).  Under the hood all these syntaxes are
+converted to SODA. The conversion can be very straightforward (as in case of
+<span class="MCPopup"><a href="javascript:void(0);" class="MCPopupSpot" onclick="FMCPopup( event, this ); return false;" MadCap:src="../../../basics/querying/query_by_example.htm">QBE<img style="border: none;margin-left: 5px;" src="../../../SkinSupport/ExpandingClosed.gif" MadCap:altsrc="../../../SkinSupport/ExpandingOpen.gif" class="MCExpandingIcon" onload="if ( typeof( FMCPreloadImage ) == 'function' ) { FMCPreloadImage( '../../../SkinSupport/ExpandingOpen.gif' ); }" /></a></span>), or pretty sophisticated (some Native queries). The fact that conversion
+takes place and can be more or less complex affects the performance of queries
+expressed with different syntax. Another factor affecting the performance can
+be using unoptimized Native Queries: this can happen if the query is too
+complex to analyze or when optimization is disabled through configuration.
+Optimization is also applicable to LINQ queries, i.e. some of LINQ queries are
+currently too complex to analyze and optimize. In cases when optimization does
+not happen, the query is run against all instances of an object in the database,
+which is quite slow and consumes a lot of RAM.</p>
+        <p MadCap:conditions="Primary.Java,Primary.All languages">
+            <pre class="prettyprint" xml:space="preserve">QueryPerformanceBenchmark.java: runDifferentQueriesTest
+private void runDifferentQueriesTest()  {
+    init();
+
+    clean();
+    System.out.println("Storing objects as a bulk:");
+    open(configure());
+    store();
+    close();
+
+    open(configure());
+    //
+    System.out.println("Query by example:");
+    startTimer();
+    Item item = (Item) objectContainer.queryByExample(
+        new Item("level1/1", null)).next();
+    stopTimer("Select 1 object QBE: " + item._name);
+
+    //
+    System.out.println("SODA:");
+    startTimer();
+    Query query = objectContainer.query();
+    query.constrain(Item.class);
+    query.descend("_name").constrain("level1/1");
+    item = (Item) query.execute().next();
+    stopTimer("Select 1 object SODA: " + item._name);
+
+    //
+    System.out.println("Native Query:");
+    startTimer();
+    List&lt;Item&gt; result = objectContainer.query(new Predicate&lt;Item&gt;()  {
+      public boolean match(Item item)  {
+        return item._name.equals("level1/1");
+      }
+    });
+    item = result.queryByExample(0);
+    stopTimer("Select 1 object NQ: " + item._name);
+    close();
+    
+    //
+    open(configureUnoptimizedNQ());
+    System.out.println("Native Query Unoptimized:");
+    startTimer();
+    result = objectContainer.query(new Predicate&lt;Item&gt;()  {
+      public boolean match(Item item)  {
+        return item._name.equals("level1/1");
+      }
+    });
+    item = result.queryByExample(0);
+    stopTimer("Select 1 object NQ: " + item._name);
+
+    close();
+  }</pre>
+            <pre class="prettyprint" xml:space="preserve">QueryPerformanceBenchmark.java: init
+private void init()  {
+    _filePath = "performance.db4o";
+    // amount of objects
+    _count = 10000;
+    // depth of objects
+    _depth = 3;
+    _isClientServer = false;
+
+  }</pre>
+            <pre class="prettyprint" xml:space="preserve">QueryPerformanceBenchmark.java: configure
+private Configuration configure()  {
+    Configuration config = Db4o.newConfiguration();
+    return config;
+  }</pre>
+        </p>
+        <p MadCap:conditions="Global.Primary:java" />
+        <p MadCap:conditions="Global.Primary:net" />
+        <p>The following results were obtained on a test machine:</p>
+        <p><i>Storing objects as a
+bulk:</i>
+        </p>
+        <p><i>Store 30000 objects:
+5337 ms</i>
+        </p>
+        <p><i>Query by example:</i>
+        </p>
+        <p><i>Select 1 object QBE:
+level1/1: 1021 ms</i>
+        </p>
+        <p><i>SODA:</i>
+        </p>
+        <p><i>Select 1 object SODA:
+level1/1: 809 ms</i>
+        </p>
+        <p><i>LINQ:</i>
+        </p>
+        <p><i>Select 1 object LINQ:
+level1/1: 915 ms</i>
+        </p>
+        <p><i>Native Query:</i>
+        </p>
+        <p><i>Select 1 object <span class="MCTextPopup"><a href="javascript:void(0);" class="MCTextPopupSpot" onclick="FMCTextPopup( event, this ); return false;">NQ<img style="border: none;margin-left: 5px;" src="../../../SkinSupport/ExpandingClosed.gif" MadCap:altsrc="../../../SkinSupport/ExpandingOpen.gif" class="MCExpandingIcon" onload="if ( typeof( FMCPreloadImage ) == 'function' ) { FMCPreloadImage( '../../../SkinSupport/ExpandingOpen.gif' ); }" /></a><span class="MCTextPopupBody" style="display: none; ">Native Query</span></span>:
+level1/1: 1604 ms</i>
+        </p>
+        <p><i>Native Query Unoptimized:</i>
+        </p>
+        <p><i>Select 1 object NQ:
+level1/1: 5008 ms</i>
+        </p>
+        <p>You can see that SODA query shows the best performance. The
+other query types are less performant due to conversion, however they can be
+easier to support and refactor. The worst performance is shown in the case of
+unoptimized Native Query: in this case all the objects from the database were
+instantiated and tested against the constraint.</p>
+        <p MadCap:conditions="Primary.Online">Download example code:</p>
+        <p MadCap:conditions="Primary.Online">
+            <MadCap:conditionalText MadCap:conditions="Primary.Java"><a href="queryperformancejava.zip">Java </a>
+            </MadCap:conditionalText>
+        </p>
+        <script type="text/javascript" src="../../../SkinSupport/MadCapBodyEnd.js">
+        </script>
+    </body>
+</html>

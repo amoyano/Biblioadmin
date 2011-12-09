@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:lastBlockDepth="2" MadCap:lastHeight="120" MadCap:lastWidth="624" MadCap:disableMasterStylesheet="true" MadCap:tocPath="Tuning|Performance Hints" MadCap:InPreviewMode="false" MadCap:RuntimeFileType="Topic" MadCap:TargetType="WebHelp" MadCap:PathToHelpSystem="../../../" MadCap:HelpSystemFileName="index.xml" MadCap:SearchType="Stem">
+    <head><title>Commit Strategies	</title>
+        <script type="text/javascript">/* <![CDATA[ */
+window.onload = function(){
+	var pathToFlash = $('html').attr('MadCap:PathToHelpSystem') + 'Content/Resources/Code/ZeroClipboard.swf';
+	ZeroClipboard.setMoviePath(pathToFlash);
+			
+	function bindToClipBord(element,content){
+		var clip = new ZeroClipboard.Client();
+		clip.setText(content);
+		clip.glue(element);
+	};
+		
+	if(location.protocol==='file:'){
+		$('.copylink-marker').remove();
+	} else{
+			$('.copylink-marker').each(function(){
+				var text = $(this).parent().parent().children('.prettyprint').html();
+				$(this).hover(function(){
+					bindToClipBord(this,text);
+				},
+				function(){});
+			});	
+	}		
+	prettyPrint();	
+};
+                /* ]]> */</script>
+        <link href="../../SkinSupport/MadCap.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/OnlineStyle.css" rel="stylesheet" />
+        <script src="../../SkinSupport/MadCapAll.js">
+        </script>
+        <script src="../../Resources/Code/prettify.js">
+        </script>
+        <script src="../../Resources/Code/lang-vb.js">
+        </script>
+        <script src="../../Resources/Code/jquery.min.js">
+        </script>
+        <script src="../../Resources/Code/ZeroClipboard.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink" style="display: none;"><a href="../../../index_CSH.html#tuning/performance_hints/commit_strategies.htm" style="">Open topic with navigation</a>
+        </p>
+        <div class="MCBreadcrumbsBox"><span class="MCBreadcrumbsPrefix">You are here: </span><a class="MCBreadcrumbsLink" href="../../tuning.htm">Tuning</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../performance_hints.htm">Performance Hints</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Commit Strategies</span>
+        </div>
+        <p>
+            <script type="text/javascript">/*<![CDATA[*/document.write('<a href="' + location.href +'">');
+				document.write("Direct Link");
+			document.write('</a>');/*]]>*/</script>
+        </p>
+        <p>
+        </p>
+        <h1>Commit Strategies</h1>
+        <p MadCap:conditions="Primary.Java,Primary.All languages">
+            <p>Java: </p>
+            <p><code>objectContainer.commit();</code>
+            </p>
+        </p>
+        <p MadCap:conditions="Global.Primary:java" />
+        <p MadCap:conditions="Global.Primary:net" />
+        <p>Objects created or instantiated within one db4o transaction
+are written to a temporary transaction area in the database file and are only
+durable after the transaction is committed.</p>
+        <p>Transactions are committed implicitly when the
+object container is closed.</p>
+        <p MadCap:conditions="Primary.Java,Primary.All languages">
+            <p>Java: </p>
+            <p><code>objectContainer.close();</code>
+            </p>
+        </p>
+        <p MadCap:conditions="Global.Primary:java" />
+        <p MadCap:conditions="Global.Primary:net" /><a name="Advantage"></a>
+        <h2>Advantage</h2>
+        <p>Committing a transaction makes sure that all the changes are
+effectively written to a storage location. Commit uses a special sequence of
+actions, which ensures <span class="MCPopup"><a href="javascript:void(0);" class="MCPopupSpot" onclick="FMCPopup( event, this ); return false;" MadCap:src="../../basics/acid_and_transactions.htm">ACID<img style="border: none;margin-left: 5px;" src="../../SkinSupport/ExpandingClosed.gif" MadCap:altsrc="../../SkinSupport/ExpandingOpen.gif" class="MCExpandingIcon" onload="if ( typeof( FMCPreloadImage ) == 'function' ) { FMCPreloadImage( '../../SkinSupport/ExpandingOpen.gif' ); }" /></a></span> transactions. The following operations are done
+during commit:</p>
+        <ul>
+            <li value="1">flushing
+     modified class indexes</li>
+            <li value="2">flushing
+     changes of in-memory field indexes to file-based indexes</li>
+            <li value="3">writing
+     all intended pointer changes as a "pre-log" to the file</li>
+            <li value="4">writing
+     all pointer changes</li>
+            <li value="5">reorganizing
+     the free-space system</li>
+            <li value="6">deleting
+     the "pre log"</li>
+        </ul><a name="Effect"></a>
+        <h2>Effect</h2>
+        <p>Commit is a costly operation as it includes disk writes and
+flushes of the operating system disk cache. Too many commits can decrease your
+application's performance. On the other hand long transaction increases the
+risk of loosing your data in case of a system or a hardware failure.</p><a name="Best Strategies"></a>
+        <h2>Best Strategies</h2>
+        <ul>
+            <li value="1">You should call commit() at the end of every logical
+operation, at a point where you want to make sure that all the changes done get
+permanently stored to the database.</li>
+            <li value="2">If you are doing a bulk insert of many (say &gt;100 000)
+objects, it is a good idea to commit after every few thousand inserts,
+depending on the complexity of your objects. If you don't do that, there is not
+only a risk of losing the objects in a case of a failure, but also a good
+chance of running out of memory and slowing down the operations due to memory
+flushes to disk. The exact amount of inserts that can be done safely and
+effectively within one transaction should be calculated for the concrete system
+and will depend on available system resources and size and complexity of
+objects.</li>
+            <li value="3">Don't forget to close db4o object container before the
+application exits to make sure that all the changes will be saved to disk
+during implicit commit.</li>
+        </ul>
+        <script type="text/javascript" src="../../SkinSupport/MadCapBodyEnd.js">
+        </script>
+    </body>
+</html>

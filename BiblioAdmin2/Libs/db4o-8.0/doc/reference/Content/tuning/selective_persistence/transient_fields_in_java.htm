@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:lastBlockDepth="2" MadCap:lastHeight="120" MadCap:lastWidth="624" MadCap:disableMasterStylesheet="true" MadCap:tocPath="Tuning|Selective Persistence" MadCap:InPreviewMode="false" MadCap:RuntimeFileType="Topic" MadCap:TargetType="WebHelp" MadCap:PathToHelpSystem="../../../" MadCap:HelpSystemFileName="index.xml" MadCap:SearchType="Stem">
+    <head><title>Transient Fields In Java	</title>
+        <script type="text/javascript">/* <![CDATA[ */
+window.onload = function(){
+	var pathToFlash = $('html').attr('MadCap:PathToHelpSystem') + 'Content/Resources/Code/ZeroClipboard.swf';
+	ZeroClipboard.setMoviePath(pathToFlash);
+			
+	function bindToClipBord(element,content){
+		var clip = new ZeroClipboard.Client();
+		clip.setText(content);
+		clip.glue(element);
+	};
+		
+	if(location.protocol==='file:'){
+		$('.copylink-marker').remove();
+	} else{
+			$('.copylink-marker').each(function(){
+				var text = $(this).parent().parent().children('.prettyprint').html();
+				$(this).hover(function(){
+					bindToClipBord(this,text);
+				},
+				function(){});
+			});	
+	}		
+	prettyPrint();	
+};
+                /* ]]> */</script>
+        <link href="../../SkinSupport/MadCap.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/OnlineStyle.css" rel="stylesheet" />
+        <script src="../../Resources/Code/prettify.js">
+        </script>
+        <script src="../../Resources/Code/lang-vb.js">
+        </script>
+        <script src="../../Resources/Code/jquery.min.js">
+        </script>
+        <script src="../../Resources/Code/ZeroClipboard.js">
+        </script>
+        <script src="../../SkinSupport/MadCapAll.js" type="text/javascript">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink" style="display: none;"><a href="../../../index_CSH.html#tuning/selective_persistence/transient_fields_in_java.htm" style="">Open topic with navigation</a>
+        </p>
+        <div class="MCBreadcrumbsBox"><span class="MCBreadcrumbsPrefix">You are here: </span><a class="MCBreadcrumbsLink" href="../../tuning.htm">Tuning</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../selective_persistence.htm">Selective Persistence</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Transient Fields In Java</span>
+        </div>
+        <p>
+            <script type="text/javascript">/*<![CDATA[*/document.write('<a href="' + location.href +'">');
+				document.write("Direct Link");
+			document.write('</a>');/*]]>*/</script>
+        </p>
+        <p>
+        </p>
+        <h1><a name="kanchor117"></a>Transient Fields In Java</h1>
+        <p MadCap:conditions="Primary.Java,Primary.All languages">
+            <p>You can use the <i>transient</i> keyword to indicate that a field is not part of the persistent state of an object: </p>
+            <pre class="prettyprint" xml:space="preserve">Test.java
+/**//* Copyright (C) 2004 - 2007 Versant Inc. http://www.db4o.com */
+
+package com.db4odoc.selectivepersistence;
+
+public class Test  {
+  transient String transientField;
+
+  String persistentField;
+
+  public Test(String transientField, String persistentField)  {
+    this.transientField = transientField;
+    this.persistentField = persistentField;
+  }
+
+  public String toString()  {
+    return "Test: persistent: " + persistentField
+        + ", transient: " + transientField;
+  }
+
+}</pre>
+            <p>The following example demonstrates the effect of transient keyword on db4o:</p>
+            <pre class="prettyprint" xml:space="preserve">MarkTransientExample.java: saveObjects
+private static void saveObjects(Configuration configuration) {
+    new File(DB4O_FILE_NAME).delete();
+    ObjectContainer container = Db4o.openFile(configuration, DB4O_FILE_NAME);
+    try 
+     {
+      Test test = new Test("Transient string","Persistent string");
+      container.store(test);
+    } 
+    finally 
+     {
+      container.close();
+    }
+  }</pre>
+            <pre class="prettyprint" xml:space="preserve">MarkTransientExample.java: retrieveObjects
+private static void retrieveObjects()
+  {
+    ObjectContainer container = Db4o.openFile(DB4O_FILE_NAME);
+    try 
+    {
+      ObjectSet result = container.query(Test.class);
+      listResult(result);
+    } 
+    finally 
+    {
+      container.close();
+    }
+  }</pre>
+        </p>
+        <p MadCap:conditions="Global.Primary:java" />
+        <p MadCap:conditions="Primary.Online">Download example code:</p>
+        <p MadCap:conditions="Primary.Online">
+            <MadCap:conditionalText MadCap:conditions="Primary.Java"><a href="selectivepersistencejava.zip">Java </a>
+            </MadCap:conditionalText>
+        </p>
+        <script type="text/javascript" src="../../SkinSupport/MadCapBodyEnd.js">
+        </script>
+    </body>
+</html>

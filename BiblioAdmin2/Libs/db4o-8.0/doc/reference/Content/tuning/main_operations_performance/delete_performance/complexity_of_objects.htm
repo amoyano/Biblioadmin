@@ -1,0 +1,251 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:lastBlockDepth="2" MadCap:lastHeight="120" MadCap:lastWidth="624" MadCap:disableMasterStylesheet="true" MadCap:tocPath="Tuning|Main Operations Performance|Delete Performance" MadCap:InPreviewMode="false" MadCap:RuntimeFileType="Topic" MadCap:TargetType="WebHelp" MadCap:PathToHelpSystem="../../../../" MadCap:HelpSystemFileName="index.xml" MadCap:SearchType="Stem">
+    <head><title>Complexity Of Objects	</title>
+        <script type="text/javascript">/* <![CDATA[ */
+window.onload = function(){
+	var pathToFlash = $('html').attr('MadCap:PathToHelpSystem') + 'Content/Resources/Code/ZeroClipboard.swf';
+	ZeroClipboard.setMoviePath(pathToFlash);
+			
+	function bindToClipBord(element,content){
+		var clip = new ZeroClipboard.Client();
+		clip.setText(content);
+		clip.glue(element);
+	};
+		
+	if(location.protocol==='file:'){
+		$('.copylink-marker').remove();
+	} else{
+			$('.copylink-marker').each(function(){
+				var text = $(this).parent().parent().children('.prettyprint').html();
+				$(this).hover(function(){
+					bindToClipBord(this,text);
+				},
+				function(){});
+			});	
+	}		
+	prettyPrint();	
+};
+                /* ]]> */</script>
+        <link href="../../../SkinSupport/MadCap.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/OnlineStyle.css" rel="stylesheet" />
+        <script src="../../../Resources/Code/prettify.js">
+        </script>
+        <script src="../../../Resources/Code/lang-vb.js">
+        </script>
+        <script src="../../../Resources/Code/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Code/ZeroClipboard.js">
+        </script>
+        <script src="../../../SkinSupport/MadCapAll.js" type="text/javascript">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink" style="display: none;"><a href="../../../../index_CSH.html#tuning/main_operations_performance/delete_performance/complexity_of_objects.htm" style="">Open topic with navigation</a>
+        </p>
+        <div class="MCBreadcrumbsBox"><span class="MCBreadcrumbsPrefix">You are here: </span><a class="MCBreadcrumbsLink" href="../../../tuning.htm">Tuning</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../../main_operations_performance.htm">Main Operations Performance</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../delete_performance.htm">Delete Performance</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Complexity Of Objects</span>
+        </div>
+        <p>
+            <script type="text/javascript">/*<![CDATA[*/document.write('<a href="' + location.href +'">');
+				document.write("Direct Link");
+			document.write('</a>');/*]]>*/</script>
+        </p>
+        <p>
+        </p>
+        <h1>Complexity Of Objects</h1>
+        <p>
+        </p>
+        <p>Unlike other database operations deletion is mostly
+unaffected by the complexity of objects. The delete operation basically marks
+an object as deleted and is the same for any type of object. The main time
+required is to locate the object record in the database. This is demonstrated
+by the following example:</p>
+        <p MadCap:conditions="Primary.Java,Primary.All languages">
+            <pre class="prettyprint" xml:space="preserve">DeletePerformanceBenchmark.java: runDifferentObjectsTest
+private void runDifferentObjectsTest() {
+      System.out.println("Delete test with different objects");
+          
+      configure();
+      init();
+      System.out.println("Deleting 1 of " + _count + " objects with " 
++ _depth + " levels of embedded objects:");
+      
+      clean();
+      System.out.println(" - primitive object with int field");
+      open();
+      storeSimplest();
+      deleteAny(10);
+      close();
+      
+      clean();
+      open();
+      System.out.println(" - object with String field");
+      store();
+      deleteAny(10);
+      close();
+      
+      clean();
+      open();
+      System.out.println(" - object with StringBuffer field");
+      storeWithStringBuffer();
+      deleteAny(10);
+      close();
+      
+      clean();
+      open();
+      System.out.println(" - object with int array field");
+      storeWithArray();
+      deleteAny(10);
+      close();
+      
+      clean();
+      open();
+      System.out.println(" - object with ArrayList field");
+      storeWithArrayList();
+      deleteAny(10);
+      close();
+      
+    }</pre>
+        </p>
+        <p MadCap:conditions="Global.Primary:java" />
+        <p>The following classes are used for the test:</p>
+        <p MadCap:conditions="Primary.Java,Primary.All languages">
+            <pre class="prettyprint" xml:space="preserve">DeletePerformanceBenchmark.java: SimplestItem
+public static class SimplestItem  {
+        
+        public int _id;
+        public SimplestItem _child;
+
+        public SimplestItem() {
+        }
+        
+        public SimplestItem(int id, SimplestItem child) {
+            _id = id;
+            _child = child;
+        }
+    }</pre>
+            <pre class="prettyprint" xml:space="preserve">DeletePerformanceBenchmark.java: Item
+public static class Item  {
+        
+        public String _name;
+        public Item _child;
+
+        public Item() {
+            
+        }
+        
+        public Item(String name, Item child) {
+            _name = name;
+            _child = child;
+        }
+    }</pre>
+            <pre class="prettyprint" xml:space="preserve">DeletePerformanceBenchmark.java: ItemWithStringBuffer
+public static class ItemWithStringBuffer  {
+        
+        public StringBuffer _name;
+        public ItemWithStringBuffer _child;
+        
+        public ItemWithStringBuffer() {
+        }
+        
+        public ItemWithStringBuffer(StringBuffer name, 
+ItemWithStringBuffer child) {
+            _name = name;
+            _child = child;
+        }
+    }</pre>
+            <pre class="prettyprint" xml:space="preserve">DeletePerformanceBenchmark.java: ItemWithArray
+public static class ItemWithArray  {
+        
+        public int[] _id;
+        public ItemWithArray _child;
+        
+        public ItemWithArray() {
+        }
+        
+        public ItemWithArray(int[] id, ItemWithArray child) {
+            _id = id;
+            _child = child;
+        }
+    }</pre>
+            <pre class="prettyprint" xml:space="preserve">DeletePerformanceBenchmark.java: ItemWithArrayList
+public static class ItemWithArrayList  {
+        
+        public ArrayList _ids;
+        public ItemWithArrayList _child;
+        
+        public ItemWithArrayList() {
+        }
+        
+        public ItemWithArrayList(ArrayList ids, ItemWithArrayList child) {
+            _ids = ids;
+            _child = child;
+        }
+    }</pre>
+        </p>
+        <p MadCap:conditions="Global.Primary:java" />
+        <p>The deletion procedure deletes several items from the whole
+amount of objects in the database:</p>
+        <p MadCap:conditions="Primary.Java,Primary.All languages">
+            <pre class="prettyprint" xml:space="preserve">DeletePerformanceBenchmark.java: deleteAny
+private void deleteAny(int i)  {
+      long time = 0;
+      int counter = 0;
+      while (counter++ &lt; i) {
+        long id = selectAny();
+        time += deleteById(id);
+      }
+      System.out.println("Deleted " + i + " objects in: " + time + " ms.");
+  }</pre>
+        </p>
+        <p MadCap:conditions="Global.Primary:java" />
+        <p>Approximate results on the test computer are presented below:</p>
+        <p><i>Delete test with
+different objects</i>
+        </p>
+        <p><i>Deleting 1 of
+10000 objects with 3 levels of embedded objects:</i>
+        </p>
+        <ul>
+            <li value="1"><i>primitive object with int field</i>
+                <br /><i>Store 30000
+objects: 1720ms</i>
+                <br /><i>Deleted 10
+objects in: 0 ms.</i>
+            </li>
+            <li value="2"><i>object with String field</i>
+                <br /><i>Store 30000
+objects: 1690ms</i>
+                <br /><i>Deleted 10
+objects in: 1 ms.</i>
+            </li>
+            <li value="3"><i>object with StringBuffer field</i>
+                <br /><i>Store 30000
+objects: 4424ms</i>
+                <br /><i>Deleted 10
+objects in: 1 ms.</i>
+            </li>
+            <li value="4"><i>object with int array field</i>
+                <br /><i>Store 30000
+objects: 2071ms</i>
+                <br /><i>Deleted 10
+objects in: 0 ms.</i>
+            </li>
+            <li value="5"><i>object with ArrayList field</i>
+                <br /><i>Store 30000
+objects: 4264ms</i>
+                <br /><i>Deleted 10
+objects in: 1 ms.</i>
+            </li>
+        </ul>
+        <p>You can see that the complexity and structure of an object
+play little or no role in the performance.</p>
+        <p MadCap:conditions="Primary.Online">Download example code:</p>
+        <p MadCap:conditions="Primary.Online">
+            <MadCap:conditionalText MadCap:conditions="Primary.Java"><a href="../performancejava.zip">Java </a>
+            </MadCap:conditionalText>
+        </p>
+        <script type="text/javascript" src="../../../SkinSupport/MadCapBodyEnd.js">
+        </script>
+    </body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="docs.css">
+<!--[if gte IE 5]>
+     <link href="docs_ie.css" rel="stylesheet" type="text/css">
+<![endif]-->
+</head>
+<body><div id="pagecontainer"><table><tr><td width="5">&nbsp;</td><td><a name="Troubleshooting"></a><br>
+<a name="outline113"></a><br><h1>18. Interactive Tutorial Troubleshooting</h1><br>
+db4o interactive tutorial uses Java applets to execute code examples&nbsp;directly in your browser enabling you to see the results immediately&nbsp;during reading.<br>
+In order to use the interactive functionality a Java JRE 1.3 or&nbsp;above needs to be installed and enabled in the browser. <br>
+Normally this and db4o for java installation is all that is needed&nbsp;to start with the interactive examples. However some system&nbsp;configurations can prevent the examples from running properly.<br>
+Use the following check-list to locate and fix the problem:<br>
+- JRE1.3 or above should be installed.<br>
+- JAVA_HOME environment variable should point to the correct JRE (or JDK).<br>
+- The Java control panel should be configured to use the web browser.<br>
+- Java security settings have to allow a user to grant permissions to signed content and to grant permission to content from an untrusted authority.<br>
+- You should also check that your system firewalls do not block interactive content.<br>
+<br>
+<ul>
+<a name="outline114"></a><br><h2>18.1. Configuring JRE on Windows</h2>To see whether your browser is configured to use the Java Runtime&nbsp;Environment or not, open the Windows Control Panel and check if&nbsp;the Java icon is present.<br>
+In the Java Control Panel: <br>
+- check that your browser is enabled ( For JRE1.4 and above set this parameter on&nbsp;Advanced Tab, for older JRE versions check "Enable Java Plug-in")<br>
+- check that the user is granted permissions to signed content (untrusted authority as well).<br>
+<br>
+<a name="outline115"></a><br><h2>18.2. Configuring JRE on Linux</h2><ul>
+<a name="outline116"></a><br><h2>18.2.1. Mozilla 1.4 and later</h2>Go to the plugins sub-directory under the Mozilla installation directory:<br>
+<table width="100%" cellpadding="3" cellspacing="0" border="0"><tr><td class="lg">
+<code>cd &lt;Mozilla installation directory>/plugins</code></td></tr></table>
+&nbsp;&nbsp;<br>
+In the current directory, create a symbolic link to the JRE ns7/libjavaplugin_oji.so file. Type:<br>
+<table width="100%" cellpadding="3" cellspacing="0" border="0"><tr><td class="lg">
+<code>ln -s &lt;JRE installation directory>/plugin/i386/ns7/libjavaplugin_oji.so </code></td></tr></table>
+<br>
+<b>Example:</b><br>
+If Mozilla is installed in this directory:<br>
+/usr/lib/mozilla-1.4/ <br>
+and if the JRE is installed in this directory:<br>
+/usr/java/jre1.5.0 <br>
+Then type at the terminal to go to the browser plug-in directory:<br>
+<table width="100%" cellpadding="3" cellspacing="0" border="0"><tr><td class="lg">
+<code>cd /usr/lib/mozilla-1.4/plugins</code></td></tr></table>
+&nbsp;<br>
+Enter the following command to create a symbolic link to the Java Plug-in for the Mozilla browser.<br>
+<table width="100%" cellpadding="3" cellspacing="0" border="0"><tr><td class="lg">
+<code>ln -s /usr/java/jre1.5.0/plugin/i386/ns7/libjavaplugin_oji.so . </code></td></tr></table>
+<br>
+Start Mozilla browser or restart it if it is already running. Note&nbsp;that if you have other Mozilla components (ie: Messenger, Composer, etc)&nbsp;running, you will need to restart them as well. <br>
+Go to Edit > Preferences. Under Advanced category > Select Enable Java <br>
+<br>
+<a name="outline117"></a><br><h2>18.2.2. Mozilla 1.2, Netscape 6 and later</h2>Go to the plugins sub-directory under the Netscape directory<br>
+<table width="100%" cellpadding="3" cellspacing="0" border="0"><tr><td class="lg">
+<code>cd &lt;Mozilla1.2>/plugins </code></td></tr></table>
+&nbsp;<br>
+Create a symbolic link to the ns7-gcc29/libjavaplugin_oji.so file:<br>
+<table width="100%" cellpadding="3" cellspacing="0" border="0"><tr><td class="lg">
+<code>ln -s &lt;JRE>/plugin/i386/ns7-gcc29/libjavaplugin_oji.so </code></td></tr></table>
+<br>
+<b>Example:</b><br>
+If Netscape is installed at this directory:<br>
+/usr/lib/Mozilla1.2/ <br>
+And if the JRE is installed at this directory:<br>
+/usr/java/jre1.5.0 <br>
+Then type at the terminal to go to the browser plug-in directory:<br>
+<table width="100%" cellpadding="3" cellspacing="0" border="0"><tr><td class="lg">
+<code>cd /usr/lib/Mozilla1.2/plugins </code></td></tr></table>
+&nbsp;<br>
+Enter the following command to create a symbolic link to the Java Plug-in for the Mozilla browser.<br>
+<table width="100%" cellpadding="3" cellspacing="0" border="0"><tr><td class="lg">
+<code>ln -s /usr/java/jre1.5.0/plugin/i386/ns7-gcc29/libjavaplugin_oji.so . </code></td></tr></table>
+&nbsp;<br>
+Start Mozilla browser or restart it if it is already running. Note that if&nbsp;you have other Mozilla components (ie: Messenger, Composer, etc) running,&nbsp;you will need to restart them as well. <br>
+Go to Edit > Preferences. Under Advanced category > Select Enable Java <br>
+<br>
+<br><br><div id="footer"><p align="center">Do you have any questions, suggestions or feedback? Ask your questions in the <a href="http://developer.db4o.com/Forums.aspx" target=_top>db4o forums</a>. Join the <a href="http://developer.db4o.com" target=_top>db4o community</a> for addional resources and news.<br><br><a href="http://www.db4o.com/" target=_top><small>www.db4o.com</small></a></p>.</div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></td></tr></table></div></body></html>

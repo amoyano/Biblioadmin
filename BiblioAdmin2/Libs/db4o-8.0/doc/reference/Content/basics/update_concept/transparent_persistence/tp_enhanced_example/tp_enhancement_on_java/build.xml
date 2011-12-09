@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+
+<!-- 
+	TP build time enhancement sample.
+-->
+
+<project name="tpexamples" default="buildall">
+
+	<!-- 
+	Set up the required class path for the enhancement task.
+-->
+	<path id="db4o.enhance.path">
+		<pathelement path="${basedir}" />
+		<fileset dir="lib">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+	<!-- Define enhancement task. -->
+	<taskdef name="db4o-enhance" classname="com.db4o.instrumentation.ant.Db4oFileEnhancerAntTask" classpathref="db4o.enhance.path" loaderref="db4o.enhance.loader" />
+
+	<typedef name="transparent-persistence" classname="com.db4o.ta.instrumentation.ant.TAAntClassEditFactory" classpathref="db4o.enhance.path" loaderref="db4o.enhance.loader" />
+
+
+
+	<target name="buildall" depends="compile">
+
+		<!-- Create enhanced output directory-->
+		<mkdir dir="${basedir}/enhanced-bin" />
+		<delete dir="${basedir}/enhanced-bin" quiet="true">
+			<include name="**/*" />
+		</delete>
+
+		<db4o-enhance classtargetdir="${basedir}/enhanced-bin">
+
+			<classpath refid="db4o.enhance.path" />
+			<!-- Use compiled classes as an input -->
+			<sources dir="${basedir}/bin" />
+
+			<!-- Call transparent persistence enhancement -->
+			<transparent-persistence />
+
+		</db4o-enhance>
+
+	</target>
+
+	<!-- Simple compilation. Note that db4o version 
+	should be adjusted to correspond to the version 
+	you are using
+	-->
+	<target name="compile">
+		<javac fork="true" destdir="${basedir}/bin">
+			<classpath>
+				<pathelement location="${basedir}/lib/db4o-7.1.26.8872-java5.jar" />
+			</classpath>
+			<src path="${basedir}/src" />
+			<include name="**/*.java" />
+		</javac>
+	</target>
+
+</project>

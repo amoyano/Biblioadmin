@@ -1,0 +1,495 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:lastBlockDepth="2" MadCap:lastHeight="120" MadCap:lastWidth="624" MadCap:disableMasterStylesheet="true" MadCap:tocPath="Tuning|Main Operations Performance" MadCap:InPreviewMode="false" MadCap:RuntimeFileType="Topic" MadCap:TargetType="WebHelp" MadCap:PathToHelpSystem="../../../" MadCap:HelpSystemFileName="index.xml" MadCap:SearchType="Stem">
+    <head><title>Update Performance	</title>
+        <script type="text/javascript">/* <![CDATA[ */
+window.onload = function(){
+	var pathToFlash = $('html').attr('MadCap:PathToHelpSystem') + 'Content/Resources/Code/ZeroClipboard.swf';
+	ZeroClipboard.setMoviePath(pathToFlash);
+			
+	function bindToClipBord(element,content){
+		var clip = new ZeroClipboard.Client();
+		clip.setText(content);
+		clip.glue(element);
+	};
+		
+	if(location.protocol==='file:'){
+		$('.copylink-marker').remove();
+	} else{
+			$('.copylink-marker').each(function(){
+				var text = $(this).parent().parent().children('.prettyprint').html();
+				$(this).hover(function(){
+					bindToClipBord(this,text);
+				},
+				function(){});
+			});	
+	}		
+	prettyPrint();	
+};
+                /* ]]> */</script>
+        <link href="../../SkinSupport/MadCap.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/OnlineStyle.css" rel="stylesheet" />
+        <script src="../../Resources/Code/prettify.js">
+        </script>
+        <script src="../../Resources/Code/lang-vb.js">
+        </script>
+        <script src="../../Resources/Code/jquery.min.js">
+        </script>
+        <script src="../../Resources/Code/ZeroClipboard.js">
+        </script>
+        <script src="../../SkinSupport/MadCapAll.js" type="text/javascript">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink" style="display: none;"><a href="../../../index_CSH.html#tuning/main_operations_performance/update_performance.htm" style="">Open topic with navigation</a>
+        </p>
+        <div class="MCBreadcrumbsBox"><span class="MCBreadcrumbsPrefix">You are here: </span><a class="MCBreadcrumbsLink" href="../../tuning.htm">Tuning</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../main_operations_performance.htm">Main Operations Performance</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Update Performance	</span>
+        </div>
+        <p>
+            <script type="text/javascript">/*<![CDATA[*/document.write('<a href="' + location.href +'">');
+				document.write("Direct Link");
+			document.write('</a>');/*]]>*/</script>
+        </p>
+        <p>
+        </p>
+        <h1><a name="kanchor113"></a>Update Performance</h1>
+        <p>Update performance is influenced by the similar factors as
+<a href="insert_performance.htm">Insert Performance</a>. The main factors include: configuration, disk access
+times, complexity of objects. </p>
+        <p>The following chapters provide some simple tests showing the
+influence of the above-mentioned factors. The test results are provided for
+Toshiba Sattelite Pro A120 notebook with 1,5Gb RAM 120GB ATA drive running on Vista and may be different on a different environment.</p>
+        <p>The following Item class is used in most of the tests:</p>
+        <p MadCap:conditions="Primary.Java,Primary.All languages">
+            <pre class="prettyprint" xml:space="preserve">UpdatePerformanceBenchmark.java: Item
+private void update(Object item)  {
+      objectContainer.store(item);
+  }
+    // end update
+  
+    
+    private void runDifferentObjectsTest() {
+      System.out.println("Update test with different objects");
+      int objectsToUpdate = 90;
+      int updated = objectsToUpdate;
+          
+      initDifferentObjectsTest();
+      
+      clean();
+      System.out.println(" - primitive object with int field");
+      open(configure());
+      storeSimplest();
+      
+    ObjectSet result = objectContainer.queryByExample(null);
+    startTimer();
+    for (int i = 0; i &lt; objectsToUpdate; i ++) {
+      if (result.hasNext()) {
+        SimplestItem item = (SimplestItem)result.next();
+        item._id = 1;
+          update(item);  
+      } else  {
+        updated = i;
+        break;
+      }
+    }
+      stopTimer("Updated " + updated + " items");
+      close();
+    
+      clean();
+      open(configure());
+      System.out.println(" - object with String field");
+      store();
+      updated = objectsToUpdate;
+      result = objectContainer.queryByExample(null);
+      startTimer();
+      for (int i = 0; i &lt; objectsToUpdate; i ++) {
+      if (result.hasNext()) {
+        Item item = (Item)result.next();
+        item._name = "Updated";
+          update(item);  
+      } else  {
+        updated = i;
+        break;
+      }
+    }
+      stopTimer("Updated " + updated + " items");
+      close();
+      
+      clean();
+      open(configure());
+      System.out.println(" - object with StringBuffer field");
+      storeWithStringBuffer();
+      
+      updated = objectsToUpdate;
+      result = objectContainer.queryByExample(null);
+      startTimer();
+      for (int i = 0; i &lt; objectsToUpdate; i ++) {
+      if (result.hasNext()) {
+        ItemWithStringBuffer item = (ItemWithStringBuffer)result.next();
+        item._name = new StringBuffer("Updated");
+          update(item);  
+      } else  {
+        updated = i;
+        break;
+      }
+    }
+      stopTimer("Updated " + updated + " items");
+      close();
+      
+      clean();
+      open(configure());
+      System.out.println(" - object with int array field");
+      storeWithArray();
+      updated = objectsToUpdate;
+      result = objectContainer.queryByExample(null);
+      startTimer();
+      for (int i = 0; i &lt; objectsToUpdate; i ++) {
+      if (result.hasNext()) {
+        ItemWithArray item = (ItemWithArray)result.next();
+        item._id = new int[] {1,2,3};
+          update(item);  
+      } else  {
+        updated = i;
+        break;
+      }
+    }
+      stopTimer("Updated " + updated + " items");
+      close();
+      
+      clean();
+      open(configure());
+      System.out.println(" - object with ArrayList field");
+      storeWithArrayList();
+      updated = objectsToUpdate;
+      result = objectContainer.queryByExample(null);
+      startTimer();
+      for (int i = 0; i &lt; objectsToUpdate; i ++) {
+      if (result.hasNext()) {
+        ItemWithArrayList item = (ItemWithArrayList)result.next();
+        item._ids = new ArrayList();
+          update(item);  
+      } else  {
+        updated = i;
+        break;
+      }
+    }
+      stopTimer("Updated " + updated + " items");
+      close();
+    }
+    // end runDifferentObjectsTest
+    
+    private void runIndexTest() {
+      System.out.println("Update test for objects with and without indexed fields");
+          
+      int objectsToUpdate = 100;
+      init();
+      System.out.println("Updating " + objectsToUpdate + " of " + _count + " objects");
+      clean();
+      open(configure());
+      store();
+      updateItems(objectsToUpdate);
+      close();
+      
+      clean();
+      init();
+      System.out.println("Updating " + objectsToUpdate + " of " + _count + " objects with indexed field");
+      open(configureIndexTest());
+      store();
+      updateItems(objectsToUpdate);
+      close();
+    }
+    // end runIndexTest
+
+    
+    private void init() {
+      _count = 1000;
+        _depth = 90;
+        _isClientServer = false;
+          
+    }
+    // end init
+    
+    private void initDifferentObjectsTest() {
+      _count = 1000;
+        _depth = 1;
+        _isClientServer = false;
+          
+    }
+    // end initDifferentObjectsTest
+    
+
+    
+    private void initForClientServer() {
+      _count = 1000;
+        _depth = 90;
+        _isClientServer = true;
+        _host = "localhost";  
+    }
+    // end initForClientServer
+    
+    private void initForRamDriveTest() {
+      _count = 30000;
+        _depth = 1;
+        _filePath = "r:\\performance.db4o";
+        _isClientServer = false;
+          
+    }
+    // end initForRamDriveTest
+    
+    private void initForHardDriveTest() {
+      _count = 10000;
+        _depth = 3;
+        _filePath = "performance.db4o";
+        _isClientServer = false;
+    }
+    // end initForHardDriveTest
+    
+    private void initForCommitTest() {
+      _count = 10000;
+      _commitInterval = 1000;
+        _depth = 3;
+        _isClientServer = false;
+    }
+    // end initForCommitTest
+    
+    private void clean() {
+      new File(_filePath).delete();
+    }
+    // end clean
+    
+    private Configuration configure() {
+      Configuration config = Db4o.newConfiguration();
+      // using MemoryIoAdapter improves the performance 
+      // by replacing the costly disk IO operations with 
+      // memory access
+        config.io(new MemoryIoAdapter());
+        return config;
+    }
+    // end configure
+
+    private Configuration configureTP() {
+      Configuration config = Db4o.newConfiguration();
+      // With Transparent Persistence enabled only modified
+      // objects are written to disk. This allows to achieve 
+      // better performance
+        config.objectClass(Item.class).cascadeOnUpdate(true);
+      return config;
+    }
+    // end configureTP
+
+    private Configuration configureCascade() {
+      Configuration config = Db4o.newConfiguration(); 
+      // CascadeOnUpdate can be a performance-killer for 
+      // deep object hierarchies
+        config.objectClass(Item.class).cascadeOnUpdate(true);
+        return config;
+    }
+    // end configureCascade
+
+    private Configuration configureIndexTest() {
+      Configuration config = Db4o.newConfiguration(); 
+        config.io(new MemoryIoAdapter());
+        config.objectClass(Item.class).objectField("_name").indexed(true);
+        return config;
+    }
+    // end configureIndexTest
+    
+    private Configuration configureForCommitTest() {
+      Configuration config = Db4o.newConfiguration(); 
+        config.lockDatabaseFile(false);
+        // the commit information is physically written 
+        // and in the correct order
+        config.flushFileBuffers(true);
+        return config;
+    }
+    // end configureForCommitTest
+
+
+    private Configuration configureClientServer() {
+      Configuration config = Db4o.newConfiguration(); 
+        config.clientServer().singleThreadedClient(true);
+        return config;
+    }
+    // end configureClientServer
+
+    private Configuration configureDriveTest() {
+      Configuration config = Db4o.newConfiguration(); 
+        config.flushFileBuffers(true);
+        return config;
+    }
+    // end configureDriveTest
+    
+    private void store() {
+        startTimer();
+        for (int i = 0; i &lt; _count ;i++)  {
+            Item item = new Item("level" + i, null);
+            for (int j = 1; j &lt; _depth; j++)  {
+                item = new Item("level" + i + "/" + j, item);
+            }
+            objectContainer.store(item);
+        }
+        objectContainer.commit();
+        stopTimer("Store "+ totalObjects() + " objects");
+    }
+    // end store
+
+    private void storeActivatableItems() {
+        startTimer();
+        for (int i = 0; i &lt; _count ;i++)  {
+            ActivatableItem item = new ActivatableItem("level" + i, null);
+            for (int j = 1; j &lt; _depth; j++)  {
+                item = new ActivatableItem("level" + i + "/" + j, item);
+            }
+            objectContainer.store(item);
+        }
+        objectContainer.commit();
+        stopTimer("Store "+ totalObjects() + " objects");
+    }
+    // end storeActivatableItems
+
+    private void storeInherited() {
+        startTimer();
+        for (int i = 0; i &lt; _count ;i++)  {
+            ItemDerived item = new ItemDerived("level" + i, null);
+            for (int j = 1; j &lt; _depth; j++)  {
+                item = new ItemDerived("level" + i + "/" + j, item);
+            }
+            objectContainer.store(item);
+        }
+        objectContainer.commit();
+        stopTimer("Store "+ totalObjects() + " objects");
+    }
+    // end storeInherited
+
+    
+    private void storeWithStringBuffer() {
+        startTimer();
+        for (int i = 0; i &lt; _count ;i++)  {
+            ItemWithStringBuffer item = new ItemWithStringBuffer(new StringBuffer("level" + i), null);
+            for (int j = 1; j &lt; _depth; j++)  {
+                item = new ItemWithStringBuffer(new StringBuffer("level" + i + "/" + j), item);
+            }
+            objectContainer.store(item);
+        }
+        objectContainer.commit();
+        stopTimer("Store "+ totalObjects() + " objects");
+    }
+    // end storeWithStringBuffer
+    
+    private void storeSimplest() {
+        startTimer();
+        for (int i = 0; i &lt; _count ;i++)  {
+          SimplestItem item = new SimplestItem(i, null);
+            for (int j = 1; j &lt; _depth; j++)  {
+                item = new SimplestItem(i, item);
+            }
+            objectContainer.store(item);
+        }
+        objectContainer.commit();
+        stopTimer("Store "+ totalObjects() + " objects");
+    }
+    // end storeSimplest
+    
+    private void storeWithArray() {
+        startTimer();
+        int[] array = new int[] {1,2,3,4};
+        for (int i = 0; i &lt; _count ;i++)  {
+          int[] id = new int[] {1,2,3,4};
+          ItemWithArray item = new ItemWithArray(id, null);
+            for (int j = 1; j &lt; _depth; j++)  {
+              int[] id1 = new int[] {1,2,3,4};
+                item = new ItemWithArray(id1, item);
+            }
+            objectContainer.store(item);
+        }
+        objectContainer.commit();
+        stopTimer("Store "+ totalObjects() + " objects");
+    }
+    // end storeWithArray
+    
+    private void storeWithArrayList() {
+      startTimer();
+      ArrayList idList = new ArrayList();
+      idList.add(1);
+      idList.add(2);
+      idList.add(3);
+      idList.add(4);
+        for (int i = 0; i &lt; _count ;i++)  {
+          ArrayList ids = new ArrayList();
+          ids.addAll(idList);
+          ItemWithArrayList item = new ItemWithArrayList(ids, null);
+            for (int j = 1; j &lt; _depth; j++)  {
+              ArrayList ids1 = new ArrayList();
+              ids1.addAll(idList);
+              item = new ItemWithArrayList(ids1, item);
+            }
+            objectContainer.store(item);
+        }
+        objectContainer.commit();
+        stopTimer("Store "+ totalObjects() + " objects");
+    }
+    // end storeWithArrayList
+    
+    private int totalObjects() {
+      return _count * _depth;
+    }
+    // end totalObjects
+    
+    private void open(Configuration config) {
+        if(_isClientServer) {
+          int port = TCP ? PORT : 0;
+          String user = "db4o";
+          String password = user;
+            objectServer = Db4o.openServer(_filePath, port);
+            objectServer.grantAccess(user, password);
+            objectContainer = TCP ? Db4o.openClient(_host, port, user,
+          password) : objectServer.openClient();
+        } else {
+            objectContainer = Db4o.openFile(config, _filePath);
+        }
+    }
+    // end open
+    
+    private void close() {
+        objectContainer.close();
+        if(_isClientServer) {
+            objectServer.close();
+        }
+    }
+    //end close
+    
+    private void startTimer() {
+      startTime = System.currentTimeMillis();
+    }
+    // end startTimer
+
+    
+    private void stopTimer(String message) {
+        long stop = System.currentTimeMillis();
+        long duration = stop - startTime;
+        System.out.println(message + ": " + duration + "ms");
+    }
+    // end stopTimer
+    
+    public static class Item  {
+
+      public String _name;
+        public Item _child;
+
+        public Item() {
+            
+        }
+        
+        public Item(String name, Item child) {
+            _name = name;
+            _child = child;
+        }
+    }</pre>
+        </p>
+        <p MadCap:conditions="Global.Primary:java" />
+        <p MadCap:conditions="Global.Primary:net" />
+        <p> More Reading:<ul><li value="1"><p><a href="update_performance/configuration.htm">Configuration</a></p></li><li value="2"><p><a href="update_performance/object_structure.htm">Object Structure</a></p></li><li value="3"><p><a href="update_performance/commit_frequency.htm">Commit Frequency</a></p></li><li value="4"><p><a href="update_performance/hard_drive_speed.htm">Hard Drive Speed</a></p></li><li value="5"><p><a href="update_performance/client-server.htm">Client-Server</a></p></li><li value="6"><p><a href="update_performance/indexes.htm">Indexes</a></p></li><li value="7"><p><a href="update_performance/inheritance.htm">Inheritance</a></p></li></ul></p>
+        <script type="text/javascript" src="../../SkinSupport/MadCapBodyEnd.js">
+        </script>
+    </body>
+</html>
