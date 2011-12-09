@@ -1,0 +1,624 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:lastBlockDepth="2" MadCap:lastHeight="120" MadCap:lastWidth="624" MadCap:disableMasterStylesheet="true" MadCap:tocPath="Tuning|Main Operations Performance" MadCap:InPreviewMode="false" MadCap:RuntimeFileType="Topic" MadCap:TargetType="WebHelp" MadCap:PathToHelpSystem="../../../" MadCap:HelpSystemFileName="index.xml" MadCap:SearchType="Stem">
+    <head><title>Query Performance	</title>
+        <script type="text/javascript">/* <![CDATA[ */
+window.onload = function(){
+	var pathToFlash = $('html').attr('MadCap:PathToHelpSystem') + 'Content/Resources/Code/ZeroClipboard.swf';
+	ZeroClipboard.setMoviePath(pathToFlash);
+			
+	function bindToClipBord(element,content){
+		var clip = new ZeroClipboard.Client();
+		clip.setText(content);
+		clip.glue(element);
+	};
+		
+	if(location.protocol==='file:'){
+		$('.copylink-marker').remove();
+	} else{
+			$('.copylink-marker').each(function(){
+				var text = $(this).parent().parent().children('.prettyprint').html();
+				$(this).hover(function(){
+					bindToClipBord(this,text);
+				},
+				function(){});
+			});	
+	}		
+	prettyPrint();	
+};
+                /* ]]> */</script>
+        <link href="../../SkinSupport/MadCap.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/OnlineStyle.css" rel="stylesheet" />
+        <script src="../../SkinSupport/MadCapAll.js">
+        </script>
+        <script src="../../Resources/Code/prettify.js">
+        </script>
+        <script src="../../Resources/Code/lang-vb.js">
+        </script>
+        <script src="../../Resources/Code/jquery.min.js">
+        </script>
+        <script src="../../Resources/Code/ZeroClipboard.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink" style="display: none;"><a href="../../../index_CSH.html#tuning/main_operations_performance/query_performance.htm" style="">Open topic with navigation</a>
+        </p>
+        <div class="MCBreadcrumbsBox"><span class="MCBreadcrumbsPrefix">You are here: </span><a class="MCBreadcrumbsLink" href="../../tuning.htm">Tuning</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../main_operations_performance.htm">Main Operations Performance</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Query Performance	</span>
+        </div>
+        <p>
+            <script type="text/javascript">/*<![CDATA[*/document.write('<a href="' + location.href +'">');
+				document.write("Direct Link");
+			document.write('</a>');/*]]>*/</script>
+        </p>
+        <p>
+        </p>
+        <h1><a name="kanchor114"></a>Query Performance</h1>
+        <p>Query Performance is one of the most important
+characteristics of a database system. In the same time it is probably the one
+that can vary the most. In general query performance can be dependent on the
+following list of factors and their combinations:</p>
+        <ul class="unIndentedList">
+            <li value="1">hardware resources (free RAM, processor speed,
+disk access)</li>
+            <li value="2">database model &amp; complexity of objects</li>
+            <li value="3">query structure</li>
+            <li value="4">query configuration</li>
+            <li value="5">amount of objects in the database</li>
+            <li value="6">connection speed </li>
+            <li value="7">indexes</li>
+            <li value="8">query optimization</li>
+            <li value="9">etc</li>
+        </ul>
+        <p>The following set of tests shows some performance
+dependencies. A simple Item object with a string field is used in most of the
+tests:</p>
+        <p MadCap:conditions="Primary.Java,Primary.All languages">
+            <pre class="prettyprint" xml:space="preserve">QueryPerformanceBenchmark.java: Item
+//
+    System.out.println("Native Query:");
+    startTimer();
+    List&lt;Item&gt; result = objectContainer.query(new Predicate&lt;Item&gt;()  {
+      public boolean match(Item item)  {
+        return item._name.equals("level1/1");
+      }
+    });
+    item = result.queryByExample(0);
+    stopTimer("Select 1 object <span class="MCTextPopup"><a href="javascript:void(0);" class="MCTextPopupSpot" onclick="FMCTextPopup( event, this ); return false;">NQ<img style="border: none;margin-left: 5px;" src="../../SkinSupport/ExpandingClosed.gif" MadCap:altsrc="../../SkinSupport/ExpandingOpen.gif" class="MCExpandingIcon" onload="if ( typeof( FMCPreloadImage ) == 'function' ) { FMCPreloadImage( '../../SkinSupport/ExpandingOpen.gif' ); }" /></a><span class="MCTextPopupBody" style="display: none; ">Native Query</span></span>: " + item._name);
+    close();
+    
+    //
+    open(configureUnoptimizedNQ());
+    System.out.println("Native Query Unoptimized:");
+    startTimer();
+    result = objectContainer.query(new Predicate&lt;Item&gt;()  {
+      public boolean match(Item item)  {
+       return item._name.equals("level1/1");
+      }
+    });
+    item = result.queryByExample(0);
+    stopTimer("Select 1 object NQ: " + item._name);
+
+    close();
+  }
+
+  // end runDifferentQueriesTest
+
+  
+  private void runRamDiskTest()  {
+
+    initForHardDriveTest();
+    clean();
+    System.out.println("Storing " + _count + " objects of depth " + _depth
+        + " on a hard drive:");
+    open(configureRamDrive());
+    store();
+    close();
+    open(configureRamDrive());
+    startTimer();
+    Query query = objectContainer.query();
+    query.constrain(Item.class);
+    query.descend("_name").constrain("level1/1");
+    Item item = (Item) query.execute().next();
+    stopTimer("Select 1 object: " + item._name);
+    close();
+
+    initForRamDriveTest();
+    clean();
+    System.out.println("Storing " + _count + " objects of depth " + _depth
+        + " on a RAM disk:");
+    open(configureRamDrive());
+    store();
+    close();
+    open(configureRamDrive());
+    startTimer();
+    query = objectContainer.query();
+    query.constrain(Item.class);
+    query.descend("_name").constrain("level1/1");
+    item = (Item) query.execute().next();
+    stopTimer("Select 1 object: " + item._name);
+    close();
+  }
+
+  // end runRamDiskTest
+
+  private void runClientServerTest()  {
+
+    initForClientServer();
+    clean();
+    System.out.println("Storing " + _count + " objects of depth " + _depth
+        + " remotely:");
+    open(configureClientServer());
+    store();
+    close();
+    open(configureClientServer());
+    startTimer();
+    Query query = objectContainer.query();
+    query.constrain(Item.class);
+    query.descend("_name").constrain("level1/1");
+    Item item = (Item) query.execute().next();
+    stopTimer("Select 1 object: " + item._name);
+    close();
+    
+    init();
+    clean();
+    System.out.println("Storing " + _count + " objects of depth " + _depth
+        + " locally:");
+    open(configureClientServer());
+    store();
+    close();
+    open(configureClientServer());
+    startTimer();
+    query = objectContainer.query();
+    query.constrain(Item.class);
+    query.descend("_name").constrain("level1/1");
+    item = (Item) query.execute().next();
+    stopTimer("Select 1 object: " + item._name);
+    close();
+  }
+
+  // end runClientServerTest
+
+  private void runInheritanceTest()  {
+    init();
+    clean();
+    System.out.println("Storing " + _count + " objects of depth " + _depth);
+    open(configure());
+    store();
+    close();
+    open(configure());
+    startTimer();
+    Query query = objectContainer.query();
+    query.constrain(Item.class);
+    query.descend("_name").constrain("level1/1");
+    Item item = (Item) query.execute().next();
+    stopTimer("Select 1 object: " + item._name);
+    close();
+
+    clean();
+    System.out.println("Storing " + _count + " inherited objects of depth "
+        + _depth);
+    open(configure());
+    storeInherited();
+    close();
+    open(configure());
+    startTimer();
+    // Query for item, inheriting objects should be included in the result
+    query = objectContainer.query();
+    query.constrain(Item.class);
+    query.descend("_name").constrain("level1/1");
+    item = (Item) query.execute().next();
+    stopTimer("Select 1 object: " + item._name);
+    close();
+  }
+
+  // end runInheritanceTest
+
+  private void runDifferentObjectsTest()  {
+
+    init();
+    System.out.println("Storing " + _count + " objects with " + _depth
+        + " levels of embedded objects:");
+
+    clean();
+    System.out.println();
+    System.out.println(" - primitive object with int field");
+    open(configure());
+    storeSimplest();
+    close();
+    open(configure());
+    startTimer();
+    Query query = objectContainer.query();
+    query.constrain(SimplestItem.class);
+    query.descend("_id").constrain(1);
+    List result = query.execute();
+    SimplestItem simplestItem = (SimplestItem) result.queryByExample(0);
+    stopTimer("Querying SimplestItem: " + simplestItem._id);
+    close();
+
+    open(configure());
+    System.out.println();
+    System.out.println(" - object with String field");
+    store();
+    close();
+    open(configure());
+    startTimer();
+    query = objectContainer.query();
+    query.constrain(Item.class);
+    query.descend("_name").constrain("level1/2");
+    result = query.execute();
+    Item item = (Item) result.queryByExample(0);
+    stopTimer("Querying object with String field: " + item._name);
+    close();
+
+    clean();
+    open(configure());
+    System.out.println();
+    System.out.println(" - object with StringBuffer field");
+    storeWithStringBuffer();
+    close();
+    open(configure());
+    startTimer();
+    query = objectContainer.query();
+    query.constrain(ItemWithStringBuffer.class);
+    query.descend("_name").constrain(new StringBuffer("level1/2"));
+    result = query.execute();
+    ItemWithStringBuffer itemWithSB = (ItemWithStringBuffer) result.queryByExample(0);
+    stopTimer("Querying object with StringBuffer field: "
+        + itemWithSB._name);
+    close();
+
+    clean();
+    open(configure());
+    System.out.println();
+    System.out.println(" - object with int array field");
+    storeWithArray();
+    close();
+    open(configure());
+    startTimer();
+    query = objectContainer.query();
+    query.constrain(ItemWithArray.class);
+    Query idQuery = query.descend("_id");
+    idQuery.constrain(new Integer(1));
+    idQuery.constrain(new Integer(2));
+    idQuery.constrain(new Integer(3));
+   idQuery.constrain(new Integer(4));
+    result = query.execute();
+
+    ItemWithArray itemWithArray = (ItemWithArray) result.queryByExample(0);
+    stopTimer("Querying object with Array field: [" + itemWithArray._id[0]
+        + ", " + +itemWithArray._id[1] + ", " + +itemWithArray._id[2]
+        + ", " + +itemWithArray._id[0] + "]");
+    close();
+
+    clean();
+    open(configure());
+    System.out.println();
+    System.out.println(" - object with ArrayList field");
+    storeWithArrayList();
+    close();
+    open(configure());
+    startTimer();
+    query = objectContainer.query();
+    query.constrain(ItemWithArrayList.class);
+    query.descend("_ids").constrain(1).contains();
+    result = query.execute();
+    ItemWithArrayList itemWithArrayList = (ItemWithArrayList) result.queryByExample(0);
+    stopTimer("Querying object with ArrayList field: "
+        + itemWithArrayList._ids.toString());
+    close();
+
+  }
+
+  // end runDifferentObjectsTest
+
+  private void runIndexTest()  {
+
+    init();
+    System.out.println("Storing " + _count + " objects with " + _depth
+        + " levels of embedded objects:");
+
+    clean();
+    System.out.println(" - no index");
+    open(configure());
+    store();
+    close();
+    open(configure());
+    startTimer();
+    Query query = objectContainer.query();
+    query.constrain(Item.class);
+    query.descend("_name").constrain("level1/2");
+    List result = query.execute();
+    Item item = (Item) result.queryByExample(0);
+    stopTimer("Querying object with String field: " + item._name);
+    close();
+
+
+    System.out.println(" - index on String field");
+    // open to create index
+    open(configureIndex());
+    close();
+    open(configure());
+    startTimer();
+    query = objectContainer.query();
+    query.constrain(Item.class);
+    query.descend("_name").constrain("level1/2");
+    result = query.execute();
+    item = (Item) result.queryByExample(0);
+    stopTimer("Querying object with String field: " + item._name);
+   close();
+  }
+
+  // end runIndexTest
+
+  private void init()  {
+    _filePath = "performance.db4o";
+    // amount of objects
+    _count = 10000;
+    // depth of objects
+    _depth = 3;
+    _isClientServer = false;
+
+  }
+
+  // end init
+
+  private void initLargeDb()  {
+    _filePath = "performance.db4o";
+    _count = 100000;
+    _depth = 3;
+    _isClientServer = false;
+
+  }
+
+  // end initLargeDb
+
+  
+  private void initForClientServer()  {
+    _filePath = "performance.db4o";
+    _isClientServer = true;
+    _host = "localhost";
+  }
+
+  // end initForClientServer
+
+  private void initForRamDriveTest()  {
+    _count = 30000;
+    _depth = 3;
+    _filePath = "r:\\performance.db4o";
+    _isClientServer = false;
+
+  }
+
+  // end initForRamDriveTest
+
+  private void initForHardDriveTest()  {
+    _count = 30000;
+    _depth = 3;
+    _filePath = "performance.db4o";
+    _isClientServer = false;
+
+  }
+
+  // end initForHardDriveTest
+
+
+  private void clean()  {
+    new File(_filePath).delete();
+  }
+
+  // end clean
+
+  private Configuration configure()  {
+    Configuration config = Db4o.newConfiguration();
+    return config;
+  }
+
+  // end configure
+
+  private Configuration configureUnoptimizedNQ()  {
+    Configuration config = Db4o.newConfiguration();
+    config.optimizeNativeQueries(false);
+    return config;
+  }
+  // end configureUnoptimizedNQ
+
+  private Configuration configureIndex()  {
+    Configuration config = Db4o.newConfiguration();
+    config.objectClass(Item.class).objectField("_name").indexed(true);
+    return config;
+  }
+
+  // end configureIndex
+
+  private Configuration configureClientServer()  {
+    Configuration config = Db4o.newConfiguration();
+    config.queries().evaluationMode(QueryEvaluationMode.IMMEDIATE);
+    config.clientServer().singleThreadedClient(true);
+    return config;
+  }
+
+  // end configureClientServer
+
+  private Configuration configureRamDrive()  {
+    Configuration config = Db4o.newConfiguration();
+    config.flushFileBuffers(true);
+    return config;
+  }
+
+  // end configureRamDrive
+
+  private void store()  {
+    startTimer();
+    for (int i = 0; i &lt; _count; i++)  {
+     Item item = new Item("level" + i, null);
+      for (int j = 1; j &lt; _depth; j++)  {
+        item = new Item("level" + i + "/" + j, item);
+      }
+      objectContainer.store(item);
+    }
+    objectContainer.commit();
+    stopTimer("Store " + totalObjects() + " objects");
+  }
+  // end store
+
+  private void storeInherited()  {
+    startTimer();
+    for (int i = 0; i &lt; _count; i++)  {
+      ItemDerived item = new ItemDerived("level" + i, null);
+      for (int j = 1; j &lt; _depth; j++)  {
+        item = new ItemDerived("level" + i + "/" + j, item);
+      }
+      objectContainer.store(item);
+    }
+   objectContainer.commit();
+    stopTimer("Store " + totalObjects() + " objects");
+  }
+
+  // end storeInherited
+
+  private void storeWithStringBuffer()  {
+    startTimer();
+    for (int i = 0; i &lt; _count; i++)  {
+      ItemWithStringBuffer item = new ItemWithStringBuffer(
+          new StringBuffer("level" + i), null);
+      for (int j = 1; j &lt; _depth; j++)  {
+        item = new ItemWithStringBuffer(new StringBuffer("level" + i
+            + "/" + j), item);
+      }
+      objectContainer.store(item);
+    }
+    objectContainer.commit();
+    stopTimer("Store " + totalObjects() + " objects");
+  }
+
+  // end storeWithStringBuffer
+
+  private void storeSimplest()  {
+    startTimer();
+    for (int i = 0; i &lt; _count; i++)  {
+      SimplestItem item = new SimplestItem(i, null);
+      for (int j = 1; j &lt; _depth; j++)  {
+        item = new SimplestItem(i, item);
+      }
+      objectContainer.store(item);
+    }
+    objectContainer.commit();
+    stopTimer("Store " + totalObjects() + " objects");
+  }
+
+  // end storeSimplest
+
+  private void storeWithArray()  {
+    startTimer();
+    int[] array = new int[]  { 1, 2, 3, 4 };
+    for (int i = 0; i &lt; _count; i++)  {
+      int[] id = new int[]  { 1, 2, 3, 4 };
+      ItemWithArray item = new ItemWithArray(id, null);
+      for (int j = 1; j &lt; _depth; j++)  {
+        int[] id1 = new int[]  { 1, 2, 3, 4 };
+        item = new ItemWithArray(id1, item);
+      }
+      objectContainer.store(item);
+    }
+    objectContainer.commit();
+    stopTimer("Store " + totalObjects() + " objects");
+  }
+
+  // end storeWithArray
+
+  private void storeWithArrayList()  {
+    startTimer();
+    ArrayList idList = new ArrayList();
+    idList.add(1);
+    idList.add(2);
+    idList.add(3);
+    idList.add(4);
+    for (int i = 0; i &lt; _count; i++)  {
+      ArrayList ids = new ArrayList();
+      ids.addAll(idList);
+      ItemWithArrayList item = new ItemWithArrayList(ids, null);
+      for (int j = 1; j &lt; _depth; j++)  {
+        ArrayList ids1 = new ArrayList();
+        ids1.addAll(idList);
+        item = new ItemWithArrayList(ids1, item);
+      }
+      objectContainer.store(item);
+    }
+    objectContainer.commit();
+    stopTimer("Store " + totalObjects() + " objects");
+  }
+
+  // end storeWithArrayList
+
+  private int totalObjects()  {
+    return _count * _depth;
+  }
+
+  // end totalObjects
+
+  private void open(Configuration configure)  {
+    if (_isClientServer)  {
+      int port = TCP ? PORT : 0;
+      String user = "db4o";
+      String password = user;
+      objectServer = Db4o.openServer(configure, _filePath, port);
+      objectServer.grantAccess(user, password);
+      objectContainer = TCP ? Db4o
+          .openClient(configure, _host, port, user, password) : objectServer
+          .openClient(configure);
+    } else  {
+      objectContainer = Db4o.openFile(configure, _filePath);
+    }
+  }
+
+  // end open
+
+  private void close()  {
+    objectContainer.close();
+    if (_isClientServer)  {
+      objectServer.close();
+    }
+  }
+
+  // end close
+
+  private void startTimer()  {
+    startTime = System.currentTimeMillis();
+  }
+
+  // end startTimer
+
+  private void stopTimer(String message)  {
+    long stop = System.currentTimeMillis();
+    long duration = stop - startTime;
+    System.out.println(message + ": " + duration + "ms");
+  }
+
+  // end stopTimer
+
+  public static class Item  {
+
+    public String _name;
+    public Item _child;
+
+    public Item()  {
+
+    }
+
+    public Item(String name, Item child)  {
+      _name = name;
+      _child = child;
+    }
+  }</pre>
+        </p>
+        <p MadCap:conditions="Global.Primary:java" />
+        <p MadCap:conditions="Global.Primary:net" />
+        <p MadCap:conditions="Primary.Online">Download example code:</p>
+        <p MadCap:conditions="Primary.Online">
+            <MadCap:conditionalText MadCap:conditions="Primary.Java"><a href="query_performance/queryperformancejava.zip">Java </a>
+            </MadCap:conditionalText>
+        </p>
+        <script type="text/javascript" src="../../SkinSupport/MadCapBodyEnd.js">
+        </script>
+    </body>
+</html>

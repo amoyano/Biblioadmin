@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:lastBlockDepth="2" MadCap:lastHeight="120" MadCap:lastWidth="624" MadCap:disableMasterStylesheet="true" MadCap:tocPath="Basics Operations &amp; Concepts|Update Concept|Transparent Persistence" MadCap:InPreviewMode="false" MadCap:RuntimeFileType="Topic" MadCap:TargetType="WebHelp" MadCap:PathToHelpSystem="../../../../" MadCap:HelpSystemFileName="index.xml" MadCap:SearchType="Stem">
+    <head><title>Transparent Persistence Implementation</title>
+        <script type="text/javascript">/* <![CDATA[ */
+window.onload = function(){
+	var pathToFlash = $('html').attr('MadCap:PathToHelpSystem') + 'Content/Resources/Code/ZeroClipboard.swf';
+	ZeroClipboard.setMoviePath(pathToFlash);
+			
+	function bindToClipBord(element,content){
+		var clip = new ZeroClipboard.Client();
+		clip.setText(content);
+		clip.glue(element);
+	};
+		
+	if(location.protocol==='file:'){
+		$('.copylink-marker').remove();
+	} else{
+			$('.copylink-marker').each(function(){
+				var text = $(this).parent().parent().children('.prettyprint').html();
+				$(this).hover(function(){
+					bindToClipBord(this,text);
+				},
+				function(){});
+			});	
+	}		
+	prettyPrint();	
+};
+                /* ]]> */</script>
+        <link href="../../../SkinSupport/MadCap.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/OnlineStyle.css" rel="stylesheet" />
+        <script src="../../../SkinSupport/MadCapAll.js">
+        </script>
+        <script src="../../../Resources/Code/prettify.js">
+        </script>
+        <script src="../../../Resources/Code/lang-vb.js">
+        </script>
+        <script src="../../../Resources/Code/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Code/ZeroClipboard.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink" style="display: none;"><a href="../../../../index_CSH.html#basics/update_concept/transparent_persistence/transparent_persistence_implementation.htm" style="">Open topic with navigation</a>
+        </p>
+        <div class="MCBreadcrumbsBox"><span class="MCBreadcrumbsPrefix">You are here: </span><a class="MCBreadcrumbsLink" href="../../../basics.htm">Basics Operations &amp; Concepts</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../../update_concept.htm">Update Concept</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../transparent_persistence.htm">Transparent Persistence</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Transparent Persistence Implementation</span>
+        </div>
+        <p>
+            <script type="text/javascript">/*<![CDATA[*/document.write('<a href="' + location.href +'">');
+				document.write("Direct Link");
+			document.write('</a>');/*]]>*/</script>
+        </p>
+        <p>
+        </p>
+        <h1>Transparent Persistence Implementation</h1>
+        <p>The basic logic of Transparent Persistence (<span class="MCTextPopup"><a href="javascript:void(0);" class="MCTextPopupSpot" onclick="FMCTextPopup( event, this ); return false;">TP<img style="border: none;margin-left: 5px;" src="../../../SkinSupport/ExpandingClosed.gif" MadCap:altsrc="../../../SkinSupport/ExpandingOpen.gif" class="MCExpandingIcon" onload="if ( typeof( FMCPreloadImage ) == 'function' ) { FMCPreloadImage( '../../../SkinSupport/ExpandingOpen.gif' ); }" /></a><span class="MCTextPopupBody" style="display: none; ">Transparent Persistence</span></span>) is the
+following:</p>
+        <ul>
+            <li value="1">Classes
+     available for Transparent Persistence should implement the <span class="PrimaryActivatable">Activatable</span>    -interface, which allows to bind an object in the reference cache to the
+     current object container.</li>
+            <li value="2">Persistent
+     objects should be initially explicitly stored to the database: 
+     <p MadCap:conditions="Primary.Java,Primary.All languages"> Java: 
+     <code>objectContainer.store(myObject)</code></p><p MadCap:conditions="Global.Primary:java" /><p MadCap:conditions="Global.Primary:net" /> 
+     myObject can be an object of any complexity including a linked list or a
+     collection (currently you must use db4o-specific implementation for transparent collections: ArrayList4). For complex objects all field objects will be registered with
+     the database with this call as well.</li>
+            <li value="3">Stored
+     objects are bound to the Transparent Persistent framework when they are
+     instantiated in the reference cache. This happens after the initial
+     store() or when an object is retrieved from the database through one of
+     the querying mechanisms.</li>
+            <li value="4">Whenever
+     a commit() call is issued by the user, Transparent Persistent framework scans for modified
+     persistent objects and implicitly calls store() on them before committing
+     the transaction. Implicit commit with the mentioned above changes also occurs when the database is closed. </li>
+        </ul>
+        <p>Note that Transparent Persistence is based on Transparent
+<span class="MCPopup"><a href="javascript:void(0);" class="MCPopupSpot" onclick="FMCPopup( event, this ); return false;" MadCap:src="../../activation.htm">Activation<img style="border: none;margin-left: 5px;" src="../../../SkinSupport/ExpandingClosed.gif" MadCap:altsrc="../../../SkinSupport/ExpandingOpen.gif" class="MCExpandingIcon" onload="if ( typeof( FMCPreloadImage ) == 'function' ) { FMCPreloadImage( '../../../SkinSupport/ExpandingOpen.gif' ); }" /></a></span>, so it is strongly recommended to study the <a href="../../activation_concept/transparent_activation_framework.htm">Transparent Activation</a> documentation first.</p>
+        <p>In order to make use of Transparent Persistence you will
+need:</p>
+        <ol>
+            <li value="1">Enable
+      Transparent Activation (required for binding object instances to the TP
+      framework) on the database level: 
+      <p MadCap:conditions="Primary.Java,Primary.All languages"> Java: 
+      <code>configuration.common().add(new TransparentPersistenceSupport());</code></p><p MadCap:conditions="Global.Primary:java" /><p MadCap:conditions="Global.Primary:net" /></li>
+            <li value="2">Implement
+      <span class="PrimaryActivatable">Activatable</span> interface for the persistent classes, either
+      manually or through using <a href="../../../advanced_topics/enhancement_tools.htm">enhancement tools</a>.</li>
+            <li value="3">Call
+      activate method at the beginning of all class methods that modify class
+      fields: 
+      <p MadCap:conditions="Primary.Java,Primary.All languages"> Java: 
+      <code>activate(ActivationPurpose.WRITE)</code></p><p MadCap:conditions="Global.Primary:java" /><p MadCap:conditions="Global.Primary:net" /></li>
+        </ol>
+        <p>Note that TransparentPersistenceSupport configuration implicitly adds TransparentActivationSupport. The fact is, that before
+modification each field object should be loaded into the reference cache and
+that is the job of TA. So TA should be utilized in any case before TP. You can also note that the way TA and TP links into objects is absolutely identical: TP also uses
+the same <code>activate</code> call, but in this case its purpose is WRITE.</p>
+        <script type="text/javascript" src="../../../SkinSupport/MadCapBodyEnd.js">
+        </script>
+    </body>
+</html>

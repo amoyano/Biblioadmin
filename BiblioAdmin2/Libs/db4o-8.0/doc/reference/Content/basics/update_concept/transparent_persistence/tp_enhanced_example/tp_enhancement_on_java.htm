@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:lastBlockDepth="2" MadCap:lastHeight="120" MadCap:lastWidth="624" MadCap:disableMasterStylesheet="true" MadCap:tocPath="Basics Operations &amp; Concepts|Update Concept|Transparent Persistence|TP Enhanced Example" MadCap:InPreviewMode="false" MadCap:RuntimeFileType="Topic" MadCap:TargetType="WebHelp" MadCap:PathToHelpSystem="../../../../../" MadCap:HelpSystemFileName="index.xml" MadCap:SearchType="Stem">
+    <head><title>TP Enhancement On Java	</title>
+        <script type="text/javascript">/* <![CDATA[ */
+window.onload = function(){
+	var pathToFlash = $('html').attr('MadCap:PathToHelpSystem') + 'Content/Resources/Code/ZeroClipboard.swf';
+	ZeroClipboard.setMoviePath(pathToFlash);
+			
+	function bindToClipBord(element,content){
+		var clip = new ZeroClipboard.Client();
+		clip.setText(content);
+		clip.glue(element);
+	};
+		
+	if(location.protocol==='file:'){
+		$('.copylink-marker').remove();
+	} else{
+			$('.copylink-marker').each(function(){
+				var text = $(this).parent().parent().children('.prettyprint').html();
+				$(this).hover(function(){
+					bindToClipBord(this,text);
+				},
+				function(){});
+			});	
+	}		
+	prettyPrint();	
+};
+                /* ]]> */</script>
+        <link href="../../../../SkinSupport/MadCap.css" rel="stylesheet" />
+        <link href="../../../../Resources/Stylesheets/OnlineStyle.css" rel="stylesheet" />
+        <script src="../../../../SkinSupport/MadCapAll.js">
+        </script>
+        <script src="../../../../Resources/Code/prettify.js">
+        </script>
+        <script src="../../../../Resources/Code/lang-vb.js">
+        </script>
+        <script src="../../../../Resources/Code/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Code/ZeroClipboard.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink" style="display: none;"><a href="../../../../../index_CSH.html#basics/update_concept/transparent_persistence/tp_enhanced_example/tp_enhancement_on_java.htm" style="">Open topic with navigation</a>
+        </p>
+        <div class="MCBreadcrumbsBox"><span class="MCBreadcrumbsPrefix">You are here: </span><a class="MCBreadcrumbsLink" href="../../../../basics.htm">Basics Operations &amp; Concepts</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../../../update_concept.htm">Update Concept</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../../transparent_persistence.htm">Transparent Persistence</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">TP Enhancement On Java	</span>
+        </div>
+        <p>
+            <script type="text/javascript">/*<![CDATA[*/document.write('<a href="' + location.href +'">');
+				document.write("Direct Link");
+			document.write('</a>');/*]]>*/</script>
+        </p>
+        <p>
+        </p>
+        <h1>TP Enhancement On Java</h1>
+        <p><span class="MCTextPopup"><a href="javascript:void(0);" class="MCTextPopupSpot" onclick="FMCTextPopup( event, this ); return false;">TP<img style="border: none;margin-left: 5px;" src="../../../../SkinSupport/ExpandingClosed.gif" MadCap:altsrc="../../../../SkinSupport/ExpandingOpen.gif" class="MCExpandingIcon" onload="if ( typeof( FMCPreloadImage ) == 'function' ) { FMCPreloadImage( '../../../../SkinSupport/ExpandingOpen.gif' ); }" /></a><span class="MCTextPopupBody" style="display: none; ">Transparent Persistence</span></span> Enhancement on Java platform can be done by customizing the ant build script to include instrumentation for persistent classes. </p>
+        <p>For a simple example we will use <a href="tp_enhancement_on_java/sensorpanel.htm">SensorPanel</a> class, which represents a simple linked list. In our example application we will first store several objects of this class, then retrieve and modify them. Transparent Persistence mechanism should take care of modified objects and persist them to the database when the transaction is committed or the database is closed. As SensorPanel does not implement Activatable interface, we will need to use db4o enhancement tools to implement this interface after the class is built.</p>
+        <p>Let's look at our example code.</p>
+        <p>First, we need to configure Transparent Persistence:</p>
+        <pre class="prettyprint" xml:space="preserve">TPExample.java: configureTP
+private static Configuration configureTP()  {
+    Configuration configuration = Db4o.newConfiguration();
+    // add TP support
+    configuration.add(new TransparentPersistenceSupport());
+    return configuration;
+  }</pre>
+        <p>Now we will store a linked list of 10 elements: </p>
+        <pre class="prettyprint" xml:space="preserve">TPExample.java: storeSensorPanel
+private static void storeSensorPanel()  {
+    new File(DB4O_FILE_NAME).delete();
+    ObjectContainer container = database(Db4o.newConfiguration());
+    if (container != null)  {
+      try  {
+        // create a linked list with length 10
+        SensorPanel list = new SensorPanel().createList(10);
+        container.store(list);
+      } finally  {
+        closeDatabase();
+      }
+    }
+  }</pre>
+        <p>And the following procedure will test the effect of TP:</p>
+        <pre class="prettyprint" xml:space="preserve">TPExample.java: testTransparentPersistence
+private static void testTransparentPersistence()  {
+    storeSensorPanel();
+    Configuration configuration = configureTP();
+
+    ObjectContainer container = database(configuration);
+    if (container != null)  {
+      try  {
+        ObjectSet result = container.queryByExample(new SensorPanel(1));
+        listResult(result);
+        SensorPanel sensor = null;
+        if (result.size() &gt; 0)  {
+          System.out.println("Before modification: ");
+          sensor = (SensorPanel) result.queryByExample(0);
+          // the object is a linked list, so each call to next()
+          // will need to activate a new object
+          SensorPanel next = sensor.getNext();
+          while (next != null)  {
+            System.out.println(next);
+            // modify the next sensor
+            next.setSensor(new Integer(10 + (Integer)next.getSensor()));
+            next = next.getNext();
+          }
+          // Explicit commit stores and commits the changes at any time
+                    container.commit();
+        }
+      } finally  {
+        // If there are unsaved changes to activatable objects, they 
+                // will be implicitly saved and committed when the database 
+                // is closed
+        closeDatabase();
+      }
+    }
+    // reopen the database and check the modifications
+    container = database(configuration);
+    if (container != null)  {
+      try  {
+        ObjectSet result = container.queryByExample(new SensorPanel(1));
+        listResult(result);
+        SensorPanel sensor = null;
+        if (result.size() &gt; 0)  {
+          System.out.println("After modification: ");
+          sensor = (SensorPanel) result.queryByExample(0);
+          SensorPanel next = sensor.getNext();
+          while (next != null)  {
+            System.out.println(next);
+            next = next.getNext();
+          }
+        }
+      } finally  {
+        closeDatabase();
+      }
+    }
+  }</pre>
+        <p>Of course, if you will run the code above as is, you will see that all the changes were lost. In order to fix it we will need to build the application with a special build script:</p>
+        <pre class="prettyprint" xml:space="preserve">Build.Xml
+&lt;?xml version="1.0"?&gt;
+
+&lt;!-- 
+  TP build time enhancement sample.
+--&gt;
+
+&lt;project name="tpexamples" default="buildall"&gt;
+
+  &lt;!-- 
+  Set up the required class path for the enhancement task.
+--&gt;
+  &lt;path id="db4o.enhance.path"&gt;
+    &lt;pathelement path="${basedir}" /&gt;
+    &lt;fileset dir="lib"&gt;
+      &lt;include name="**/*.jar" /&gt;
+    &lt;/fileset&gt;
+  &lt;/path&gt;
+
+  &lt;!-- Define enhancement task. --&gt;
+  &lt;taskdef name="db4o-enhance" 
+classname="com.db4o.instrumentation.ant.Db4oFileEnhancerAntTask" 
+classpathref="db4o.enhance.path" loaderref="db4o.enhance.loader" /&gt;
+
+  &lt;typedef name="transparent-persistence" 
+classname="com.db4o.ta.instrumentation.ant.TAAntClassEditFactory" 
+classpathref="db4o.enhance.path" loaderref="db4o.enhance.loader" /&gt;
+
+
+
+  &lt;target name="buildall" depends="compile"&gt;
+
+    &lt;!-- Create enhanced output directory--&gt;
+    &lt;mkdir dir="${basedir}/enhanced-bin" /&gt;
+    &lt;delete dir="${basedir}/enhanced-bin" quiet="true"&gt;
+      &lt;include name="**/*" /&gt;
+    &lt;/delete&gt;
+
+    &lt;db4o-enhance classtargetdir="${basedir}/enhanced-bin"&gt;
+
+      &lt;classpath refid="db4o.enhance.path" /&gt;
+      &lt;!-- Use compiled classes as an input --&gt;
+      &lt;sources dir="${basedir}/bin" /&gt;
+
+      &lt;!-- Call transparent persistence enhancement --&gt;
+      &lt;transparent-persistence /&gt;
+
+    &lt;/db4o-enhance&gt;
+
+  &lt;/target&gt;
+
+  &lt;!-- Simple compilation. Note that db4o version 
+  should be adjusted to correspond to the version 
+  you are using
+  --&gt;
+  &lt;target name="compile"&gt;
+    &lt;javac fork="true" destdir="${basedir}/bin"&gt;
+      &lt;classpath&gt;
+        &lt;pathelement location="${basedir}/lib/db4o-X.XX-java5.jar" /&gt;
+      &lt;/classpath&gt;
+      &lt;src path="${basedir}/src" /&gt;
+      &lt;include name="**/*.java" /&gt;
+    &lt;/javac&gt;
+  &lt;/target&gt;
+
+&lt;/project&gt;</pre>The build script relies on several jars:<ul><li value="1">ant.jar - <a href="http://ant.apache.org/">Ant</a> library  </li><li value="2">bloat-1.0.jar - bloat bytecode instrumentation library </li><li value="3">db4o-<span class="PrimaryCurrentVersion">X.XX</span>-instrumentation.jar - db4o instrumentation library on top of bloat </li><li value="4">db4o-<span class="PrimaryCurrentVersion">X.XX</span>-java5.jar - db4o jar </li><li value="5">db4o-<span class="PrimaryCurrentVersion">X.XX</span>-taj.jar - db4o transparent activation support </li><li value="6">db4o-<span class="PrimaryCurrentVersion">X.XX</span>-tools.jar - db4o tools</li></ul><p>All these jars should be added to /lib folder in the project directory.</p><p>After running the build script above you will get /bin and /enhanced-bin folders produced in your project folder. /bin folder contains compiled application classes, whereas /enhanced-bin contains compiled and enhanced classes. For testing the result of the enhancement you can use the following batch file (to be run from /enhanced-bin folder):</p><p><code>set
+CLASSPATH=.;{$PROJECT_ROOT}\lib\db4o-<span class="PrimaryCurrentVersion">X.XX</span>-java5.jar</code></p><p><code>java
+com.db4odoc.tpbuildtime.TPExample</code></p><p MadCap:conditions="Primary.Online">Download example code:</p><p MadCap:conditions="Primary.Online"><MadCap:conditionalText MadCap:conditions="Primary.Java"><a href="tpexamplesjava.zip">Java </a></MadCap:conditionalText></p><script type="text/javascript" src="../../../../SkinSupport/MadCapBodyEnd.js"></script></body>
+</html>

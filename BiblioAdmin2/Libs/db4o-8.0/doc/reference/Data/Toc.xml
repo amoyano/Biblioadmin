@@ -1,0 +1,539 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CatapultToc Version="1" DescendantCount="440">
+    <TocEntry Title="Introduction" Link="/Content/welcome.htm" ComputedResetPageLayout="true" ComputedFirstTopic="true" DescendantCount="0" />
+    <TocEntry Title="Product Philosophy" Link="/Content/product_philosophy.htm" ComputedFirstTopic="false" DescendantCount="6">
+        <TocEntry Title="Data Persistence" Link="/Content/product_philosophy/data_persistence.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="OODBMS" Link="/Content/product_philosophy/oodbms.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="db4o Position" Link="/Content/product_philosophy/db4o_position.htm" ComputedFirstTopic="false" DescendantCount="2">
+            <TocEntry Title="db4o Applications" Link="/Content/product_philosophy/db4o_applications.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Scalability" Link="/Content/product_philosophy/scalability.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        </TocEntry>
+        <TocEntry Title="Why Choose db4o" Link="/Content/product_philosophy/why_choose_db4o.htm" ComputedFirstTopic="false" DescendantCount="0" />
+    </TocEntry>
+    <TocEntry Title="Basics Operations &amp; Concepts" Link="/Content/basics.htm" ComputedFirstTopic="false" DescendantCount="108">
+        <TocEntry Title="Getting Started" Link="/Content/basics/getting_started.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="The Basic Operations" Link="/Content/basics/object_container.htm" ComputedFirstTopic="false" DescendantCount="5">
+            <TocEntry Title="Access The Database" Link="/Content/basics/object_container.htm#AccessingDB" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Store Objects" Link="/Content/basics/object_container.htm#StoringObject" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Query The Database" Link="/Content/basics/object_container.htm#Queries" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Update Objects" Link="/Content/basics/object_container.htm#UpdateObjects" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Delete Objects" Link="/Content/basics/object_container.htm#DeleteObjects" ComputedFirstTopic="false" DescendantCount="0" />
+        </TocEntry>
+        <TocEntry Title="Querying" Link="/Content/basics/querying.htm" ComputedFirstTopic="false" DescendantCount="47">
+            <TocEntry Title="Native Queries" Link="/Content/basics/querying/native_queries.htm" ComputedFirstTopic="false" DescendantCount="11">
+                <TocEntry Title="Native Query Examples" Link="/Content/basics/querying/native_queries/native_query_examples.htm" ComputedFirstTopic="false" DescendantCount="6">
+                    <TocEntry Title="Equality" Link="/Content/basics/querying/native_queries/native_query_examples.htm#Equality" ComputedFirstTopic="false" DescendantCount="0" />
+                    <TocEntry Title="Comparison" Link="/Content/basics/querying/native_queries/native_query_examples.htm#Comparison" ComputedFirstTopic="false" DescendantCount="0" />
+                    <TocEntry Title="Query For Value Range" Link="/Content/basics/querying/native_queries/native_query_examples.htm#ValueRange" ComputedFirstTopic="false" DescendantCount="0" />
+                    <TocEntry Title="Combine Check With Logical Operators" Link="/Content/basics/querying/native_queries/native_query_examples.htm#LogicalOperators" ComputedFirstTopic="false" DescendantCount="0" />
+                    <TocEntry Title="Query In Separate Class" Link="/Content/basics/querying/native_queries/native_query_examples.htm#SeperateQueryUnit" conditions="Primary.Java" ComputedFirstTopic="false" DescendantCount="0" />
+                    <TocEntry Title="Arbitrary Code" Link="/Content/basics/querying/native_queries/native_query_examples.htm#ArbitraryCode" ComputedFirstTopic="false" DescendantCount="0" />
+                </TocEntry>
+                <TocEntry Title="Native Query Sorting" Link="/Content/basics/querying/native_queries/native_query_sorting.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Native Query Optimization" Link="/Content/basics/querying/native_queries/native_query_optimization.htm" ComputedFirstTopic="false" DescendantCount="2">
+                    <TocEntry Title="Monitoring Optimization" Link="/Content/basics/querying/native_queries/native_query_optimization/monitoring_optimization.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                    <TocEntry Title="Native Query Optimization At Build Time" Link="/Content/basics/querying/native_queries/native_query_optimization/nq_build_time_optimisation.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                </TocEntry>
+            </TocEntry>
+            <TocEntry Title="Query By Example" Link="/Content/basics/querying/query_by_example.htm" ComputedFirstTopic="false" DescendantCount="9">
+                <TocEntry Title="Query By Example Examples" Link="/Content/basics/querying/query_by_example/qby_examples.htm" ComputedFirstTopic="false" DescendantCount="7">
+                    <TocEntry Title="Query By Example Basics" Link="/Content/basics/querying/query_by_example/qby_examples.htm#Basics" ComputedFirstTopic="false" DescendantCount="0" />
+                    <TocEntry Title="Combine Values" Link="/Content/basics/querying/query_by_example/qby_examples.htm#Combine" ComputedFirstTopic="false" DescendantCount="0" />
+                    <TocEntry Title="All Objects Of A Type" Link="/Content/basics/querying/query_by_example/qby_examples.htm#AllOfAType" ComputedFirstTopic="false" DescendantCount="0" />
+                    <TocEntry Title="All Objects" Link="/Content/basics/querying/query_by_example/qby_examples.htm#AllObjects" ComputedFirstTopic="false" DescendantCount="0" />
+                    <TocEntry Title="Nested Objects" Link="/Content/basics/querying/query_by_example/qby_examples.htm#NestedObjects" ComputedFirstTopic="false" DescendantCount="0" />
+                    <TocEntry Title="Contains Example" Link="/Content/basics/querying/query_by_example/qby_examples.htm#Contains" ComputedFirstTopic="false" DescendantCount="0" />
+                    <TocEntry Title="Structured Contains" Link="/Content/basics/querying/query_by_example/qby_examples.htm#StructuredCombine" ComputedFirstTopic="false" DescendantCount="0" />
+                </TocEntry>
+                <TocEntry Title="QBE Limitations" Link="/Content/basics/querying/query_by_example/qbe_limitations.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            </TocEntry>
+            <TocEntry Title="SODA Query" Link="/Content/basics/querying/soda_query.htm" ComputedFirstTopic="false" DescendantCount="24">
+                <TocEntry Title="SODA Query Examples" Link="/Content/basics/querying/soda/soda_example_catelog.htm" ComputedFirstTopic="false" DescendantCount="7">
+                    <TocEntry Title="Type Constraint" Link="/Content/basics/querying/soda/soda_example_catelog.htm#TypeConstraint" ComputedFirstTopic="false" DescendantCount="0" />
+                    <TocEntry Title="Field Constraint" Link="/Content/basics/querying/soda/soda_example_catelog.htm#FieldConstraint" ComputedFirstTopic="false" DescendantCount="0" />
+                    <TocEntry Title="Comparisons" Link="/Content/basics/querying/soda/soda_example_catelog.htm#Comparisons" ComputedFirstTopic="false" DescendantCount="0" />
+                    <TocEntry Title="Combination of Constraints" Link="/Content/basics/querying/soda/soda_example_catelog.htm#Combination" ComputedFirstTopic="false" DescendantCount="0" />
+                    <TocEntry Title="String Comparison" Link="/Content/basics/querying/soda/soda_example_catelog.htm#StringComparison" ComputedFirstTopic="false" DescendantCount="0" />
+                    <TocEntry Title="Compare Field With Existing Object" Link="/Content/basics/querying/soda/soda_example_catelog.htm#CheckForObject" ComputedFirstTopic="false" DescendantCount="0" />
+                    <TocEntry Title="Descend Deeper Into Objects" Link="/Content/basics/querying/soda/soda_example_catelog.htm#DescendIntoObjects" ComputedFirstTopic="false" DescendantCount="0" />
+                </TocEntry>
+                <TocEntry Title="SODA Special Cases Examples" Link="/Content/basics/querying/soda/soda_special_case_examples.htm" ComputedFirstTopic="false" DescendantCount="6">
+                    <TocEntry Title="Contains on Collections and Arrays" Link="/Content/basics/querying/soda/soda_special_case_examples.htm#ContainsOnCollections" ComputedFirstTopic="false" DescendantCount="0" />
+                    <TocEntry Title="Constrains on Collection Members" Link="/Content/basics/querying/soda/soda_special_case_examples.htm#ConstrainsOnCollectionMembers" ComputedFirstTopic="false" DescendantCount="0" />
+                    <TocEntry Title="Contains Key on Maps" Link="/Content/basics/querying/soda/soda_special_case_examples.htm#ContainsKeyOnMaps" ComputedFirstTopic="false" DescendantCount="0" />
+                    <TocEntry Title="Return the Objects of a Field" Link="/Content/basics/querying/soda/soda_special_case_examples.htm#FieldObjects" ComputedFirstTopic="false" DescendantCount="0" />
+                    <TocEntry Title="Mixing With Query By Example" Link="/Content/basics/querying/soda/soda_special_case_examples.htm#MixQueryByExample" ComputedFirstTopic="false" DescendantCount="0" />
+                    <TocEntry Title="Dynamically Typed" Link="/Content/basics/querying/soda/soda_special_case_examples.htm#DynamicTypedNature" ComputedFirstTopic="false" DescendantCount="0" />
+                </TocEntry>
+                <TocEntry Title="SODA Evaluations" Link="/Content/basics/querying/soda/soda_evaluations.htm" ComputedFirstTopic="false" DescendantCount="3">
+                    <TocEntry Title="Simple Evaluation" Link="/Content/basics/querying/soda/soda_evaluations.htm#SimpleEvaluation" ComputedFirstTopic="false" DescendantCount="0" />
+                    <TocEntry Title="Evaluation on Field" Link="/Content/basics/querying/soda/soda_evaluations.htm#EvaluationOnField" ComputedFirstTopic="false" DescendantCount="0" />
+                    <TocEntry Title="Regex on Fields" Link="/Content/basics/querying/soda/soda_evaluations.htm#RegexEvaluation" ComputedFirstTopic="false" DescendantCount="0" />
+                </TocEntry>
+                <TocEntry Title="SODA Sorting" Link="/Content/basics/querying/soda/soda_sorting.htm" ComputedFirstTopic="false" DescendantCount="3">
+                    <TocEntry Title="Sorting by Field" Link="/Content/basics/querying/soda/soda_sorting.htm#SortByField" ComputedFirstTopic="false" DescendantCount="0" />
+                    <TocEntry Title="Sort by Multiple Fields" Link="/Content/basics/querying/soda/soda_sorting.htm#SortByMultipleFields" ComputedFirstTopic="false" DescendantCount="0" />
+                    <TocEntry Title="Sorting With A Comperator" Link="/Content/basics/querying/soda/soda_sorting.htm#CostumSorting" ComputedFirstTopic="false" DescendantCount="0" />
+                </TocEntry>
+                <TocEntry Title="SODA Processing" Link="/Content/basics/querying/soda/soda_processing.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            </TocEntry>
+        </TocEntry>
+        <TocEntry Title="ACID Properties And Transactions" Link="/Content/basics/acid_and_transactions.htm" ComputedFirstTopic="false" DescendantCount="4">
+            <TocEntry Title="db4o Transactions" Link="/Content/basics/acid_and_transactions/db4o_tx_basics.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Isolation" Link="/Content/basics/acid_and_transactions/isolation.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Dangerous Practices" Link="/Content/basics/acid_and_transactions/dangerous_practises.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="db4o's Commit Process" Link="/Content/basics/acid_and_transactions/commit_process_db4o.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        </TocEntry>
+        <TocEntry Title="Identity Concept" Link="/Content/basics/identity_concept.htm" ComputedFirstTopic="false" DescendantCount="2">
+            <TocEntry Title="Identity Vs Equality" Link="/Content/basics/indentity_concept/identity_vs_equals.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="The Reference Cache" Link="/Content/basics/indentity_concept/reference_cache.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        </TocEntry>
+        <TocEntry Title="Activation" Link="/Content/basics/activation.htm" ComputedFirstTopic="false" DescendantCount="17">
+            <TocEntry Title="Activation In Action" Link="/Content/basics/activation_concept/hitting_activation_depth_wall.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Transparent Activation" Link="/Content/basics/activation_concept/transparent_activation_framework.htm" ComputedFirstTopic="false" DescendantCount="15">
+                <TocEntry Title="Example" Link="/Content/basics/activation_concept/transparent_activation_framework/detailed_example.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="TA Implementation" Link="/Content/basics/activation_concept/transparent_activation_framework/ta_implementation.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="TA Enhanced Example" Link="/Content/basics/activation_concept/transparent_activation_framework/ta_enhanced_example.htm" ComputedFirstTopic="false" DescendantCount="4">
+                    <TocEntry Title="TA Enhancement At Load Time" Link="/Content/basics/activation_concept/transparent_activation_framework/ta_enhanced_example/ta_enhancement_at_load_time.htm" conditions="Primary.All languages,Primary.Java" ComputedFirstTopic="false" DescendantCount="0" />
+                    <TocEntry Title="TA Enhancement At Build Time" Link="/Content/basics/activation_concept/transparent_activation_framework/ta_enhanced_example/ta_enhancement_at_build_time.htm" conditions="Primary.All languages,Primary.Java" ComputedFirstTopic="false" DescendantCount="0" />
+                    <TocEntry Title="Transparent Persistence For Java Collections" Link="/Content/basics/activation_concept/transparent_activation_framework/transparent_persistence_for_java_collections.htm" conditions="Primary.Java" ComputedFirstTopic="false" DescendantCount="0" />
+                    <TocEntry Title="Sensorpanel" Link="/Content/basics/activation_concept/transparent_activation_framework/ta_enhanced_example/sensorpanel.htm" conditions="Primary.All languages,Primary.Java" ComputedFirstTopic="false" DescendantCount="0" />
+                </TocEntry>
+                <TocEntry Title="Collections" Link="/Content/basics/activation_concept/transparent_activation_framework/Collections.htm" ComputedFirstTopic="false" DescendantCount="2">
+                    <TocEntry Title="Using TA Collections Directly" Link="/Content/basics/activation_concept/transparent_activation_framework/collections/use_ta_collections.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                    <TocEntry Title="Enhance Collections" Link="/Content/basics/activation_concept/transparent_activation_framework/collections/enhance_collections.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                </TocEntry>
+                <TocEntry Title="Object Types In TA" Link="/Content/basics/activation_concept/transparent_activation_framework/object_types_in_ta.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="TADiagnostics" Link="/Content/basics/activation_concept/transparent_activation_framework/ta_diagnostics.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="TA For Public Fields" Link="/Content/basics/activation_concept/transparent_activation_framework/ta_for_public_fields.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Transparent Activation Pitfalls" Link="/Content/basics/activation_concept/transparent_activation_framework/transparent_activation_pitfalls.htm" ComputedFirstTopic="false" DescendantCount="1">
+                    <TocEntry Title="Migrating Between Databases" Link="/Content/basics/activation_concept/transparent_activation_framework/transparent_activation/migrating_between_databases.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                </TocEntry>
+            </TocEntry>
+        </TocEntry>
+        <TocEntry Title="Update Concept" Link="/Content/basics/update_concept.htm" ComputedFirstTopic="false" DescendantCount="18">
+            <TocEntry Title="Update Depth In Action" Link="/Content/basics/update_concept/update_depth_in_action.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Updating Collections" Link="/Content/basics/update_concept/updating_collections.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Transparent Persistence" Link="/Content/basics/update_concept/transparent_persistence.htm" ComputedFirstTopic="false" DescendantCount="15">
+                <TocEntry Title="Transparent Persistence Example" Link="/Content/basics/update_concept/transparent_persistence/transparent_persistence_example.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Transparent Persistence Implementation" Link="/Content/basics/update_concept/transparent_persistence/transparent_persistence_implementation.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="TP Enhanced Example" Link="/Content/basics/update_concept/transparent_persistence/tp_enhanced_example.htm" ComputedFirstTopic="false" DescendantCount="2">
+                    <TocEntry Title="TP Enhancement On Java" Link="/Content/basics/update_concept/transparent_persistence/tp_enhanced_example/tp_enhancement_on_java.htm" ComputedFirstTopic="false" DescendantCount="1">
+                        <TocEntry Title="SensorPanel" Link="/Content/basics/update_concept/transparent_persistence/tp_enhanced_example/tp_enhancement_on_java/sensorpanel.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                    </TocEntry>
+                </TocEntry>
+                <TocEntry Title="Transparent Persistence Pitfalls" Link="/Content/basics/update_concept/transparent_persistence/transparent_persistence.htm" ComputedFirstTopic="false" DescendantCount="8">
+                    <TocEntry Title="Rollback Strategies" Link="/Content/basics/update_concept/transparent_persistence/transparent_persistence/rollback_strategies.htm" ComputedFirstTopic="false" DescendantCount="5">
+                        <TocEntry Title="Rollback And Cache" Link="/Content/basics/update_concept/transparent_persistence/transparent_persistence/rollback_strategies/rollback_and_cache.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                        <TocEntry Title="Automatic Deactivation" Link="/Content/basics/update_concept/transparent_persistence/transparent_persistence/rollback_strategies/automatic_deactivation.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                        <TocEntry Title="Car" Link="/Content/basics/update_concept/transparent_persistence/transparent_persistence/rollback_strategies/car.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                        <TocEntry Title="Id" Link="/Content/basics/update_concept/transparent_persistence/transparent_persistence/rollback_strategies/id.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                        <TocEntry Title="Pilot" Link="/Content/basics/update_concept/transparent_persistence/transparent_persistence/rollback_strategies/pilot.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                    </TocEntry>
+                    <TocEntry Title="Car" Link="/Content/basics/update_concept/transparent_persistence/transparent_persistence/car.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                    <TocEntry Title="Object Clone" Link="/Content/basics/update_concept/transparent_persistence/transparent_persistence/object_clone.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                </TocEntry>
+                <TocEntry Title="Collections" Link="/Content/basics/update_concept/transparent_persistence/collection_example.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            </TocEntry>
+        </TocEntry>
+        <TocEntry Title="Delete Behavior" Link="/Content/basics/delete_behavior.htm" ComputedFirstTopic="false" DescendantCount="2">
+            <TocEntry Title="Cascading Deletion" Link="/Content/basics/delete_behavior/cascading_deletion.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Collections And Arrays" Link="/Content/basics/delete_behavior/collections.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        </TocEntry>
+        <TocEntry Title="Indexing" Link="/Content/basics/indexing.htm" ComputedFirstTopic="false" DescendantCount="4">
+            <TocEntry Title="When And Where" Link="/Content/basics/indexing/when_and_where.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Costs And Benefits" Link="/Content/basics/indexing/costs_and_benefits.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Types And Limitations" Link="/Content/basics/indexing/types_and_limitations.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Check For Existing Indexes" Link="/Content/basics/indexing/check_for_index.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        </TocEntry>
+    </TocEntry>
+    <TocEntry Title="Configuration" Link="/Content/configuration.htm" ComputedFirstTopic="false" DescendantCount="91">
+        <TocEntry Title="Common Configuration" Link="/Content/configuration/common_configuration.htm" ComputedFirstTopic="false" DescendantCount="28">
+            <TocEntry Title="Common Configuration Items" Link="/Content/configuration/common/configuration_items.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Activation Depth" Link="/Content/configuration/common/activation_depth.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Update Depth" Link="/Content/configuration/common/update_depth.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Aliases" Link="/Content/configuration/common/alias.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Allow Version Updates" Link="/Content/configuration/common/updating_db4o_file_format.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Automatic Shutdown" Link="/Content/configuration/common/automatic_shutdown.htm" VolumeNumberReset="same" SectionNumberReset="continue" ChapterNumberReset="continue" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="B-Tree Node Size" Link="/Content/configuration/common/btree_node_size.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Disable Callbacks" Link="/Content/configuration/common/no_callbacks.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Calling Constructors" Link="/Content/configuration/common/calling_constructors.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Disable Schema Change Detection" Link="/Content/configuration/common/no_schema_changes.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Diagnostics" Link="/Content/configuration/common/diagnostics.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Exceptions On Not Storable Objects" Link="/Content/configuration/common/exceptionsonnotstorable.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Intern Strings" Link="/Content/configuration/common/intern_strings.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Mark Transient" Link="/Content/configuration/common/mark_transient.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Message Level" Link="/Content/configuration/common/message_level.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Name Provider" Link="/Content/configuration/common/name_provider.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Disable Optimize Native Queries" Link="/Content/configuration/common/disable_optimize_nq.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Register Type Handler" Link="/Content/configuration/common/register_type_handler.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Changing the Output Stream" Link="/Content/configuration/common/out_stream.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Query Modes" Link="/Content/configuration/common/query_modes.htm" ComputedFirstTopic="false" DescendantCount="3">
+                <TocEntry Title="Immediate Queries" Link="/Content/configuration/common/query_modes/immediate_queries.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Lazy Queries" Link="/Content/configuration/common/query_modes/lazy_queries.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Snapshot Queries" Link="/Content/configuration/common/query_modes/snapshot_queries.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            </TocEntry>
+            <TocEntry Title="Changing The Reflector" Link="/Content/configuration/common/reflector.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="String Encoding" Link="/Content/configuration/common/string_encoding.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Disable Constructor Testing" Link="/Content/configuration/common/no_test_instances.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Weak Reference Collection Interval" Link="/Content/configuration/common/weak_reference_collection_interval.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Disable Weak References" Link="/Content/configuration/common/disable_weak_references.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        </TocEntry>
+        <TocEntry Title="File Configuration" Link="/Content/configuration/file_configuration.htm" ComputedFirstTopic="false" DescendantCount="25">
+            <TocEntry Title="Asynchronous File-Sync" Link="/Content/configuration/file/async_sync.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Blob Path" Link="/Content/configuration/file/blob_path.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Block Size" Link="/Content/configuration/file/block_size.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Database Growth Size" Link="/Content/configuration/file/database_growth_size.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Disable Commit Recovery" Link="/Content/configuration/file/disable_commit_recovery.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Freespace Configuration" Link="/Content/configuration/file/freespace_configuration.htm" ComputedFirstTopic="false" DescendantCount="4">
+                <TocEntry Title="Discarding Threshold" Link="/Content/configuration/file/freespace_configuration.htm#Discard" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Memory Freespace System" Link="/Content/configuration/file/freespace_configuration.htm#MemorySystem" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="BTree Freespace System" Link="/Content/configuration/file/freespace_configuration.htm#BTreeSystem" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Freespace Filler" Link="/Content/configuration/file/freespace_configuration.htm#Filler" ComputedFirstTopic="false" DescendantCount="0" />
+            </TocEntry>
+            <TocEntry Title="Generate UUIDs" Link="/Content/configuration/file/generate_uuids.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Generate Commit Timestamps" Link="/Content/configuration/file/generate_timestamps.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Lock Database File" Link="/Content/configuration/file/lock_database.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Read Only" Link="/Content/configuration/file/read_only.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Recovery Mode" Link="/Content/configuration/file/recover_mode.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Reserve Storage Space" Link="/Content/configuration/file/reserve_storage_space.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Storage" Link="/Content/configuration/file/storage.htm" ComputedFirstTopic="false" DescendantCount="8">
+                <TocEntry Title="FileStorage" Link="/Content/configuration/file/storage/filestorage.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Memory Storage" Link="/Content/configuration/file/storage/memory_storage.htm" ComputedFirstTopic="false" DescendantCount="1">
+                    <TocEntry Title="Storing MemoryBin Data" Link="/Content/configuration/file/storage/memory_storage/storing_memorybin_data.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                </TocEntry>
+                <TocEntry Title="CachingStorage" Link="/Content/configuration/file/storage/cachingstorage.htm" ComputedFirstTopic="false" DescendantCount="1">
+                    <TocEntry Title="Cache Configuration Example" Link="/Content/configuration/file/storage/cachingstorage/cache_configuration_example.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                </TocEntry>
+                <TocEntry Title="NonFlushingStorage" Link="/Content/configuration/file/storage/nonflushingstorage.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Pluggable Storage" Link="/Content/configuration/file/storage/pluggable_storage.htm" ComputedFirstTopic="false" DescendantCount="1">
+                    <TocEntry Title="Logging Storage" Link="/Content/configuration/file/storage/pluggable_storage/logging_storage.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                </TocEntry>
+            </TocEntry>
+        </TocEntry>
+        <TocEntry Title="Client Configuration" Link="/Content/configuration/client_configuration.htm" ComputedFirstTopic="false" DescendantCount="6">
+            <TocEntry Title="Message Sender" Link="/Content/configuration/client/message_sender.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Prefetch Depth" Link="/Content/configuration/client/prefetch_depth.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Prefetch Object Count" Link="/Content/configuration/client/prefetch_object_count.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Prefetch Slot Cache Size" Link="/Content/configuration/client/prefetch_slot_cache_size.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Prefetching IDs For New Objects" Link="/Content/configuration/client/prefecht_id_count.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Timeout Client Socket" Link="/Content/configuration/client/timeout_client_socket.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        </TocEntry>
+        <TocEntry Title="Networking Configuration" Link="/Content/configuration/network_configuration.htm" ComputedFirstTopic="false" DescendantCount="6">
+            <TocEntry Title="Batch Mode" Link="/Content/configuration/networking/batch_mode.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Client Server Factory" Link="/Content/configuration/networking/client_server_factory.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Message Recipient" Link="/Content/configuration/networking/message_recipient.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Max Batch Queue Size" Link="/Content/configuration/networking/max_batch_queue_size.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Single Threaded Client" Link="/Content/configuration/networking/single_threaded_client.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Pluggable Sockets" Link="/Content/configuration/networking/pluggable_sockets.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        </TocEntry>
+        <TocEntry Title="Class Specific Configuration" Link="/Content/configuration/objectclass_configuration.htm" ComputedFirstTopic="false" DescendantCount="13">
+            <TocEntry Title="Call Constructor" Link="/Content/configuration/objectclass/call_constructor.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Cascade on Delete" Link="/Content/configuration/objectclass/cascade_on_delete.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Cascade on Update" Link="/Content/configuration/objectclass/cascade_on_update.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Cascade on Activate" Link="/Content/configuration/objectclass/cascade_on-activate.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Disable Class Index" Link="/Content/configuration/objectclass/diable_class_index.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Generate UUIDs" Link="/Content/configuration/objectclass/generate_uuid.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Maximum Activation Depth" Link="/Content/configuration/objectclass/maximum_activation_depth.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Minimum Activation Depth" Link="/Content/configuration/objectclass/minimum_activation_depth.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Persist Static Fields" Link="/Content/configuration/objectclass/persist_static_fields.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Rename Class" Link="/Content/configuration/objectclass/rename_class.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Set a Translator" Link="/Content/configuration/objectclass/set_a_translator.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Store Transient Fields" Link="/Content/configuration/objectclass/store_transient_fields.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Update Depth" Link="/Content/configuration/objectclass/update_depth.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        </TocEntry>
+        <TocEntry Title="Field Specific Configuration" Link="/Content/configuration/objectfield_configuration.htm" ComputedFirstTopic="false" DescendantCount="5">
+            <TocEntry Title="Adding a Field Index" Link="/Content/configuration/objectfield_configuration.htm#Adding" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Cascade On Activate" Link="/Content/configuration/objectfield_configuration.htm#CascadeActivate" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Cascade On Update" Link="/Content/configuration/objectfield_configuration.htm#CascadeUpdate" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Cascade On Delete" Link="/Content/configuration/objectfield_configuration.htm#CascadeDelete" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Rename Field" Link="/Content/configuration/objectfield_configuration.htm#Rename" ComputedFirstTopic="false" DescendantCount="0" />
+        </TocEntry>
+        <TocEntry Title="Id System" Link="/Content/configuration/id_system.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Server Configuration" Link="/Content/configuration/server_configuration.htm" ComputedFirstTopic="false" DescendantCount="0" />
+    </TocEntry>
+    <TocEntry Title="Client-Server" Link="/Content/client-server.htm" ComputedFirstTopic="false" DescendantCount="13">
+        <TocEntry Title="Reference Cache In Client-Server Mode" Link="/Content/client-server/reference_cache_in_client-server_mode.htm" ComputedFirstTopic="false" DescendantCount="1">
+            <TocEntry Title="Refreshing Objects" Link="/Content/client-server/refreshing_objects.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        </TocEntry>
+        <TocEntry Title="Embedded Clients" Link="/Content/client-server/embedded.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Native Queries" Link="/Content/client-server/native_queries.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Anonymous Classes In Client Server Mode" Link="/Content/client-server/anonymous_classes.htm" conditions="Primary.Java" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Server Without Persistent Classes Deployed" Link="/Content/client-server/server_without_persistent_classes_deployed.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Events In Client Server-Mode" Link="/Content/client-server/events_in_cs_mode.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Client-Container Pooling" Link="/Content/client-server/pooling.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Concurrency Control" Link="/Content/client-server/concurrency_control.htm" ComputedFirstTopic="false" DescendantCount="1">
+            <TocEntry Title="Semaphores" Link="/Content/client-server/semaphores.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        </TocEntry>
+        <TocEntry Title="Messaging" Link="/Content/client-server/messaging.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Using SSL For Client-Server Communication" Link="/Content/client-server/pluggable_sockets/using_ssl_for_client-server_communication.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Client-Server Timeouts" Link="/Content/client-server/client-server_timeouts.htm" ComputedFirstTopic="false" DescendantCount="0" />
+    </TocEntry>
+    <TocEntry Title="Advanced Features" Link="/Content/advanced_topics.htm" ComputedFirstTopic="false" DescendantCount="64">
+        <TocEntry Title="Session Containers" Link="/Content/advanced_topics/session_containers.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Unique Constraints" Link="/Content/advanced_topics/unique_constraints.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Backup" Link="/Content/advanced_topics/backup.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="UUID Support" Link="/Content/advanced_topics/uuid_support.htm" conditions="Primary.Java" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="IDs And UUIDs" Link="/Content/advanced_topics/ids_and_uuids.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="db4o Meta-Information" Link="/Content/advanced_topics/db4o_meta-information.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="System Info" Link="/Content/advanced_topics/system_info.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Defragment" Link="/Content/advanced_topics/defragment.htm" ComputedFirstTopic="false" DescendantCount="12">
+            <TocEntry Title="How To Use Defragmentation" Link="/Content/advanced_topics/defragment/how_to_use_defragmentation.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Defragmentation Configuration" Link="/Content/advanced_topics/defragment/defragmentation_configuration.htm" ComputedFirstTopic="false" DescendantCount="9">
+                <TocEntry Title="Original Database And Backup" Link="/Content/advanced_topics/defragment/configuration/database_files.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Database Configuration" Link="/Content/advanced_topics/defragment/configuration/database_configuration.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Commit Frequency" Link="/Content/advanced_topics/defragment/configuration/commit_frequency.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Class Filter" Link="/Content/advanced_topics/defragment/configuration/class_filter.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Delete The Backup" Link="/Content/advanced_topics/defragment/configuration/delete_backup.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Upgrade Database File" Link="/Content/advanced_topics/defragment/configuration/upgrade_db.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Disable Read Only Mode" Link="/Content/advanced_topics/defragment/configuration/disable_read_only.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Configure Storage for Backup File" Link="/Content/advanced_topics/defragment/configuration/storage_backupdb.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Configure IDMapping" Link="/Content/advanced_topics/defragment/configuration/id_mapping.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            </TocEntry>
+            <TocEntry Title="Tracking Defragmentation Errors" Link="/Content/advanced_topics/defragment/tracking_defragmentation_errors.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        </TocEntry>
+        <TocEntry Title="Enhancement Tools" Link="/Content/advanced_topics/enhancement_tools.htm" ComputedFirstTopic="false" DescendantCount="3">
+            <TocEntry Title="Example Built Time Enhancement" Link="/Content/advanced_topics/enhancement_tools/build_time_enhancement.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Enhancement For Java" Link="/Content/advanced_topics/enhancement_tools/enhancement_for_java.htm" conditions="Primary.Java,Primary.All languages" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Load Time Enhancement" Link="/Content/advanced_topics/enhancement_tools/enhancement_for_java/complex_example/load_time_enhancement.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        </TocEntry>
+        <TocEntry Title="Callbacks" Link="/Content/advanced_topics/callbacks.htm" ComputedFirstTopic="false" DescendantCount="8">
+            <TocEntry Title="Object Callbacks" Link="/Content/advanced_topics/callbacks/object_callbacks.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Event Registry API" Link="/Content/advanced_topics/callbacks/event_registry_api.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Events Overview" Link="/Content/advanced_topics/callbacks/events_overview.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Possible Usecases" Link="/Content/advanced_topics/callbacks/possible_usecases.htm" ComputedFirstTopic="false" DescendantCount="3">
+                <TocEntry Title="Autoincrement" Link="/Content/advanced_topics/callbacks/possible_usecases/autoincrement.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Referential Integrity" Link="/Content/advanced_topics/callbacks/possible_usecases/referential_integrity.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Committed Event Example" Link="/Content/advanced_topics/callbacks/possible_usecases/committed_event_example.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            </TocEntry>
+            <TocEntry Title="Commit-Time Callbacks" Link="/Content/advanced_topics/callbacks/commit-time_callbacks.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        </TocEntry>
+        <TocEntry Title="Type Handling" Link="/Content/advanced_topics/type_handling.htm" ComputedFirstTopic="false" DescendantCount="16">
+            <TocEntry Title="Big Math" Link="/Content/advanced_topics/type_handling/bigmath.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Blobs" Link="/Content/advanced_topics/type_handling/blobs.htm" ComputedFirstTopic="false" DescendantCount="1">
+                <TocEntry Title="Db4o Blob Implementation" Link="/Content/advanced_topics/type_handling/blobs/db4o_blob_implementation.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            </TocEntry>
+            <TocEntry Title="Collections" Link="/Content/advanced_topics/type_handling/collections.htm" ComputedFirstTopic="false" DescendantCount="2">
+                <TocEntry Title="Collections Or Arrays" Link="/Content/advanced_topics/type_handling/collections/collections_or_arrays.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Big Set" Link="/Content/advanced_topics/type_handling/collections/big_set.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            </TocEntry>
+            <TocEntry Title="Final Fields" Link="/Content/advanced_topics/type_handling/final_fields.htm" conditions="Primary.All languages,Primary.Java" ComputedFirstTopic="false" DescendantCount="2">
+                <TocEntry Title="Final Fields Specifics" Link="/Content/advanced_topics/type_handling/final_fields/final_fields_specifics.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Possible Solutions" Link="/Content/advanced_topics/type_handling/final_fields/possible_solutions.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            </TocEntry>
+            <TocEntry Title="Static Fields And Enums" Link="/Content/advanced_topics/type_handling/static_fields_and_enums.htm" ComputedFirstTopic="false" DescendantCount="1">
+                <TocEntry Title="Storing Static Fields" Link="/Content/advanced_topics/type_handling/static_fields_and_enums/static_fields_api.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            </TocEntry>
+            <TocEntry Title="Translators" Link="/Content/advanced_topics/type_handling/translators.htm" ComputedFirstTopic="false" DescendantCount="1">
+                <TocEntry Title="Built-In Translators" Link="/Content/advanced_topics/type_handling/translators/built-in_translators.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            </TocEntry>
+            <TocEntry Title="Typehandlers" Link="/Content/advanced_topics/type_handling/typehandlers.htm" ComputedFirstTopic="false" DescendantCount="2">
+                <TocEntry Title="Pluggable Typehandler Benefits" Link="/Content/advanced_topics/type_handling/typehandlers/pluggable_typehandler_benefits.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Custom Typehandler Example" Link="/Content/advanced_topics/type_handling/typehandlers/custom_typehandler_example.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            </TocEntry>
+        </TocEntry>
+        <TocEntry Title="Refactoring And Schema Evolution" Link="/Content/advanced_topics/refactoring_and_schema_evolution.htm" ComputedFirstTopic="false" DescendantCount="7">
+            <TocEntry Title="Automatic Refactoring" Link="/Content/advanced_topics/refactoring_and_schema_evolution/automatic_refactoring.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Renaming API" Link="/Content/advanced_topics/refactoring_and_schema_evolution/refactoring_api.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Field Type Change" Link="/Content/advanced_topics/refactoring_and_schema_evolution/field_type_change.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Field Refactoring Limitation" Link="/Content/advanced_topics/refactoring_and_schema_evolution/field_refactoring_limitation.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Refactoring Class Hierarchy" Link="/Content/advanced_topics/refactoring_and_schema_evolution/refactoring_class_hierarchy.htm" ComputedFirstTopic="false" DescendantCount="2">
+                <TocEntry Title="Removing Class From A Hierarchy" Link="/Content/advanced_topics/refactoring_and_schema_evolution/refactoring_class_hierarchy/removing_class_from_a_hierarchy.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Inserting Class Into a Hierarchy" Link="/Content/advanced_topics/refactoring_and_schema_evolution/refactoring_class_hierarchy/inserting_class_into_a_hierarchy.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            </TocEntry>
+        </TocEntry>
+        <TocEntry Title="Exception Handling" Link="/Content/advanced_topics/exceptions.htm" ComputedFirstTopic="false" DescendantCount="2">
+            <TocEntry Title="Exception Types" Link="/Content/advanced_topics/exceptions/exception_types.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="How To Work With db4o Exceptions" Link="/Content/advanced_topics/exceptions/how_to_work_with_db4o_exceptions.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        </TocEntry>
+        <TocEntry Title="db4o Reflection API" Link="/Content/advanced_topics/db4o_reflection_api.htm" ComputedFirstTopic="false" DescendantCount="2">
+            <TocEntry Title="Creating your own reflector" Link="/Content/advanced_topics/db4o_reflection_api/creating_your_own_reflector.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="GenericReflector" Link="/Content/advanced_topics/db4o_reflection_api/genericreflector.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        </TocEntry>
+    </TocEntry>
+    <TocEntry Title="Best Practices" Link="/Content/best_practises.htm" ComputedFirstTopic="false" DescendantCount="4">
+        <TocEntry Title="Paging" Link="/Content/best_practises/paging.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Upgrade db4o Version" Link="/Content/best_practises/updating_db4o_version.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Lifetime Of An Object Container" Link="/Content/best_practises/lifetime_of_a_objectcontainer.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Deleting Objects" Link="/Content/best_practises/deleting_objects.htm" ComputedFirstTopic="false" DescendantCount="0" />
+    </TocEntry>
+    <TocEntry Title="Platform Specific Issues" Link="/Content/platform_specific_issues.htm" ComputedFirstTopic="false" DescendantCount="41">
+        <TocEntry Title="Disconnected Objects" Link="/Content/platform_specific_issues/disconnected_objects.htm" ComputedFirstTopic="false" DescendantCount="8">
+            <TocEntry Title="Comparison Of Different IDs" Link="/Content/platform_specific_issues/disconnected_objects/comparison_of_ids.htm" ComputedFirstTopic="false" DescendantCount="4">
+                <TocEntry Title="Example Internal Id" Link="/Content/platform_specific_issues/disconnected_objects/example_internal_id.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Example db4o UUID" Link="/Content/platform_specific_issues/disconnected_objects/example_db4o_uuid.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Example UUID" Link="/Content/platform_specific_issues/disconnected_objects/example_plattform_uuid.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Example ID-Generator" Link="/Content/platform_specific_issues/disconnected_objects/example_id_generator.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            </TocEntry>
+            <TocEntry Title="Merging Changes" Link="/Content/platform_specific_issues/disconnected_objects/merging_changes.htm" ComputedFirstTopic="false" DescendantCount="2">
+                <TocEntry Title="Wrong Approach" Link="/Content/platform_specific_issues/disconnected_objects/wrong_approach.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Example Merge Changes" Link="/Content/platform_specific_issues/disconnected_objects/example_merge_changes.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            </TocEntry>
+        </TocEntry>
+        <TocEntry Title="Web Environment" Link="/Content/platform_specific_issues/web_environment.htm" ComputedFirstTopic="false" DescendantCount="3">
+            <TocEntry Title="Isolation in Web-Applications" Link="/Content/platform_specific_issues/web/web_isolation.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Servlets" Link="/Content/platform_specific_issues/web/servlets.htm" conditions="Primary.All languages,Primary.Java" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Spring MVC Example" Link="/Content/platform_specific_issues/web/spring_mvc_example.htm" conditions="Primary.Java" ComputedFirstTopic="false" DescendantCount="0" />
+        </TocEntry>
+        <TocEntry Title="Android" Link="/Content/platform_specific_issues/android.htm" conditions="Primary.All languages,Primary.Java" ComputedFirstTopic="false" DescendantCount="13">
+            <TocEntry Title="Getting Started" Link="/Content/platform_specific_issues/android/getting_started.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Pitfalls and Tested Functionality" Link="/Content/platform_specific_issues/android/state_and_pitfalls.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Native Queries" Link="/Content/platform_specific_issues/android/native_queries.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Comparison With SQLite" Link="/Content/platform_specific_issues/android/comparison_with_sqlite.htm" ComputedFirstTopic="false" DescendantCount="9">
+                <TocEntry Title="General Info" Link="/Content/platform_specific_issues/android/general_info.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Opening a Database" Link="/Content/platform_specific_issues/android/opening_a_database.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Storing Data" Link="/Content/platform_specific_issues/android/storing_data.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Retrieving Data" Link="/Content/platform_specific_issues/android/retrieving_data.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Changing Data" Link="/Content/platform_specific_issues/android/changing_data.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Deleting Data" Link="/Content/platform_specific_issues/android/deleting_data.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Backup" Link="/Content/platform_specific_issues/android/backup.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Closing a Database" Link="/Content/platform_specific_issues/android/closing_a_database.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Schema Evolution" Link="/Content/platform_specific_issues/android/schema_evolution.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            </TocEntry>
+        </TocEntry>
+        <TocEntry Title="db4o On Java Platforms" Link="/Content/platform_specific_issues/db4o_on_java_platforms.htm" conditions="Primary.All languages,Primary.Java" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Security Requirements On Java Platform" Link="/Content/platform_specific_issues/security_requirements_on_java_platform.htm" conditions="Primary.All languages,Primary.Java" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="XML Import-Export In Java" Link="/Content/platform_specific_issues/xml_import-export_in_java.htm" conditions="Primary.All languages,Primary.Java" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Classloader Issues" Link="/Content/platform_specific_issues/classloader_issues.htm" conditions="Primary.All languages,Primary.Java" ComputedFirstTopic="false" DescendantCount="3">
+            <TocEntry Title="Classloader Basics" Link="/Content/platform_specific_issues/classloader_issues/classloader_basics.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Configuration" Link="/Content/platform_specific_issues/classloader_issues/configuration.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Special Cases" Link="/Content/platform_specific_issues/classloader_issues/special_cases.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        </TocEntry>
+        <TocEntry Title="Database For OSGI" Link="/Content/platform_specific_issues/database_for_osgi.htm" conditions="Primary.All languages,Primary.Java" ComputedFirstTopic="false" DescendantCount="6">
+            <TocEntry Title="db4o-OSGI Usage" Link="/Content/platform_specific_issues/database_for_osgi/db4o-osgi_usage.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Eclipse Plug-In With db4o Service" Link="/Content/platform_specific_issues/database_for_osgi/eclipse_plug-in_with_db4o_service.htm" ComputedFirstTopic="false" DescendantCount="4">
+                <TocEntry Title="Creating a Plugin" Link="/Content/platform_specific_issues/database_for_osgi/eclipse_plug-in_with_db4o_service/creating_a_plugin.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Code Overview" Link="/Content/platform_specific_issues/database_for_osgi/eclipse_plug-in_with_db4o_service/code_overview.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Connecting To db4o" Link="/Content/platform_specific_issues/database_for_osgi/eclipse_plug-in_with_db4o_service/connecting_to_db4o.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Testing Memoplugin" Link="/Content/platform_specific_issues/database_for_osgi/eclipse_plug-in_with_db4o_service/testing_memoplugin.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            </TocEntry>
+            <TocEntry Title="Memoplugin" Link="/Content/platform_specific_issues/database_for_osgi/memoplugin.jpg" ComputedFirstTopic="false" DescendantCount="0" />
+        </TocEntry>
+    </TocEntry>
+    <TocEntry Title="Tuning" Link="/Content/tuning.htm" ComputedFirstTopic="false" DescendantCount="71">
+        <TocEntry Title="Main Operations Performance" Link="/Content/tuning/main_operations_performance.htm" ComputedFirstTopic="false" DescendantCount="31">
+            <TocEntry Title="Insert Performance" Link="/Content/tuning/main_operations_performance/insert_performance.htm" ComputedFirstTopic="false" DescendantCount="7">
+                <TocEntry Title="Hardware Resources" Link="/Content/tuning/main_operations_performance/insert_performance/hardware_resources.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Local And Remote Modes" Link="/Content/tuning/main_operations_performance/insert_performance/local_and_remote_modes.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Commit Frequency" Link="/Content/tuning/main_operations_performance/insert_performance/commit_frequency.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Object Structure" Link="/Content/tuning/main_operations_performance/insert_performance/object_structure.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Indexes" Link="/Content/tuning/main_operations_performance/insert_performance/indexes.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Inherited Objects" Link="/Content/tuning/main_operations_performance/insert_performance/inherited_objects.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Configuration Options" Link="/Content/tuning/main_operations_performance/insert_performance/configuration_options.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            </TocEntry>
+            <TocEntry Title="Delete Performance" Link="/Content/tuning/main_operations_performance/delete_performance.htm" ComputedFirstTopic="false" DescendantCount="5">
+                <TocEntry Title="Commit Frequency" Link="/Content/tuning/main_operations_performance/delete_performance/commit_frequency.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Complexity Of Objects" Link="/Content/tuning/main_operations_performance/delete_performance/complexity_of_objects.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Storage Characteristics" Link="/Content/tuning/main_operations_performance/delete_performance/storage_characteristics.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Client-Server" Link="/Content/tuning/main_operations_performance/delete_performance/client-server.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Cascade On Delete" Link="/Content/tuning/main_operations_performance/delete_performance/cascade_on_delete.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            </TocEntry>
+            <TocEntry Title="Update Performance" Link="/Content/tuning/main_operations_performance/update_performance.htm" ComputedFirstTopic="false" DescendantCount="7">
+                <TocEntry Title="Configuration" Link="/Content/tuning/main_operations_performance/update_performance/configuration.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Object Structure" Link="/Content/tuning/main_operations_performance/update_performance/object_structure.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Commit Frequency" Link="/Content/tuning/main_operations_performance/update_performance/commit_frequency.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Hard Drive Speed" Link="/Content/tuning/main_operations_performance/update_performance/hard_drive_speed.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Cient-Server" Link="/Content/tuning/main_operations_performance/update_performance/client-server.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Indexes" Link="/Content/tuning/main_operations_performance/update_performance/indexes.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Inheritance" Link="/Content/tuning/main_operations_performance/update_performance/inheritance.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            </TocEntry>
+            <TocEntry Title="Query Performance" Link="/Content/tuning/main_operations_performance/query_performance.htm" ComputedFirstTopic="false" DescendantCount="8">
+                <TocEntry Title="Different Query Types" Link="/Content/tuning/main_operations_performance/query_performance/different_query_types.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Query Structure" Link="/Content/tuning/main_operations_performance/query_performance/query_structure.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Database Size" Link="/Content/tuning/main_operations_performance/query_performance/database_size.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Complexity Of Objects" Link="/Content/tuning/main_operations_performance/query_performance/complexity_of_objects.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Inherited  Objects" Link="/Content/tuning/main_operations_performance/query_performance/inherited_objects.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Hardware Resources" Link="/Content/tuning/main_operations_performance/query_performance/hardware_resources.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Client-Server" Link="/Content/tuning/main_operations_performance/query_performance/client-server.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Indexing" Link="/Content/tuning/main_operations_performance/query_performance/indexing.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            </TocEntry>
+        </TocEntry>
+        <TocEntry Title="Io Benchmark Tools" Link="/Content/tuning/io_benchmark_tools.htm" conditions="Primary.Java,Primary.All languages" ComputedFirstTopic="false" DescendantCount="4">
+            <TocEntry Title="First Steps" Link="/Content/tuning/io_benchmark_tools/first_steps.htm" conditions="Primary.All languages,Primary.Java" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Using Your Application To Generate The  Io Pattern" Link="/Content/tuning/io_benchmark_tools/using_your_application_to_generate_the_io_pattern.htm" conditions="Primary.All languages,Primary.Java" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Simulating Slow Io On A Fast Machine" Link="/Content/tuning/io_benchmark_tools/simulating_slow_io_on_a_fast_machine.htm" conditions="Primary.All languages,Primary.Java" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Io Log File Statistics" Link="/Content/tuning/io_benchmark_tools/io_log_file_statistics.htm" conditions="Primary.All languages,Primary.Java" ComputedFirstTopic="false" DescendantCount="0" />
+        </TocEntry>
+        <TocEntry Title="Selective Persistence" Link="/Content/tuning/selective_persistence.htm" ComputedFirstTopic="false" DescendantCount="4">
+            <TocEntry Title="Transient Fields In Java" Link="/Content/tuning/selective_persistence/transient_fields_in_java.htm" conditions="Primary.Java,Primary.All languages" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Transient Classes" Link="/Content/tuning/selective_persistence/transient_classes.htm" ComputedFirstTopic="false" DescendantCount="2">
+                <TocEntry Title="test1" Link="/Content/tuning/selective_persistence/transient_classes/test1.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="test2" Link="/Content/tuning/selective_persistence/transient_classes/test2.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            </TocEntry>
+        </TocEntry>
+        <TocEntry Title="Performance Hints" Link="/Content/tuning/performance_hints.htm" ComputedFirstTopic="false" DescendantCount="9">
+            <TocEntry Title="Discarding Free Space" Link="/Content/tuning/performance_hints/discarding_free_space.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Defragment" Link="/Content/tuning/performance_hints/defragment.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Activation Strategies" Link="/Content/tuning/performance_hints/activation_strategies.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="No Class Index" Link="/Content/tuning/performance_hints/no_class_index.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Commit Strategies" Link="/Content/tuning/performance_hints/commit_strategies.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Increasing The Maximum Database File Size" Link="/Content/tuning/performance_hints/increasing_the_maximum_database_file_size.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Database Size" Link="/Content/tuning/performance_hints/database_size.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Inheritance Hierarchies" Link="/Content/tuning/performance_hints/inheritance_hierarchies.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Persistent And Transient Fields" Link="/Content/tuning/performance_hints/persistent_and_transient_fields.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        </TocEntry>
+        <TocEntry Title="Runtime Statistics" Link="/Content/tuning/runtime_statistics.htm" ComputedFirstTopic="false" DescendantCount="7">
+            <TocEntry Title="Install and Monitor" Link="/Content/tuning/Runtime_Statistics/install_and_monitor.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Monitoring Queries" Link="/Content/tuning/Runtime_Statistics/monitor_queries.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Monitor Object Lifecycle" Link="/Content/tuning/Runtime_Statistics/monitor_object_lifecycle.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Monitor IO" Link="/Content/tuning/Runtime_Statistics/monitor_io.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Monitor Freespace" Link="/Content/tuning/Runtime_Statistics/monitor_freespace.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Monitor Network" Link="/Content/tuning/Runtime_Statistics/monitor_network.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Monitor Reference System" Link="/Content/tuning/Runtime_Statistics/monitor_reference_system.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        </TocEntry>
+        <TocEntry Title="Debugging db4o" Link="/Content/tuning/debugging_db4o.htm" ComputedFirstTopic="false" DescendantCount="3">
+            <TocEntry Title="Debug Messaging System" Link="/Content/tuning/debugging_db4o/debug_messaging_system.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Using Dtrace" Link="/Content/tuning/debugging_db4o/using_dtrace.htm" conditions="Primary.Java,Primary.All languages" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Reading db4o File" Link="/Content/tuning/debugging_db4o/reading_db4o_file.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        </TocEntry>
+        <TocEntry Title="Diagnostics" Link="/Content/tuning/diagnostics.htm" ComputedFirstTopic="false" DescendantCount="1">
+            <TocEntry Title="Diagnostic Messages Filter" Link="/Content/tuning/diagnostics/diagnostic_messages_filter.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        </TocEntry>
+        <TocEntry Title="Utility Methods" Link="/Content/tuning/utility_methods.htm" ComputedFirstTopic="false" DescendantCount="4">
+            <TocEntry Title="peekpersisted" Link="/Content/tuning/utility_methods/peekpersisted.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="isactive" Link="/Content/tuning/utility_methods/isactive.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="isstored" Link="/Content/tuning/utility_methods/isstored.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="descend" Link="/Content/tuning/utility_methods/descend.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        </TocEntry>
+    </TocEntry>
+    <TocEntry Title="Usage Pitfalls" Link="/Content/usage_pitfalls.htm" ComputedFirstTopic="false" DescendantCount="8">
+        <TocEntry Title="Activation Depth Pitfall" Link="/Content/usage_pitfalls/activation_depth.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Update Depth Pitfall" Link="/Content/usage_pitfalls/update_depth.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Storing BigDecimal And BigInteger" Link="/Content/usage_pitfalls/storing_bigdecimal.htm" conditions="Primary.Java" ReplaceMergeNode="false" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Special Type Handling" Link="/Content/usage_pitfalls/special_type_handling.htm" conditions="Primary.Java" ReplaceMergeNode="false" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Classloader And Generic Classes" Link="/Content/usage_pitfalls/classloader_and_generic_classes.htm" conditions="Primary.All languages,Primary.Java" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Dangerous Practices" Link="/Content/usage_pitfalls/dangerous_practices.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Persistent Hashtables" Link="/Content/usage_pitfalls/persistent_hashtables.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Working With Large Amounts Of Data" Link="/Content/usage_pitfalls/working_with_large_amounts_of_data.htm" ComputedFirstTopic="false" DescendantCount="0" />
+    </TocEntry>
+    <TocEntry Title="db4o Replication System" conditions="Primary.Java" Link="/../../../../../reference/DRSFlare/Reference.flprj" ReplaceMergeNode="false" StartSection="false" StartChapter="false" AutoMerge="after-head" AbsoluteLink="file:///C:/Users/Gamlor/Develop/db4o/ReferenceDocumentation/workingCopy/DRSFlare/Reference.flprj#JavaWeb" MergeHint="0" ComputedFirstTopic="false" DescendantCount="0" />
+    <TocEntry Title="Object Manager Enterprise" Link="/Content/object_manager_enterprise.htm" ComputedFirstTopic="false" DescendantCount="3">
+        <TocEntry Title="OME Interface" Link="/Content/object_manager_enterprise/ome_for_eclipse/ome_interface.htm" conditions="Primary.Java" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Browsing a Database" Link="/Content/object_manager_enterprise/ome_for_eclipse/browsing_a_database.htm" conditions="Primary.Java" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Querying" Link="/Content/object_manager_enterprise/ome_for_eclipse/querying.htm" conditions="Primary.Java" ComputedFirstTopic="false" DescendantCount="0" />
+    </TocEntry>
+    <TocEntry Title="Community" Link="/Content/community.htm" ComputedFirstTopic="false" DescendantCount="16">
+        <TocEntry Title="Forums" Link="/Content/community.htm#db4o" StartSection="false" StartChapter="false" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Resources &amp; News" Link="/Content/community.htm#Addition" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Report Bugs" Link="/Content/community/report_bugs.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Working With Source Code" Link="/Content/community/working_with_source_code.htm" ComputedFirstTopic="false" DescendantCount="12">
+            <TocEntry Title="Sharpen" Link="/Content/community/working_with_source/sharpen.htm" ComputedFirstTopic="false" DescendantCount="4">
+                <TocEntry Title="How To Setup Sharpen" Link="/Content/community/working_with_source/sharpen/how_to_setup_sharpen.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Doing a Sharpen Conversion" Link="/Content/community/working_with_source/sharpen/example_conversion.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Sharpen Command-Line Arguments" Link="/Content/community/working_with_source/sharpen/sharpen_command-line_arguments.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="Sharpen Annotations" Link="/Content/community/working_with_source/sharpen/sharpen_annotations.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            </TocEntry>
+            <TocEntry Title="db4o Testing Framework" Link="/Content/community/working_with_source/db4o_testing_framework.htm" ComputedFirstTopic="false" DescendantCount="2">
+                <TocEntry Title="Creating A Sample Test" Link="/Content/community/working_with_source/db4o_testing_framework/creating_a_sample_test.htm" ComputedFirstTopic="false" DescendantCount="0" />
+                <TocEntry Title="db4ounit Methods" Link="/Content/community/working_with_source/db4o_testing_framework/db4ounit_methods.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            </TocEntry>
+            <TocEntry Title="Using The Sources From db4o Distribution" Link="/Content/community/working_with_source/using_the_sources_from_db4o_distribution.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Using The Repository" Link="/Content/community/working_with_source/using_the_repository.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Building Full Distribution" Link="/Content/community/working_with_source/building_full_distribution.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Patch Submission" Link="/Content/community/working_with_source/patch_submission.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        </TocEntry>
+    </TocEntry>
+    <TocEntry Title="Dependency Overview" Link="/Content/dependency_overview.htm" ComputedFirstTopic="false" DescendantCount="0" />
+    <TocEntry Title="License" Link="/Content/license.htm" ComputedFirstTopic="false" DescendantCount="0" />
+    <TocEntry Title="Contacts" Link="/Content/contacts.htm" ComputedFirstTopic="false" DescendantCount="0" />
+</CatapultToc>

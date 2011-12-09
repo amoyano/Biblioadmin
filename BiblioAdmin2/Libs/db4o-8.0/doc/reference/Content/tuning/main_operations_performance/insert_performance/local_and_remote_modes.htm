@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:lastBlockDepth="2" MadCap:lastHeight="120" MadCap:lastWidth="624" MadCap:disableMasterStylesheet="true" MadCap:tocPath="Tuning|Main Operations Performance|Insert Performance" MadCap:InPreviewMode="false" MadCap:RuntimeFileType="Topic" MadCap:TargetType="WebHelp" MadCap:PathToHelpSystem="../../../../" MadCap:HelpSystemFileName="index.xml" MadCap:SearchType="Stem">
+    <head><title>Local And Remote Modes	</title>
+        <script type="text/javascript">/* <![CDATA[ */
+window.onload = function(){
+	var pathToFlash = $('html').attr('MadCap:PathToHelpSystem') + 'Content/Resources/Code/ZeroClipboard.swf';
+	ZeroClipboard.setMoviePath(pathToFlash);
+			
+	function bindToClipBord(element,content){
+		var clip = new ZeroClipboard.Client();
+		clip.setText(content);
+		clip.glue(element);
+	};
+		
+	if(location.protocol==='file:'){
+		$('.copylink-marker').remove();
+	} else{
+			$('.copylink-marker').each(function(){
+				var text = $(this).parent().parent().children('.prettyprint').html();
+				$(this).hover(function(){
+					bindToClipBord(this,text);
+				},
+				function(){});
+			});	
+	}		
+	prettyPrint();	
+};
+                /* ]]> */</script>
+        <link href="../../../SkinSupport/MadCap.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/OnlineStyle.css" rel="stylesheet" />
+        <script src="../../../Resources/Code/prettify.js">
+        </script>
+        <script src="../../../Resources/Code/lang-vb.js">
+        </script>
+        <script src="../../../Resources/Code/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Code/ZeroClipboard.js">
+        </script>
+        <script src="../../../SkinSupport/MadCapAll.js" type="text/javascript">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink" style="display: none;"><a href="../../../../index_CSH.html#tuning/main_operations_performance/insert_performance/local_and_remote_modes.htm" style="">Open topic with navigation</a>
+        </p>
+        <div class="MCBreadcrumbsBox"><span class="MCBreadcrumbsPrefix">You are here: </span><a class="MCBreadcrumbsLink" href="../../../tuning.htm">Tuning</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../../main_operations_performance.htm">Main Operations Performance</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../insert_performance.htm">Insert Performance</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Local And Remote Modes</span>
+        </div>
+        <p>
+            <script type="text/javascript">/*<![CDATA[*/document.write('<a href="' + location.href +'">');
+				document.write("Direct Link");
+			document.write('</a>');/*]]>*/</script>
+        </p>
+        <p>
+        </p>
+        <h1>Local And Remote Modes</h1>
+        <p>Of course local and client/server modes cannot give the same
+performance and it is difficult to say what will be the impact of inserting the
+objects over the network, as the network conditions can vary. </p>
+        <p>You can use the following test to compare the performance on
+your network:</p>
+        <p MadCap:conditions="Primary.Java,Primary.All languages">
+            <pre class="prettyprint" xml:space="preserve">InsertPerformanceBenchmark.java: runClientServerTest
+private void runClientServerTest() {
+      
+      configureClientServer();
+      
+      init();
+      clean();
+      System.out.println("Storing " + _count + " objects of depth " 
++ _depth + " locally:");
+      open();
+      store();
+      close();
+      
+      initForClientServer();
+      clean();
+      System.out.println("Storing " + _count + " objects of depth " 
++ _depth + " remotely:");
+      open();
+      store();
+      close();
+      
+    }</pre>
+            <pre class="prettyprint" xml:space="preserve">InsertPerformanceBenchmark.java: configureClientServer
+private void configureClientServer() {
+      Configuration config = Db4o.configure(); 
+        config.lockDatabaseFile(false);
+        config.weakReferences(false);
+        config.flushFileBuffers(false);
+        config.clientServer().singleThreadedClient(true);
+    }</pre>
+            <pre class="prettyprint" xml:space="preserve">InsertPerformanceBenchmark.java: init
+private void init() {
+      _count = 10000;
+        _depth = 3;
+        _isClientServer = false;
+          
+    }</pre>
+            <pre class="prettyprint" xml:space="preserve">InsertPerformanceBenchmark.java: initForClientServer
+private void initForClientServer() {
+      _count = 10000;
+        _depth = 3;
+        _isClientServer = true;
+        _host = "localhost";  
+    }</pre>
+            <pre class="prettyprint" xml:space="preserve">InsertPerformanceBenchmark.java: store
+private void store() {
+        startTimer();
+        for (int i = 0; i &lt; _count ;i++)  {
+            Item item = new Item("load", null);
+            for (int j = 1; j &lt; _depth; j++)  {
+                item = new Item("load", item);
+            }
+            objectContainer.store(item);
+        }
+        objectContainer.commit();
+        stopTimer("Store "+ totalObjects() + " objects");
+    }</pre>
+        </p>
+        <p MadCap:conditions="Global.Primary:java" />
+        <p MadCap:conditions="Global.Primary:net" />
+        <p>With a good and reliable network you can use the same
+methods to improve the insert performance as in a local mode. However, if your
+network connection is not always perfect you will need to use commits more
+often to ensure that the objects do not get lost. See the
+<a href="commit_frequency.htm">next chapter</a> for recommendations on commit performance.</p>
+        <p MadCap:conditions="Primary.Online">Download example code:</p>
+        <p MadCap:conditions="Primary.Online">
+            <MadCap:conditionalText MadCap:conditions="Primary.Java"><a href="../performancejava.zip">Java </a>
+            </MadCap:conditionalText>
+        </p>
+        <script type="text/javascript" src="../../../SkinSupport/MadCapBodyEnd.js">
+        </script>
+    </body>
+</html>

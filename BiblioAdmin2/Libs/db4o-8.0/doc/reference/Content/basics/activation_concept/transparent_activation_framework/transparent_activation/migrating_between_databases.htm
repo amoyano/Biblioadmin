@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:lastBlockDepth="2" MadCap:lastHeight="120" MadCap:lastWidth="624" MadCap:disableMasterStylesheet="true" MadCap:tocPath="Basics Operations &amp; Concepts|Activation|Transparent Activation|Transparent Activation Pitfalls" MadCap:InPreviewMode="false" MadCap:RuntimeFileType="Topic" MadCap:TargetType="WebHelp" MadCap:PathToHelpSystem="../../../../../" MadCap:HelpSystemFileName="index.xml" MadCap:SearchType="Stem">
+    <head><title>Migrating Between Databases	</title>
+        <script type="text/javascript">/* <![CDATA[ */
+window.onload = function(){
+	var pathToFlash = $('html').attr('MadCap:PathToHelpSystem') + 'Content/Resources/Code/ZeroClipboard.swf';
+	ZeroClipboard.setMoviePath(pathToFlash);
+			
+	function bindToClipBord(element,content){
+		var clip = new ZeroClipboard.Client();
+		clip.setText(content);
+		clip.glue(element);
+	};
+		
+	if(location.protocol==='file:'){
+		$('.copylink-marker').remove();
+	} else{
+			$('.copylink-marker').each(function(){
+				var text = $(this).parent().parent().children('.prettyprint').html();
+				$(this).hover(function(){
+					bindToClipBord(this,text);
+				},
+				function(){});
+			});	
+	}		
+	prettyPrint();	
+};
+                /* ]]> */</script>
+        <link href="../../../../SkinSupport/MadCap.css" rel="stylesheet" />
+        <link href="../../../../Resources/Stylesheets/OnlineStyle.css" rel="stylesheet" />
+        <script src="../../../../SkinSupport/MadCapAll.js">
+        </script>
+        <script src="../../../../Resources/Code/prettify.js">
+        </script>
+        <script src="../../../../Resources/Code/lang-vb.js">
+        </script>
+        <script src="../../../../Resources/Code/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Code/ZeroClipboard.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink" style="display: none;"><a href="../../../../../index_CSH.html#basics/activation_concept/transparent_activation_framework/transparent_activation/migrating_between_databases.htm" style="">Open topic with navigation</a>
+        </p>
+        <div class="MCBreadcrumbsBox"><span class="MCBreadcrumbsPrefix">You are here: </span><a class="MCBreadcrumbsLink" href="../../../../basics.htm">Basics Operations &amp; Concepts</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../../../activation.htm">Activation</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../../transparent_activation_framework.htm">Transparent Activation</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Migrating Between Databases</span>
+        </div>
+        <p>
+            <script type="text/javascript">/*<![CDATA[*/document.write('<a href="' + location.href +'">');
+				document.write("Direct Link");
+			document.write('</a>');/*]]>*/</script>
+        </p>
+        <p>
+        </p>
+        <h1>Migrating Between Databases</h1>
+        <p>Transparent activation and persistence functionality depends
+on an association between an object and an object container, which is created
+when an activator is bound to the object. Each object allows only one
+activator. Typically this limitation won't show up, however there is a valid
+use case for it: </p>
+        <p>1)      suppose
+you need to copy one or more objects from one object container to another;</p>
+        <p>2)      you
+will retrieve the object(s) from the first object container using any suitable
+query syntax;</p>
+        <p>3)      optionally
+you can close the first object container;</p>
+        <p>4)      you
+will now save the object to the second object container.</p>
+        <p>If both object containers were
+using transparent activation or persistence - the 4-th step will throw an
+exception. Let's look at the case in more detail. Typical activatable class
+contains an <code>activator</code> field. When transparent activation
+functionality is used for the first time an object container activator will be
+bound to the object:</p>
+        <p MadCap:conditions="Primary.Java,Primary.All languages">
+            <pre class="prettyprint" xml:space="preserve">SensorPanelTA.java: bind
+/**//*Bind the class to the specified object container, create the activator*/
+  public void bind(Activator activator)  {
+      if (_activator == activator)  {
+        return;
+      }
+      if (activator != null &amp;&amp; _activator != null)  {
+            throw new IllegalStateException();
+        }
+    _activator = activator;
+  }</pre>
+        </p>
+        <p MadCap:conditions="Global.Primary:java" />
+        <p MadCap:conditions="Global.Primary:cs" />
+        <p MadCap:conditions="Global.Primary:vb" />
+        <p>If <code>bind</code> method will
+be re-called with the same object container, activator parameter will always be
+the same. However, if another object container tries to bind the object (in our
+case with the <code>store</code> call) activator parameter will be different,
+which will cause an exception. (Exception will be thrown even if the first
+object container is already closed, as activator object still exists in the
+memory.) This behaviour is illustrated with the following example
+(<a href="../detailed_example.htm">SensorPanelTA</a> class from Transparent <span class="MCPopup"><a href="javascript:void(0);" class="MCPopupSpot" onclick="FMCPopup( event, this ); return false;" MadCap:src="../../../activation.htm">Activation<img style="border: none;margin-left: 5px;" src="../../../../SkinSupport/ExpandingClosed.gif" MadCap:altsrc="../../../../SkinSupport/ExpandingOpen.gif" class="MCExpandingIcon" onload="if ( typeof( FMCPreloadImage ) == 'function' ) { FMCPreloadImage( '../../../../SkinSupport/ExpandingOpen.gif' ); }" /></a></span> chapter is used):</p>
+        <p MadCap:conditions="Primary.Java,Primary.All languages">
+            <pre class="prettyprint" xml:space="preserve">TAExample.java: testSwitchDatabases
+private static void testSwitchDatabases()  {
+    storeSensorPanel();
+
+    ObjectContainer firstDb = Db4o.openFile(configureTA(), FIRST_DB_NAME);
+    ObjectContainer secondDb = Db4o.openFile(configureTA(), SECOND_DB_NAME);
+    try  {
+      ObjectSet result = firstDb.queryByExample(new SensorPanelTA(1));
+      if (result.size() &gt; 0)  {
+        SensorPanelTA sensor = (SensorPanelTA) result.queryByExample(0);
+        firstDb.close();
+        // Migrating an object from the first database
+        // into a second database
+        secondDb.store(sensor);
+      }
+    } finally  {
+      firstDb.close();
+      secondDb.close();
+    }
+  }</pre>
+        </p>
+        <p MadCap:conditions="Global.Primary:java" />
+        <p MadCap:conditions="Global.Primary:cs" />
+        <p MadCap:conditions="Global.Primary:vb" />
+        <p>The solution to this problem is
+simple: activator should be unbound from the object:</p>
+        <p MadCap:conditions="Primary.Java,Primary.All languages">
+            <p>Java:</p>
+            <p><code>sensor.bind(null);</code>
+            </p>
+        </p>
+        <p MadCap:conditions="Global.Primary:java" />
+        <p MadCap:conditions="Global.Primary:cs" />
+        <p MadCap:conditions="Global.Primary:vb" />
+        <p>Note, that the object will quit
+being activatable for the first object container. The following example shows
+the described behaviour:</p>
+        <p MadCap:conditions="Primary.Java,Primary.All languages">
+            <pre class="prettyprint" xml:space="preserve">TAExample.java: testSwitchDatabasesFixed
+private static void testSwitchDatabasesFixed()  {
+    storeSensorPanel();
+
+    ObjectContainer firstDb = Db4o.openFile(configureTA(), FIRST_DB_NAME);
+    ObjectContainer secondDb = Db4o.openFile(configureTA(), SECOND_DB_NAME);
+    try  {
+      ObjectSet result = firstDb.queryByExample(new SensorPanelTA(1));
+      if (result.size() &gt; 0)  {
+        SensorPanelTA sensor = (SensorPanelTA) result.queryByExample(0);
+        // Unbind the object from the first database
+        sensor.bind(null);
+        // Migrating the object into the second database
+        secondDb.store(sensor);
+        
+        
+        System.out.println("Retrieving previous query results from " 
+            + FIRST_DB_NAME + ":");
+        SensorPanelTA next = sensor.getNext();
+        while (next != null)  {
+          System.out.println(next);
+          next = next.getNext();
+        }
+        
+        System.out.println("Retrieving previous query results from " 
+            + FIRST_DB_NAME + " with manual activation:");
+        firstDb.activate(sensor, Integer.MAX_VALUE);
+        next = sensor.getNext();
+        while (next != null)  {
+          System.out.println(next);
+          next = next.getNext();
+        }
+        
+        System.out.println("Retrieving sensorPanel from " + SECOND_DB_NAME + ":");
+        result = secondDb.queryByExample(new SensorPanelTA(1));
+        next = sensor.getNext();
+        while (next != null)  {
+          System.out.println(next);
+          next = next.getNext();
+        }
+      }
+    } finally  {
+      firstDb.close();
+      secondDb.close();
+    }
+  }</pre>
+        </p>
+        <p MadCap:conditions="Global.Primary:java" />
+        <p MadCap:conditions="Global.Primary:cs" />
+        <p MadCap:conditions="Global.Primary:vb" />
+        <p MadCap:conditions="Primary.Online">Download example code:</p>
+        <p MadCap:conditions="Primary.Online">
+            <MadCap:conditionalText MadCap:conditions="Primary.Java"><a href="tamigratejava.zip">Java </a>
+            </MadCap:conditionalText>
+        </p>
+        <script type="text/javascript" src="../../../../SkinSupport/MadCapBodyEnd.js">
+        </script>
+    </body>
+</html>

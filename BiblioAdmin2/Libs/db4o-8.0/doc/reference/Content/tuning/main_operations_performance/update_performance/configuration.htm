@@ -1,0 +1,272 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:lastBlockDepth="2" MadCap:lastHeight="120" MadCap:lastWidth="624" MadCap:disableMasterStylesheet="true" MadCap:tocPath="Tuning|Main Operations Performance|Update Performance" MadCap:InPreviewMode="false" MadCap:RuntimeFileType="Topic" MadCap:TargetType="WebHelp" MadCap:PathToHelpSystem="../../../../" MadCap:HelpSystemFileName="index.xml" MadCap:SearchType="Stem">
+    <head><title>Configuration	</title>
+        <script type="text/javascript">/* <![CDATA[ */
+window.onload = function(){
+	var pathToFlash = $('html').attr('MadCap:PathToHelpSystem') + 'Content/Resources/Code/ZeroClipboard.swf';
+	ZeroClipboard.setMoviePath(pathToFlash);
+			
+	function bindToClipBord(element,content){
+		var clip = new ZeroClipboard.Client();
+		clip.setText(content);
+		clip.glue(element);
+	};
+		
+	if(location.protocol==='file:'){
+		$('.copylink-marker').remove();
+	} else{
+			$('.copylink-marker').each(function(){
+				var text = $(this).parent().parent().children('.prettyprint').html();
+				$(this).hover(function(){
+					bindToClipBord(this,text);
+				},
+				function(){});
+			});	
+	}		
+	prettyPrint();	
+};
+                /* ]]> */</script>
+        <link href="../../../SkinSupport/MadCap.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/OnlineStyle.css" rel="stylesheet" />
+        <script src="../../../Resources/Code/prettify.js">
+        </script>
+        <script src="../../../Resources/Code/lang-vb.js">
+        </script>
+        <script src="../../../Resources/Code/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Code/ZeroClipboard.js">
+        </script>
+        <script src="../../../SkinSupport/MadCapAll.js" type="text/javascript">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink" style="display: none;"><a href="../../../../index_CSH.html#tuning/main_operations_performance/update_performance/configuration.htm" style="">Open topic with navigation</a>
+        </p>
+        <div class="MCBreadcrumbsBox"><span class="MCBreadcrumbsPrefix">You are here: </span><a class="MCBreadcrumbsLink" href="../../../tuning.htm">Tuning</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../../main_operations_performance.htm">Main Operations Performance</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../update_performance.htm">Update Performance</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Configuration</span>
+        </div>
+        <p>
+            <script type="text/javascript">/*<![CDATA[*/document.write('<a href="' + location.href +'">');
+				document.write("Direct Link");
+			document.write('</a>');/*]]>*/</script>
+        </p>
+        <p>
+        </p>
+        <h1>Configuration</h1>
+        <P>db4o provides a wide range of configuration options to help you meet your performance and reliability requirements. The following example shows how different configurations affect update performance:</P>
+        <p MadCap:conditions="Primary.Java,Primary.All languages">
+            <pre class="prettyprint" xml:space="preserve">UpdatePerformanceBenchmark.java: runConfigurationTest
+private void runConfigurationTest() {
+      System.out.println("Update test with different configurations");
+      
+      //
+      clean();
+      init();
+      System.out.println("Update test: default configurations");
+      open(Db4o.newConfiguration());
+      store();
+      updateItems(90);
+      close();  
+      //
+      
+      clean();
+      System.out.println("Update test: memory IO adapter");
+      open(configure());
+      store();
+      updateItems(90);
+      close();
+      //
+      clean();
+      System.out.println("Update test: cascade on update");
+      open(configureCascade());
+      store();
+      updateTopLevelItems(90);
+      close();
+      
+      //
+      clean();
+      System.out.println("Update test: Transparent Persistence");
+      open(configureTP());
+      storeActivatableItems();
+      updateActivatableItems(90);
+      close();
+      
+    }</pre>
+            <pre class="prettyprint" xml:space="preserve">UpdatePerformanceBenchmark.java: updateItems
+private void updateItems(int count)  {
+    startTimer();
+    ObjectSet result = objectContainer.queryByExample(null);
+    
+    for (int i = 0; i &lt; count; i ++) {
+      if (result.hasNext()) {
+        Item item = (Item)result.next();
+          item._name = "Updated";
+          update(item);  
+      } else  {
+        count = i;
+        break;
+      }
+    }
+      stopTimer("Updated " + count + " items");
+  }</pre>
+            <pre class="prettyprint" xml:space="preserve">UpdatePerformanceBenchmark.java: updateTopLevelItems
+private void updateTopLevelItems(int count)  {
+    startTimer();
+    Query query = objectContainer.query();
+    query.constrain(Item.class);
+    query.descend("_name").constrain("level0").startsWith(true);
+    ObjectSet result = query.execute();
+    
+    for (int i = 0; i &lt; count; i ++) {
+      if (result.hasNext()) {
+        Item item = (Item)result.next();
+          item._name = "Updated";
+          update(item);  
+      } else  {
+        count = i;
+        break;
+      }
+    }
+      stopTimer("Updated " + count + " items");
+  }</pre>
+            <pre class="prettyprint" xml:space="preserve">UpdatePerformanceBenchmark.java: updateActivatableItems
+private void updateActivatableItems(int count)  {
+    startTimer();
+    Query query = objectContainer.query();
+    query.constrain(ActivatableItem.class);
+    query.descend("_name").constrain("level0").startsWith(true);
+    ObjectSet result = query.execute();
+    
+    for (int i = 0; i &lt; count; i ++) {
+      if (result.hasNext()) {
+        ActivatableItem item = (ActivatableItem)result.next();
+          item.setName("Updated");
+          update(item);  
+      } else  {
+        count = i;
+        break;
+      }
+    }
+      stopTimer("Updated " + count + " items");
+  }</pre>
+            <pre class="prettyprint" xml:space="preserve">UpdatePerformanceBenchmark.java: configure
+private Configuration configure() {
+      Configuration config = Db4o.newConfiguration();
+      // using MemoryIoAdapter improves the performance 
+      // by replacing the costly disk IO operations with 
+      // memory access
+        config.io(new MemoryIoAdapter());
+        return config;
+   }</pre>
+            <pre class="prettyprint" xml:space="preserve">UpdatePerformanceBenchmark.java: configureCascade
+private Configuration configureCascade() {
+      Configuration config = Db4o.newConfiguration(); 
+      // CascadeOnUpdate can be a performance-killer for 
+      // deep object hierarchies
+        config.objectClass(Item.class).cascadeOnUpdate(true);
+        return config;
+    }</pre>
+            <pre class="prettyprint" xml:space="preserve">UpdatePerformanceBenchmark.java: configureTP
+private Configuration configureTP() {
+      Configuration config = Db4o.newConfiguration();
+      // With Transparent Persistence enabled only modified
+      // objects are written to disk. This allows to achieve 
+      // better performance
+        config.objectClass(Item.class).cascadeOnUpdate(true);
+      return config;
+    }</pre>
+            <pre class="prettyprint" xml:space="preserve">UpdatePerformanceBenchmark.java: ActivatableItem
+public static class ActivatableItem implements Activatable  {
+
+      private String _name;
+        public ActivatableItem _child;
+
+      transient Activator _activator;
+      
+      public void bind(Activator activator)  {
+          if (_activator == activator)  {
+            return;
+          }
+          if (activator != null &amp;&amp; _activator != null)  {
+                throw new IllegalStateException();
+            }
+        _activator = activator;
+      }
+      
+      public void activate(ActivationPurpose purpose)  {
+        if (_activator == null) return;
+        _activator.activate(purpose);
+      }
+      
+        
+        public ActivatableItem() {
+            
+        }
+        
+        public ActivatableItem(String name, ActivatableItem child) {
+            setName(name);
+            _child = child;
+        }
+
+    public void setName(String _name)  {
+      this._name = _name;
+    }
+
+    public String getName()  {
+      return _name;
+    }
+        
+    }</pre>
+        </p>
+        <p MadCap:conditions="Global.Primary:java" />
+        <p MadCap:conditions="Global.Primary:net" />
+        <P>The results:</P>
+        <P>
+            <I>Update test with different configurations</I>
+        </P>
+        <P>
+            <I>Update test: default configurations</I>
+        </P>
+        <P>
+            <I>Store 90000 objects: 7869ms</I>
+        </P>
+        <P>
+            <I>Updated 90 items: 471ms</I>
+        </P>
+        <P>
+            <I>Update test: memory IO adapter</I>
+        </P>
+        <P>
+            <I>Store 90000 objects: 6622ms</I>
+        </P>
+        <P>
+            <I>Updated 90 items: 289ms</I>
+        </P>
+        <P>
+            <I>Update test: cascade on update</I>
+        </P>
+        <P>
+            <I>Store 90000 objects: 6848ms</I>
+        </P>
+        <P>
+            <I>Updated 90 items: 1531ms</I>
+        </P>
+        <P>
+            <I>Update test: Transparent Persistence</I>
+        </P>
+        <P>
+            <I>Store 90000 objects: 6604ms</I>
+        </P>
+        <P>
+            <I>Updated 90 items: 1297ms</I>
+        </P>
+        <P>From the results you can see that MemoryIoAdapter allows to improve performance, CascadeOnUpdate option results in a considerable drop of performance, and Transparent Persistence makes it better again.</P>
+        <p MadCap:conditions="Primary.Online">Download example code:</p>
+        <p MadCap:conditions="Primary.Online">
+            <MadCap:conditionalText MadCap:conditions="Primary.Java"><a href="updateperformancejava.zip">Java </a>
+            </MadCap:conditionalText>
+        </p>
+        <script type="text/javascript" src="../../../SkinSupport/MadCapBodyEnd.js">
+        </script>
+    </body>
+</html>

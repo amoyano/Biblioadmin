@@ -1,0 +1,370 @@
+/*<meta />*/
+
+/* Code */
+
+.str
+{
+	color: #080;
+}
+
+.kwd
+{
+	color: #008;
+}
+
+.com
+{
+	color: #800;
+}
+
+.typ
+{
+	color: #606;
+}
+
+.lit
+{
+	color: #066;
+}
+
+.pun
+{
+	color: #660;
+}
+
+.pln
+{
+	color: #000;
+}
+
+.tag
+{
+	color: #008;
+}
+
+.atn
+{
+	color: #606;
+}
+
+.atv
+{
+	color: #080;
+}
+
+.dec
+{
+	color: #606;
+}
+
+body
+{
+	margin-left: 0em;
+	padding-left: 1.5em;
+	padding-right: 1em;
+	border-bottom-width: .5em;
+	border-left-width: .5em;
+	border-right-width: .5em;
+	border-top-width: .5em;
+	background-repeat: repeat-x;
+	font-size: 10pt;
+	font-family: Arial;
+	color: #435055;
+	background-color: #ffffff;
+}
+
+body,
+p,
+div,
+td,
+li
+{
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+body a
+{
+	text-decoration: none;
+}
+
+body a:hover
+{
+	text-decoration: underline;
+}
+
+PRE
+{
+	font-family: Consolas, "Lucida Console", Courier, Monospace;
+}
+
+h1
+{
+	font-size: 125%;
+	margin-bottom: .5em;
+	clear: both;
+	width: 85%;
+	font-family: Verdana;
+	color: #435055;
+}
+
+h2
+{
+	font-size: 110%;
+	margin-top: 1.5em;
+	margin-bottom: .5em;
+	clear: both;
+	color: #435055;
+}
+
+h3
+{
+	font-size: 100%;
+	margin-top: 1.2em;
+	margin-bottom: .5em;
+	clear: both;
+	color: #435055;
+}
+
+h4
+{
+	font-size: 100%;
+	margin-top: 1.2em;
+	margin-bottom: .5em;
+	clear: both;
+	color: #435055;
+}
+
+a:link
+{
+	text-decoration: underline;
+	color: #800000;
+}
+
+a:visited
+{
+	text-decoration: underline;
+	color: #600000;
+}
+
+a:active
+{
+	cursor: hand;
+	text-decoration: underline;
+	color: #008000;
+}
+
+a:hover
+{
+	color: #FF0000;
+	cursor: hand;
+	text-decoration: underline;
+}
+
+p
+{
+	margin-bottom: .5em;
+	margin-top: .5em;
+}
+
+ul
+{
+	padding: 0 .8em;
+	margin: .6em;
+}
+
+li
+{
+	margin-bottom: .6em;
+	margin-top: .6em;
+}
+
+p.tip
+{
+	color: #BEF5BF;
+	font-weight: bold;
+	letter-spacing: normal;
+	background-color: #696969;
+	margin-bottom: 0.8em;
+	margin-left: .1em;
+	margin-top: 1.7em;
+	padding-left: 0.8em;
+	padding-right: 0.8em;
+	padding-bottom: 0.3em;
+	padding-top: 0.3em;
+	border-bottom-color: #000000;
+	border-bottom-style: Solid;
+	border-bottom-width: 1px;
+	border-top-color: #000000;
+	border-top-style: Solid;
+	border-top-width: 1px;
+	font-size: 1em;
+}
+
+td
+{
+	font-family: Verdana, Arial, Helvetica, Sans Serif;
+	margin-left: 0em;
+	padding-left: 1.5em;
+	padding-right: 1em;
+	border-bottom-width: .5em;
+	border-left-width: .5em;
+	border-right-width: .5em;
+	border-top-width: .5em;
+}
+
+th{
+	font-style: bold;	
+}
+
+img
+{
+	border: none;
+	padding-bottom: -0.5em;
+}
+
+@media print
+{
+	body
+	{
+		background-color: #ffffff;
+	}
+}
+
+p.copyrightfooter
+{
+	color: #808080;
+	font-size: 8pt;
+	text-align: center;
+}
+
+span.MadCap1
+{
+	font-style: italic;
+}
+
+pre
+{
+	text-align: left;
+	font-family: Consolas, "Droid Sans Mono", "DejaVu Sans Mono", "Courier New", courier, monospace;
+}
+
+pre.monospace
+{
+	text-align: left;
+	font-family: Consolas, "Droid Sans Mono", "DejaVu Sans Mono", "Courier New", courier, monospace;
+}
+
+span.method
+{
+}
+
+
+code
+{
+	text-align: left;
+	font-family: Consolas, "Droid Sans Mono", "DejaVu Sans Mono", "Courier New", courier, monospace;
+	font-size: 8pt;
+}
+
+@media print
+{
+	.str
+	{
+		color: #060;
+	}
+
+	.kwd
+	{
+		color: #006;
+		font-weight: bold;
+	}
+
+	.com
+	{
+		color: #600;
+		font-style: italic;
+	}
+
+	.typ
+	{
+		color: #404;
+		font-weight: bold;
+	}
+
+	.lit
+	{
+		color: #044;
+	}
+
+	.pun
+	{
+		color: #440;
+	}
+
+	.pln
+	{
+		color: #000;
+	}
+
+	.tag
+	{
+		color: #006;
+		font-weight: bold;
+	}
+
+	.atn
+	{
+		color: #404;
+	}
+
+	.atv
+	{
+		color: #060;
+	}
+}
+
+a
+{
+	color: #800000;
+}
+
+MadCap|conceptLink
+{
+	color: #800000;
+}
+
+MadCap|keywordLink
+{
+	color: #800000;
+}
+
+MadCap|relatedTopics
+{
+	color: #800000;
+}
+
+MadCap|xref
+{
+	color: #800000;
+}
+
+MadCap|popupHead
+{
+	color: #800000;
+}
+
+MadCap|shortcut
+{
+	color: #800000;
+}
+
+MadCap|helpControlMenuItem.Highlighted
+{
+	background-color: #b87a7c;
+}
+
+MadCap|glossaryTerm
+{
+	color: #000000;
+}
+

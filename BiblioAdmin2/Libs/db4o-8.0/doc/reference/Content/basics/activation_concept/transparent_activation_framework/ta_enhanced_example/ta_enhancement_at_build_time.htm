@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:lastBlockDepth="2" MadCap:lastHeight="120" MadCap:lastWidth="624" MadCap:disableMasterStylesheet="true" MadCap:tocPath="Basics Operations &amp; Concepts|Activation|Transparent Activation|TA Enhanced Example" MadCap:InPreviewMode="false" MadCap:RuntimeFileType="Topic" MadCap:TargetType="WebHelp" MadCap:PathToHelpSystem="../../../../../" MadCap:HelpSystemFileName="index.xml" MadCap:SearchType="Stem">
+    <head><title>TA Enhancement At Build Time	</title>
+        <script type="text/javascript">/* <![CDATA[ */
+window.onload = function(){
+	var pathToFlash = $('html').attr('MadCap:PathToHelpSystem') + 'Content/Resources/Code/ZeroClipboard.swf';
+	ZeroClipboard.setMoviePath(pathToFlash);
+			
+	function bindToClipBord(element,content){
+		var clip = new ZeroClipboard.Client();
+		clip.setText(content);
+		clip.glue(element);
+	};
+		
+	if(location.protocol==='file:'){
+		$('.copylink-marker').remove();
+	} else{
+			$('.copylink-marker').each(function(){
+				var text = $(this).parent().parent().children('.prettyprint').html();
+				$(this).hover(function(){
+					bindToClipBord(this,text);
+				},
+				function(){});
+			});	
+	}		
+	prettyPrint();	
+};
+                /* ]]> */</script>
+        <link href="../../../../SkinSupport/MadCap.css" rel="stylesheet" />
+        <link href="../../../../Resources/Stylesheets/OnlineStyle.css" rel="stylesheet" />
+        <script src="../../../../SkinSupport/MadCapAll.js">
+        </script>
+        <script src="../../../../Resources/Code/prettify.js">
+        </script>
+        <script src="../../../../Resources/Code/lang-vb.js">
+        </script>
+        <script src="../../../../Resources/Code/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Code/ZeroClipboard.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink" style="display: none;"><a href="../../../../../index_CSH.html#basics/activation_concept/transparent_activation_framework/ta_enhanced_example/ta_enhancement_at_build_time.htm" style="">Open topic with navigation</a>
+        </p>
+        <div class="MCBreadcrumbsBox"><span class="MCBreadcrumbsPrefix">You are here: </span><a class="MCBreadcrumbsLink" href="../../../../basics.htm">Basics Operations &amp; Concepts</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../../../activation.htm">Activation</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../../transparent_activation_framework.htm">Transparent Activation</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">TA Enhancement At Build Time</span>
+        </div>
+        <p>
+            <script type="text/javascript">/*<![CDATA[*/document.write('<a href="' + location.href +'">');
+				document.write("Direct Link");
+			document.write('</a>');/*]]>*/</script>
+        </p>
+        <p>
+        </p>
+        <h1>TA Enhancement At Build Time</h1>
+        <p>In this topic we will
+look at even more convenient and performant way of enhancing classes to support
+<span class="MCTextPopup"><a href="javascript:void(0);" class="MCTextPopupSpot" onclick="FMCTextPopup( event, this ); return false;">TA<img style="border: none;margin-left: 5px;" src="../../../../SkinSupport/ExpandingClosed.gif" MadCap:altsrc="../../../../SkinSupport/ExpandingOpen.gif" class="MCExpandingIcon" onload="if ( typeof( FMCPreloadImage ) == 'function' ) { FMCPreloadImage( '../../../../SkinSupport/ExpandingOpen.gif' ); }" /></a><span class="MCTextPopupBody" style="display: none; ">Transparent Activation</span></span>: during application build time. </p>
+        <p>For simplistic example our build script should:</p>
+        <ul>
+            <li value="1">Use classes, created by
+     normal build script</li>
+            <li value="2">Create a new enhanced-bin
+     folder for the enhanced classes</li>
+            <li value="3">Use TAAntClassEditFactory
+     to create InjectTransparentActivationEdit (can be based on class filter)</li>
+            <li value="4">Call
+     Db4oFileEnhancerAntTask#execute, which will call
+     Db4oClassInstrumenter#enhance passing the previously created InjectTransparentActivationEdit
+     to instrument classes with TA.</li>
+        </ul>
+        <p>All
+these can be done with the following script:</p>
+        <pre class="prettyprint" xml:space="preserve">Build.Xml
+&lt;?xml version="1.0"?&gt;
+
+&lt;!-- 
+  TA build time enhancement sample.
+--&gt;
+
+&lt;project name="taenhance" default="buildall"&gt;
+
+&lt;!-- 
+  Set up the required class path for the enhancement task.
+  In a production environment, this will be composed of jars, of course. 
+--&gt;
+&lt;path id="db4o.enhance.path"&gt;
+  &lt;pathelement path="${basedir}" /&gt;
+  &lt;fileset dir="lib"&gt;
+    &lt;include name="**/*.jar"/&gt;
+  &lt;/fileset&gt;
+&lt;/path&gt;
+  
+&lt;!-- Define enhancement task. --&gt;
+&lt;taskdef
+  name="db4o-enhance" 
+  classname="com.db4o.instrumentation.ant.Db4oFileEnhancerAntTask"
+  classpathref="db4o.enhance.path"
+  loaderref="db4o.enhance.loader" /&gt;
+
+&lt;typedef
+  name="transparent-activation" 
+  classname="com.db4o.ta.instrumentation.ant.TAAntClassEditFactory"
+  classpathref="db4o.enhance.path"
+  loaderref="db4o.enhance.loader" /&gt;
+
+
+
+&lt;target name="buildall"&gt;
+
+        &lt;!-- Create enhanced output directory--&gt;  
+  &lt;mkdir dir="${basedir}/enhanced-bin" /&gt;
+  &lt;delete dir="${basedir}/enhanced-bin" quiet = "true"&gt;
+    &lt;include name="**/*"/&gt;
+  &lt;/delete&gt;
+
+  &lt;db4o-enhance classTargetDir="${basedir}/enhanced-bin" 
+jarTargetDir="${basedir}/enhanced-lib"&gt;
+
+    &lt;classpath refid="db4o.enhance.path" /&gt;    
+                &lt;!-- Use compiled classes as an input --&gt;
+    &lt;sources dir="${basedir}/bin" /&gt;
+
+                &lt;!-- Call transparent activation enhancement --&gt; 
+    &lt;transparent-activation /&gt;
+    
+  &lt;/db4o-enhance&gt;
+  
+&lt;/target&gt;
+
+  
+  
+&lt;/project&gt;</pre>
+        <p>In
+order to test this script:</p>
+        <ul>
+            <li value="1">Create a new project,
+     consisting of TAInstrumentationExample and SensorPanel classes from the
+     <a href="ta_enhancement_at_load_time.htm">previous example</a></li>
+            <li value="2">Add lib folder to the
+     project root and copy the following jars from db4o distribution:</li>
+            <ul>
+                <li value="1">ant.jar </li>
+                <li value="2">bloat-1.0.jar</li>
+                <li value="3">db4o-<span class="PrimaryCurrentVersion">X.XX</span>-instrumentation.jar</li>
+                <li value="4">db4o-<span class="PrimaryCurrentVersion">X.XX</span>-java5.jar</li>
+                <li value="5">db4o-<span class="PrimaryCurrentVersion">X.XX</span>-taj.jar</li>
+                <li value="6">db4o-<span class="PrimaryCurrentVersion">X.XX</span>-tools.jar 
+      (Note, that the described functionality is only valid for db4o releases
+      after 7.0)</li>
+            </ul>
+            <li value="3">Build the project with your
+     IDE or any other build tools (it is assumed that the built class files go
+     to the project's bin directory)</li>
+            <li value="4">Copy build.xml into the
+     root project folder and execute it</li>
+        </ul>
+        <p>Successfully
+executed build script will produce an instrumented copy of the project classes
+in enhanced-bin folder. You can check the results by running the following
+batch file from bin and enhanced-bin folders:</p>
+        <p><code>set
+CLASSPATH=.;{$PROJECT_ROOT}\lib\db4o-<span class="PrimaryCurrentVersion">X.XX</span>-java5.jar</code>
+        </p>
+        <p><code>java
+com.db4odoc.taexamples.enhancer.TAInstrumentationExample</code>
+        </p>
+        <p>(In
+enhanced version the warning about classes that do not support TA should
+disappear).</p>
+        <p>Of
+course, the presented example is very simple and limited in functionality. In
+fact you can do a lot more things using the build script:</p>
+        <p>o      
+Add <span class="MCTextPopup"><a href="javascript:void(0);" class="MCTextPopupSpot" onclick="FMCTextPopup( event, this ); return false;">NQ<img style="border: none;margin-left: 5px;" src="../../../../SkinSupport/ExpandingClosed.gif" MadCap:altsrc="../../../../SkinSupport/ExpandingOpen.gif" class="MCExpandingIcon" onload="if ( typeof( FMCPreloadImage ) == 'function' ) { FMCPreloadImage( '../../../../SkinSupport/ExpandingOpen.gif' ); }" /></a><span class="MCTextPopupBody" style="display: none; ">Native Query</span></span> optimization in the same enhancer task</p>
+        <p>o      
+Use ClassFilter to select classes for
+enhancement</p>
+        <p>o      
+Use regex to select classes for enhancement</p>
+        <p>o      
+Use several source folders</p>
+        <p>o      
+Use jar as the source for enhancement</p>
+        <p>An example of the above features can be found in our <a href="http://developer.db4o.com/ProjectSpaces/view.aspx/TA_And_NQ_Enhancement_Example">Project
+Spaces</a>.</p>
+        <script type="text/javascript" src="../../../../SkinSupport/MadCapBodyEnd.js">
+        </script>
+    </body>
+</html>

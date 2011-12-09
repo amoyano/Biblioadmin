@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+
+<!-- 
+	TA build time enhancement sample.
+-->
+
+<project name="taenhance" default="buildall">
+
+<!-- 
+	Set up the required class path for the enhancement task.
+	In a production environment, this will be composed of jars, of course. 
+-->
+<path id="db4o.enhance.path">
+	<pathelement path="${basedir}" />
+	<fileset dir="lib">
+		<include name="**/*.jar"/>
+	</fileset>
+</path>
+	
+<!-- Define enhancement task. -->
+<taskdef
+	name="db4o-enhance" 
+	classname="com.db4o.instrumentation.ant.Db4oFileEnhancerAntTask"
+	classpathref="db4o.enhance.path"
+	loaderref="db4o.enhance.loader" />
+
+<typedef
+	name="transparent-activation" 
+	classname="com.db4o.ta.instrumentation.ant.TAAntClassEditFactory"
+	classpathref="db4o.enhance.path"
+	loaderref="db4o.enhance.loader" />
+
+
+
+<target name="buildall">
+
+        <!-- Create enhanced output directory-->	
+	<mkdir dir="${basedir}/enhanced-bin" />
+	<delete dir="${basedir}/enhanced-bin" quiet = "true">
+		<include name="**/*"/>
+	</delete>
+
+	<db4o-enhance classTargetDir="${basedir}/enhanced-bin" jarTargetDir="${basedir}/enhanced-lib">
+
+		<classpath refid="db4o.enhance.path" />		
+                <!-- Use compiled classes as an input -->
+		<sources dir="${basedir}/bin" />
+
+                <!-- Call transparent activation enhancement --> 
+		<transparent-activation />
+		
+	</db4o-enhance>
+	
+</target>
+
+	
+	
+</project>

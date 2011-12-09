@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:lastBlockDepth="2" MadCap:lastHeight="120" MadCap:lastWidth="624" MadCap:disableMasterStylesheet="true" MadCap:tocPath="Basics Operations &amp; Concepts|Activation|Transparent Activation" MadCap:InPreviewMode="false" MadCap:RuntimeFileType="Topic" MadCap:TargetType="WebHelp" MadCap:PathToHelpSystem="../../../../" MadCap:HelpSystemFileName="index.xml" MadCap:SearchType="Stem">
+    <head><title>Object Types In TA	</title>
+        <script type="text/javascript">/* <![CDATA[ */
+window.onload = function(){
+	var pathToFlash = $('html').attr('MadCap:PathToHelpSystem') + 'Content/Resources/Code/ZeroClipboard.swf';
+	ZeroClipboard.setMoviePath(pathToFlash);
+			
+	function bindToClipBord(element,content){
+		var clip = new ZeroClipboard.Client();
+		clip.setText(content);
+		clip.glue(element);
+	};
+		
+	if(location.protocol==='file:'){
+		$('.copylink-marker').remove();
+	} else{
+			$('.copylink-marker').each(function(){
+				var text = $(this).parent().parent().children('.prettyprint').html();
+				$(this).hover(function(){
+					bindToClipBord(this,text);
+				},
+				function(){});
+			});	
+	}		
+	prettyPrint();	
+};
+                /* ]]> */</script>
+        <link href="../../../SkinSupport/MadCap.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/OnlineStyle.css" rel="stylesheet" />
+        <script src="../../../SkinSupport/MadCapAll.js">
+        </script>
+        <script src="../../../Resources/Code/prettify.js">
+        </script>
+        <script src="../../../Resources/Code/lang-vb.js">
+        </script>
+        <script src="../../../Resources/Code/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Code/ZeroClipboard.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink" style="display: none;"><a href="../../../../index_CSH.html#basics/activation_concept/transparent_activation_framework/object_types_in_ta.htm" style="">Open topic with navigation</a>
+        </p>
+        <div class="MCBreadcrumbsBox"><span class="MCBreadcrumbsPrefix">You are here: </span><a class="MCBreadcrumbsLink" href="../../../basics.htm">Basics Operations &amp; Concepts</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../../activation.htm">Activation</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../transparent_activation_framework.htm">Transparent Activation</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Object Types In TA</span>
+        </div>
+        <p>
+            <script type="text/javascript">/*<![CDATA[*/document.write('<a href="' + location.href +'">');
+				document.write("Direct Link");
+			document.write('</a>');/*]]>*/</script>
+        </p>
+        <p>
+        </p>
+        <h1>Object Types In TA</h1>
+        <p>When working in <span class="MCTextPopup"><a href="javascript:void(0);" class="MCTextPopupSpot" onclick="FMCTextPopup( event, this ); return false;">TA<img style="border: none;margin-left: 5px;" src="../../../SkinSupport/ExpandingClosed.gif" MadCap:altsrc="../../../SkinSupport/ExpandingOpen.gif" class="MCExpandingIcon" onload="if ( typeof( FMCPreloadImage ) == 'function' ) { FMCPreloadImage( '../../../SkinSupport/ExpandingOpen.gif' ); }" /></a><span class="MCTextPopupBody" style="display: none; ">Transparent Activation</span></span> enabled environment you must remember that db4o treats Activatable (TA Aware) and non Activatable (other) types differently. </p>
+        <p>In general we can distinguish the following types:</p>
+        <ul>
+            <li value="1">Value types with no identity (char, boolean, integer etc). These types are handled internally by db4o engine and behave the same in TA enabled and disabled modes.</li>
+            <li value="2">Activatable types, as it is clear from the name, implement Activatable interface and are responsible for their own activation.</li>
+            <li value="3">Non Activatable type - all the other types, including user types or third-party classes.</li>
+        </ul>
+        <p>As it was mentioned  <a href="ta_implementation.htm">before</a> in TA enabled mode non-Activatable types are fully activated whereas Activatable types have 0 activation depth and are getting activated as requested. </p>
+        <p>Let's look at an example model below, which includes Activatable and non-Activatable classes:</p>
+        <p>
+            <img src="object_types_in_ta/ta.gif" />
+        </p>
+        <p>Querying and traversing in TA enabled mode:</p>
+        <p MadCap:conditions="Primary.Java,Primary.All languages">
+            <p>Java: </p>
+            <p><code>Customer c =
+container.queryByExample(Customer.class).next();</code>
+            </p>
+        </p>
+        <p MadCap:conditions="Global.Primary:java" />
+        <p MadCap:conditions="Global.Primary:cs" />
+        <p MadCap:conditions="Global.Primary:vb" />
+        <p>At this point the following paths should be already activated (Customer is not Activatable):</p>
+        <p><code>c.name</code><code>c.addresses</code><code>.addresses[N].firstLine</code>
+        </p>
+        <p>&#160;</p>
+        <p><code>c.addresses[N].country</code> - available but not activated (Activatable type).</p>
+        <p>&#160;</p>
+        <p>Country.getState would cause the Country object to be activated</p>
+        <p MadCap:conditions="Primary.Java,Primary.All languages">
+            <p>Java: </p>
+            <p><code>State state = c.getAddress(0).country().getState(someZipCode);</code>
+            </p>
+        </p>
+        <p MadCap:conditions="Global.Primary:java" />
+        <p MadCap:conditions="Global.Primary:cs" />
+        <p MadCap:conditions="Global.Primary:vb" />
+        <p>At this point the following paths become activated 
+</p>
+        <p><code>c.addresses[0].country.states</code><code>.addresses[0]<br />.country.states[N].name</code>
+        </p>
+        <p><code>c.addresses[0].country.states[N].city</code><code>.addresses[0]<br />.country.states[N].cities[N]</code>
+        </p>
+        <p>- available but not
+activated (Activatable type)</p>
+        <p>&#160;</p>The following general rules apply: 
+<ol><li value="1">Arrays of Arrays of non Activatable types: non Activatable behavior</li><li value="2">Arrays of Arrays of Activatable types: non Activatable behavior except for leaves</li><li value="3">JDK collections: non Activatable behavior</li><li value="4">Value types with references to non Activatable reference types and to Activatable
+reference types: the non Activatable path should be activated fully; Activatable
+path stops activation.</li></ol><script type="text/javascript" src="../../../SkinSupport/MadCapBodyEnd.js"></script></body>
+</html>

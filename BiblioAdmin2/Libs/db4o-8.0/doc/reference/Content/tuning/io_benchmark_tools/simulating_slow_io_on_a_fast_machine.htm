@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:lastBlockDepth="2" MadCap:lastHeight="120" MadCap:lastWidth="624" MadCap:disableMasterStylesheet="true" MadCap:tocPath="Tuning|Io Benchmark Tools" MadCap:InPreviewMode="false" MadCap:RuntimeFileType="Topic" MadCap:TargetType="WebHelp" MadCap:PathToHelpSystem="../../../" MadCap:HelpSystemFileName="index.xml" MadCap:SearchType="Stem">
+    <head><title>Simulating Slow IO On A Fast Machine	</title>
+        <script type="text/javascript">/* <![CDATA[ */
+window.onload = function(){
+	var pathToFlash = $('html').attr('MadCap:PathToHelpSystem') + 'Content/Resources/Code/ZeroClipboard.swf';
+	ZeroClipboard.setMoviePath(pathToFlash);
+			
+	function bindToClipBord(element,content){
+		var clip = new ZeroClipboard.Client();
+		clip.setText(content);
+		clip.glue(element);
+	};
+		
+	if(location.protocol==='file:'){
+		$('.copylink-marker').remove();
+	} else{
+			$('.copylink-marker').each(function(){
+				var text = $(this).parent().parent().children('.prettyprint').html();
+				$(this).hover(function(){
+					bindToClipBord(this,text);
+				},
+				function(){});
+			});	
+	}		
+	prettyPrint();	
+};
+                /* ]]> */</script>
+        <link href="../../SkinSupport/MadCap.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/OnlineStyle.css" rel="stylesheet" />
+        <script src="../../Resources/Code/prettify.js">
+        </script>
+        <script src="../../Resources/Code/lang-vb.js">
+        </script>
+        <script src="../../Resources/Code/jquery.min.js">
+        </script>
+        <script src="../../Resources/Code/ZeroClipboard.js">
+        </script>
+        <script src="../../SkinSupport/MadCapAll.js" type="text/javascript">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink" style="display: none;"><a href="../../../index_CSH.html#tuning/io_benchmark_tools/simulating_slow_io_on_a_fast_machine.htm" style="">Open topic with navigation</a>
+        </p>
+        <div class="MCBreadcrumbsBox"><span class="MCBreadcrumbsPrefix">You are here: </span><a class="MCBreadcrumbsLink" href="../../tuning.htm">Tuning</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../io_benchmark_tools.htm">Io Benchmark Tools</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Simulating Slow Io On A Fast Machine</span>
+        </div>
+        <p>
+            <script type="text/javascript">/*<![CDATA[*/document.write('<a href="' + location.href +'">');
+				document.write("Direct Link");
+			document.write('</a>');/*]]>*/</script>
+        </p>
+        <p>
+        </p>
+        <h1>Simulating Slow IO On A Fast Machine</h1>
+        <p>The code for this section is located in the com.db4o.bench.delaying package. To run delaying, the <code>System.nanoTime()</code> is needed. This method was introduced with Java 5. If you only have older versions installed, get the latest here: <a href="http://java.sun.com/javase/downloads/">http://java.sun.com/javase/downloads/</a> You
+also need a java5 db4o JAR file, otherwise you'll see a
+NotImplementedException when the benchmark tries to access <code>nanoTime()</code>.  Think
+of the following scenario: You develop software with db4o for a target
+system, that has much slower I/O than your developer system (e.g. an
+embedded device).  Wouldn't it sometimes be nice getting a feel
+for the expected speed your application will work with on the target
+system without having to deploy to it?  In particular, if you want to profile your system with a profiler like <a href="http://www.quest.com/jprobe/">JProbe</a>, simulating the expected slow I/O on a device will help you identifying the bottlenecks in your application.  This
+is where the results of IoBenchmark and a DelayingIoAdapter enter the
+arena. If you run IoBenchmark on both the embedded device and your
+developer machine you get two results files. Copy the file from the
+slower device to the db4otools folder on the faster machine and set
+both filenames in IoBenchmark.properties:
+</p>
+        <pre xml:space="preserve">results.file.1=db4o-IoBenchmark-results-30000_faster.log     
+results.file.2=db4o-IoBenchmark-results-30000_slower.log 
+</pre>It's not necessary that results.file.1 holds the faster log, any order will work.  You
+are now set to run the benchmark in delayed mode. The expected result
+of such a run is, that the results of a delayed run on the faster
+machine should be close to those on the slow device. To do a delayed run execute one of the run.delayed.benchmark.* targets of the Ant script. At the beginning of the output - prior to the benchmark results - you'll notice additional information about the delaying:
+
+<pre xml:space="preserve">========     Running db4o IoBenchmark     ============================
+=================================     Delaying:     
+&gt; machine1 (db4o-IoBenchmark-results-30000_faster.log) is faster!     
+&gt; Required delays:     
+&gt; [delays in nanoseconds] read: 8195 | write: 10669 | seek: 10098 | sync: 215121     
+&gt; Adjusting delay timer to match required delays...     
+&gt; Adjusted delays:     
+&gt; [delays in nanoseconds] read: 4934 | write: 7387 | seek: 6849 | sync: 202203     
+Running target application ...     Preparing DB file ...     Running benchmark ...     
+[...] 
+</pre>Let's have a look at what exactly is going on when setting up delaying. First
+there is a check for the validity of the two result files for delaying.
+To pass this check, one of the two supplied benchmark results file must
+contain the better values for all the 4 operations. This constraint
+exists because it's not possible to speed things up, only slowing them
+down.  Once this check is passed, the delays are calculated by
+simply subtracting the numbers found in the result files. The resulting
+numbers tell us, how long each I/O operation should be delayed on the
+faster machine to get the same behaviour as on the slower one. The
+problem is now that just simply waiting for the calculated amount of
+time will make us wait for too long. This is due to additional setup
+time for each wait (method calls) and the "at least" semantics of the wait method itself.      To
+cope with this limitation there is a delay adjustment logic. It tries
+to find the actual delay to wait for such that the overall waiting
+time, including the setup method calls, matches the desired delay time. However,
+there's a catch to this adjustment logic: On each machine there's a
+minimum delay that can be achieved with waiting, and this delay is not
+equal to zero (e.g. 400ns)! If the performance of the two machines is
+too close together, it is possible that when trying to adjust a delay,
+the outcome is below the minimum delay achievable. In this case you'll see output like this:
+<pre xml:space="preserve" class="monospace">&gt;&gt; Smallest achievable delay: 400     
+&gt;&gt; Required delay setting: 260     
+&gt;&gt; Using delay(0) to wait as short as possible.     
+&gt;&gt; Results will not be accurate. 
+</pre>To find out which delay actually was too small, and hence which results won't be accurate, take a look at the adjusted delays:
+
+<pre xml:space="preserve" class="monospace">&gt; Adjusted delays:     
+&gt; [delays in nanoseconds] read: 0 | write: 7387 | seek: 6849 | sync: 202203 
+</pre>Here the read delay was too small and therefore the results for read are expected to be slower than targeted.      Once the delays are adjusted, they can be fed to the DelayingIoAdapter (as done in IoBenchmark#delayingIoAdapter):  <code><br />IoAdapter rafFactory = new RandomAccessFileAdapter();<br /></code><code>IoAdapter delFactory = new <br />DelayingIoAdapter(rafFactory, _delays);</code><code><br />IoAdapter io =  delFactory.open(dbFileName, false, 0, false);</code> <![CDATA[ ]]><br /> If
+you now configure db4o with the IoAdapter io from above, each I/O
+operation will be delayed by the respective delay stored in _delays!  The
+above IoAdapter setup is also exactly what you need in your own
+application to simulate the slower I/O of your target device on your
+faster machine.
+  
+         
+    <script type="text/javascript" src="../../SkinSupport/MadCapBodyEnd.js"></script></body>
+</html>
